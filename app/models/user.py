@@ -1,7 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from .playlists import Playlist
+from .playlist import Playlist
 
 
 class User(db.Model, UserMixin):
@@ -14,7 +14,11 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
-    playlists = db.relationship("Playlist", back_populates='users')
+
+    songs = db.relationship('Song', back_populates='users') # not actually columns in our table, sqlalchemy creates
+    playlists = db.relationship("Playlist", back_populates='users') # objects with relevant info based on the relationship
+    likes = db.relationship('Like', back_populates='user') # without having make additional queries
+    comments = db.relationship('Comment', back_populates='user')
 
     @property
     def password(self):
