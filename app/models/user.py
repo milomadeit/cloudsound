@@ -17,8 +17,8 @@ class User(db.Model, UserMixin):
 
     songs = db.relationship('Song', back_populates='users') # not actually columns in our table, sqlalchemy creates
     playlists = db.relationship("Playlist", back_populates='users') # objects with relevant info based on the relationship
-    likes = db.relationship('Like', back_populates='user') # without having make additional queries
-    comments = db.relationship('Comment', back_populates='user')
+    likes = db.relationship('Like', back_populates='users') # without having make additional queries
+    comments = db.relationship('Comment', back_populates='users')
 
     @property
     def password(self):
