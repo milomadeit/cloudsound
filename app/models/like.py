@@ -1,4 +1,4 @@
-from .db import db, environment, SCHEMA, add_prefix_for_prod
+from .db import db, environment, SCHEMA, add_prefix_for_pro
 from .user import User
 from .song import Song
 
@@ -9,8 +9,8 @@ class Like(db.Model):
 		__table_args__ = {'schema': SCHEMA}
 
 	id = db.Column(db.Integer, primary_key=True)
-	user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-	song_id = db.Column(db.Integer, db.ForeignKey('songs.id'), nullable=False)
+	user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
+	song_id = db.Column(db.Integer, db.ForeignKey(Song.id), nullable=False)
 
 	user = db.relationship('User', back_populates='likes') # not actually fields on the table but sqlalchemy will create
 	song = db.relationship('Song', back_populates='likes') # a user or song object with info related to the like.

@@ -1,6 +1,6 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from sqlalchemy.orm import declarative_base, relationship
-
+from .user import User
 
 class Song(db.Model):
 	__tablename__ = 'songs'
@@ -9,7 +9,7 @@ class Song(db.Model):
 		__table_args__ = {'schema': SCHEMA}
 
 	id = db.Column(db.Integer(), primary_key=True)
-	user_id = db.Column(db.Integer, db.ForeignKey('users.id'))  # references users id column
+	user_id = db.Column(db.Integer, db.ForeignKey(User.id))  # references users id column
 	title = db.Column(db.String(50), nullable=False)
 	artist = db.Column(db.String(50), nullable=False)
 	genre = db.Column(db.String())
