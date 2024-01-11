@@ -9,6 +9,7 @@ from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .seeds import seed_commands
 from .config import Config
+from .models import User, Song, Comment, Like, Playlist, playlists_song
 
 app = Flask(__name__, static_folder='../react-app/build', static_url_path='/')
 
