@@ -4,11 +4,12 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_login import LoginManager
-from .models import db, User, Song, Comment, Like, Playlist, playlists_song
+from .models import db, User, Song, Comment, Like, Playlist, playlists_song, 
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .seeds import seed_commands
 from .config import Config
+
 
 app = Flask(__name__, static_folder='../react-app/build', static_url_path='/')
 
