@@ -9,9 +9,9 @@ def SongUpload():
 	form = SongForm();
 
 	if form.validate_on_submit():
-		print(form.data)
-
-	return 'Did we print?'
+		return 'valid'
+	
+	return 'not valid'
 
 
 	
