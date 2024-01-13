@@ -34,7 +34,8 @@ def SongUpload():
                     user_id = current_user.id, # how to get dynamic user id?
                     title=song_title,
                     artist=artist,
-                    genre=genre
+                    genre=genre,
+                    song_url=url
 			    )
                 db.session.add(new_song)
                 db.session.commit()
