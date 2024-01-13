@@ -16,7 +16,7 @@ class User(db.Model, UserMixin):
     hashed_password = db.Column(db.String(255), nullable=False)
 
     songs = db.relationship('Song', back_populates='users') # not actually columns in our table, sqlalchemy creates
-    playlists = db.relationship("Playlist", back_populates='users') # objects with relevant info based on the relationship
+    playlists = db.relationship("Playlist", back_populates='user') # objects with relevant info based on the relationship
     likes = db.relationship('Like', back_populates='users') # without having make additional queries
     comments = db.relationship('Comment', back_populates='users')
 
