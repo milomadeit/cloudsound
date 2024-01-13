@@ -13,4 +13,4 @@ class Like(db.Model):
 	song_id = db.Column(db.Integer, db.ForeignKey(Song.id), nullable=False)
 
 	user = db.relationship('User', back_populates='likes') # not actually fields on the table but sqlalchemy will create
-	song = db.relationship('Song', back_populates='likes') # a user or song object with info related to the like.
+	song = db.relationship('Song', back_populates='likes_relationship') # a user or song object with info related to the like.
