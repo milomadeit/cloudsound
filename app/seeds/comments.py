@@ -2,16 +2,16 @@ from app.models import db, User, environment, SCHEMA, Comment
 from sqlalchemy.sql import text
 
 
-# Adds a demo user, you can add other users here if you want
+
 def seed_comments():
     comment1 = Comment(
-        user_id=3, content='Love the song!!')
+        user_id=3, song_id=1, content='Love the song!!')
     comment2 = Comment(
-        user_id=2, content='Not my cup of tea')
+        user_id=2, song_id=1, content='Not my cup of tea')
     comment3 = Comment(
-        user_id=1, content='Too slow for me')
+        user_id=1, song_id= content='Too slow for me')
     comment4 = Comment(
-        user_id=1, content='Too slow for me')
+        user_id=, content='Too slow for me')
     comment5 = Comment(
         user_id=1, content='Too slow for me')
 
