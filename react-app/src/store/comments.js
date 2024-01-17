@@ -2,7 +2,7 @@
 const GET_COMMENTS = 'GET_COMMENTS';
 const ADD_COMMENT = 'ADD_COMMENT';
 const EDIT_COMMENT = 'EDIT_COMMENT';
-const DELETE_COMMENT = 'DELETE_COMMENT'
+const DELETE_COMMENT = 'DELETE_COMMENT';
 
 
 // actions
@@ -37,12 +37,9 @@ const delete_comment = (comment_id) => {
 
 // thunks
 export const get_comments_thunk = () => async (dispatch) => {
-  const res = await fetch('/comment-test');
+  const res = await fetch('/api/comments-test');
   const data = await res.json();
-  // dispatch(get_comments(data.comments))
-  if (data) {
-    console.log(data, '****************')
-  }
+  dispatch(get_comments(data.comments))
   return data
 }
 

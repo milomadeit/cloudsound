@@ -1,8 +1,10 @@
 from flask import Blueprint
+from app.models.comment import Comment
 
 comments_bp = Blueprint('comments_bp', __name__)
 
 
-@comments_bp.route('/comment-test')
+@comments_bp.route('/comments-test')
 def tester():
-  return 'hello from comment-test route'
+  data = Comment.query.all()
+  return data
