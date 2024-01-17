@@ -10,8 +10,9 @@ const storeSong = (song) => {
 export const uploadSong = (inputSong) => async (dispatch) => {
   const response = await fetch(`/api/songs/upload`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(inputSong),
+    // headers: { "Content-Type": "application/json" },
+    // body: JSON.stringify(inputSong),
+    body: inputSong,
   });
   const song = await response.json();
   dispatch(storeSong(song));
