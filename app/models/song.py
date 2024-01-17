@@ -4,7 +4,7 @@ from .user import User
 
 class Song(db.Model):
 	__tablename__ = 'songs'
-	
+
 	if environment == "production":
 		__table_args__ = {'schema': SCHEMA}
 
@@ -15,10 +15,11 @@ class Song(db.Model):
 	genre = db.Column(db.String())
 	song_url = db.Column(db.String(), nullable=False)
 	likes = db.Column(db.Integer())
-	
+
 	user = db.relationship('User', back_populates='songs')
 	playlists = db.relationship('Playlist', secondary="playlist_songs", back_populates='songs')
 	likes_relationship = db.relationship('Like', back_populates='song')
+	comments=db.relationship("Comment", back_populates="song")
 
 
 
