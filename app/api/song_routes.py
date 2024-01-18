@@ -16,10 +16,10 @@ def SongUpload():
         form['csrf_token'].data = request.cookies['csrf_token']
 
         if form.validate_on_submit():
-            song_file = form.song.data  # Access the file part from merged data
-            song_title = form.title.data  # Access the title text
-            artist = form.artist.data
-            genre = form.genre.data
+            song_file = request.form['song'].data  # Access the file part from merged data
+            song_title = request.form['title'].data  # Access the title text
+            artist = request.form['artist'].data
+            genre = request.form['genre'].data
 
             if song_file: # check if file is there
                 unique_filename = get_unique_filename(song_title)
