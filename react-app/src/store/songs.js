@@ -1,4 +1,12 @@
 const STORE_SONG = "songs/STORE_SONG";
+const ALL_SONGS = "allSongs/ALL_SONGS"
+
+const allSongs = (songs) => {
+  return {
+    type: ALL_SONGS,
+    songs
+  }
+}
 
 const storeSong = (song) => {
   return {
@@ -18,6 +26,12 @@ export const uploadSong = (inputSong) => async (dispatch) => {
   dispatch(storeSong(song));
   return song;
 };
+
+export const getAllSongs = () => async (dispatch) => {
+  const response = await fetch('/api/songs/', {
+    method: "GET"
+  })
+}
 
 const initialState = { allSongs: {} };
 const songsReducer = (state = initialState, action) => {
