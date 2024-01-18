@@ -1,55 +1,56 @@
 // constants
 const GET_COMMENTS = 'GET_COMMENTS';
-const ADD_COMMENT = 'ADD_COMMENT';
-const EDIT_COMMENT = 'EDIT_COMMENT';
-const DELETE_COMMENT = 'DELETE_COMMENT';
+// const ADD_COMMENT = 'ADD_COMMENT';
+// const EDIT_COMMENT = 'EDIT_COMMENT';
+// const DELETE_COMMENT = 'DELETE_COMMENT';
 
 
 // actions
 const get_comments = (comments) => {
   return {
     type: GET_COMMENTS,
-    comments: comments
+    payload: comments
   }
 }
 
-const add_comment = (comment, song_id) => {
-  return {
-    type: ADD_COMMENT,
-    comment: comment
-  }
-}
+// const add_comment = (comment, song_id) => {
+//   return {
+//     type: ADD_COMMENT,
+//     comment: comment
+//   }
+// }
 
-const edit_comment = (comment_id) => {
-  return {
-    type: EDIT_COMMENT,
-    comment_id: comment_id
-  }
-}
+// const edit_comment = (comment_id) => {
+//   return {
+//     type: EDIT_COMMENT,
+//     comment_id: comment_id
+//   }
+// }
 
-const delete_comment = (comment_id) => {
-  return {
-    type: DELETE_COMMENT,
-    comment_id: comment_id
-  }
-}
+// const delete_comment = (comment_id) => {
+//   return {
+//     type: DELETE_COMMENT,
+//     comment_id: comment_id
+//   }
+// }
 
 
 // thunks
 export const get_comments_thunk = () => async (dispatch) => {
   const res = await fetch('/api/comments-test');
   const data = await res.json();
-  dispatch(get_comments(data.comments))
+  dispatch(get_comments(data))
+
   return data
 }
 
 
 // reducer
-const comment_reducer = (state = { comments: {} }, action) => {
+const comments = (state = {}, action) => {
   let new_state = {};
   switch (action.type) {
     case GET_COMMENTS:
-      action.comments.map((comment) => new_state.comments[comment.id] = comment)
+      action.payload.map((comment) => new_state[comment.id] = comment)
       return new_state
 
     default:
@@ -57,4 +58,4 @@ const comment_reducer = (state = { comments: {} }, action) => {
   }
 }
 
-export default comment_reducer;
+export default comments;

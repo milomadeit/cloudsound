@@ -7,19 +7,27 @@ import * as commentActions from '../../store/comments';
 function GetComments() {
   const dispatch = useDispatch();
   // const { songId } = useParams();
-
-  // console.log(params, '**********')
+  const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
     dispatch(commentActions.get_comments_thunk())
+      .then(() => setIsLoaded(true))
   }, [dispatch]);
 
-  // const comments = useSelector((state) => state.comments);
+  const comments = Object.values(useSelector((state) => state.comments));
 
   return (
     <>
-      <h1>Viewing All Comments</h1>
-      <div>comment 1</div>
+      {isLoaded && (
+        comments.map((comment) =>
+          <div key={comment.id}>
+            <span>user_id: {comment.user_id} </span>
+            <div>
+              Content: {comment.content}
+            </div>
+          </div>
+        )
+      )}
     </>
   )
 }
