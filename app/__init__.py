@@ -7,7 +7,7 @@ from flask_login import LoginManager
 from .models import db, User, Song, Comment, Like, Playlist, playlists_song
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
-from .api.songs import song_routes
+from .api.song_routes import song_routes
 from .api.comments import comments_bp
 from .seeds import seed_commands
 from .config import Config
