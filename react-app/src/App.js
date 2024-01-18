@@ -6,6 +6,8 @@ import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import UploadSong from "./components/Songs/UploadSong";
+import GetComments from "./components/GetComments";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -26,11 +28,16 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
+
           {sessionUser && (
             <Route path="/songs/new">
               <UploadSong />
             </Route>
           )}
+          <Route path="/tracks/:track_id/comments">
+            <GetComments />
+          </Route>
+
         </Switch>
       )}
     </>
