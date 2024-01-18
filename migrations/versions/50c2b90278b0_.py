@@ -53,7 +53,7 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-     if environment == "production":
+    if environment == "production":
         op.execute(f"ALTER TABLE songs SET SCHEMA {SCHEMA};")
 
     op.create_table('comments',
