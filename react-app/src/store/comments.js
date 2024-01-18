@@ -16,28 +16,28 @@ const get_comments = (comments) => {
 // const add_comment = (comment, song_id) => {
 //   return {
 //     type: ADD_COMMENT,
-//     comment: comment
+//     payload: comment
 //   }
 // }
 
 // const edit_comment = (comment_id) => {
 //   return {
 //     type: EDIT_COMMENT,
-//     comment_id: comment_id
+//     payload: comment_id
 //   }
 // }
 
 // const delete_comment = (comment_id) => {
 //   return {
 //     type: DELETE_COMMENT,
-//     comment_id: comment_id
+//     payload: comment_id
 //   }
 // }
 
 
 // thunks
-export const get_comments_thunk = () => async (dispatch) => {
-  const res = await fetch('/api/comments-test');
+export const get_comments_thunk = (track_id) => async (dispatch) => {
+  const res = await fetch(`/api/${track_id}/comments`);
   const data = await res.json();
   dispatch(get_comments(data))
 

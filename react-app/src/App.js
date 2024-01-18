@@ -25,7 +25,7 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          <Route path="/comments">
+          <Route path="/tracks/:track_id/comments">
             <GetComments />
           </Route>
         </Switch>
