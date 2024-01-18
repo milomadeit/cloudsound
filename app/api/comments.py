@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint,jsonify
 from app.forms.comment_validation_form import CommentForm
 from app.models.comment import Comment
 from app.models.db import db
@@ -12,9 +12,10 @@ def tester():
   return 'hello from comment-test route'
 
 @comments_bp.route("/songs/<int:id>/comments")
-def get_comment_form():
+def get_comment_form(id):
   form=CommentForm()
-  return
+  print(form)
+  return 
 
 @comments_bp.route("/songs/<int:id>/comments", methods=['POST'])
 def post_comment(id):
