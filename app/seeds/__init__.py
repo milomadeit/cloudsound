@@ -1,6 +1,7 @@
 from flask.cli import AppGroup
 from .users import seed_users, undo_users
 from .comments import seed_comments, undo_comments
+from .songs import seed_songs, undo_songs
 
 from app.models.db import db, environment, SCHEMA
 
@@ -19,12 +20,15 @@ def seed():
         # Make sure to add all your other model's undo functions below
         db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
         db.session.execute(f"TRUNCATE table {SCHEMA}.comments RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.songs RESTART IDENTITY CASCADE;")
         db.session.commit()
         undo_users()
         undo_comments()
+        undo_songs()
 
     seed_users()
     seed_comments()
+    seed_songs()
     # Add other seed functions here
 
 
@@ -33,4 +37,5 @@ def seed():
 def undo():
     undo_users()
     undo_comments()
+    undo_songs()
     # Add other undo functions here
