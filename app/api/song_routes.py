@@ -6,22 +6,20 @@ from flask_login import current_user
 
 song_routes = Blueprint('songs', __name__)
 
-
 #  upload a song
 @song_routes.route('/upload', methods=['POST'])
 def SongUpload():
     if current_user:
 	# Merge request.form and request.files into a single dictionary
-        form_data = {**request.form, **request.files}
-        form = SongForm(formdata=form_data)  # Initialize form with combined data
+        # form_data = {**request.form, **request.files}
+        form = SongForm(formdata=request.files)  # Initialize form with combined data
+        form['csrf_token'].data = request.cookies['csrf_token']
 
         if form.validate_on_submit():
             song_file = form.song.data  # Access the file part from merged data
             song_title = form.title.data  # Access the title text
             artist = form.artist.data
             genre = form.genre.data
-
-
 
             if song_file: # check if file is there
                 unique_filename = get_unique_filename(song_title)

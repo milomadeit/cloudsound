@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import Cookies from "js-cookie";
 import { uploadSong } from "../../../store/songs";
 
 const UploadSong = () => {
@@ -15,11 +16,16 @@ const UploadSong = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("audio", songFile);
+    formData.append("song", songFile);
+    formData.append("title", title);
+    formData.append("artist", artist);
+    formData.append("genre", genre);
+
+    console.log("Cookies.attributes() :::: ", Cookies.attributes);
 
     setLoading(true);
     await dispatch(uploadSong(formData));
-    history.push("/songs");
+    history.push("/");
   };
 
   return (
