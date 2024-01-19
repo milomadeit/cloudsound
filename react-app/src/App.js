@@ -28,6 +28,9 @@ function App() {
           <Route path="/tracks/:track_id/comments">
             <GetComments />
           </Route>
+          <Route path="/tracks/:track_id/comments/new">
+            <CreateSongComment />
+          </Route>
         </Switch>
       )}
     </>

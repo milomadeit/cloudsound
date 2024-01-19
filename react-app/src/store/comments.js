@@ -1,6 +1,6 @@
 // constants
 const GET_COMMENTS = 'GET_COMMENTS';
-// const ADD_COMMENT = 'ADD_COMMENT';
+const ADD_COMMENT = 'ADD_COMMENT';
 // const EDIT_COMMENT = 'EDIT_COMMENT';
 // const DELETE_COMMENT = 'DELETE_COMMENT';
 
@@ -13,12 +13,12 @@ const get_comments = (comments) => {
   }
 }
 
-// const add_comment = (comment, song_id) => {
-//   return {
-//     type: ADD_COMMENT,
-//     payload: comment
-//   }
-// }
+const addComment = (comment, song_id) => {
+  return {
+    type: ADD_COMMENT,
+    comment
+  }
+ }
 
 // const edit_comment = (comment_id) => {
 //   return {
@@ -43,7 +43,19 @@ export const get_comments_thunk = (track_id) => async (dispatch) => {
 
   return data
 }
-
+export const postCommentThunk=(comment,songId)=>async(dispatch)=>{
+  const res =await fetch(`/api/tracks/${songId}/comments`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(comment),
+})
+if(res.ok){
+  const data = await res.json();
+  dispatch(addComment(comment))
+return data
+}
+return res
+}
 
 // reducer
 const comments = (state = {}, action) => {
@@ -52,6 +64,8 @@ const comments = (state = {}, action) => {
     case GET_COMMENTS:
       action.payload.map((comment) => new_state[comment.id] = comment)
       return new_state
+    case ADD_COMMENT:
+      return { ...state, [action.comment.id]: comment.data };
 
     default:
       return state;

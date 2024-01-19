@@ -5,7 +5,7 @@ import comments from './comments';
 
 const rootReducer = combineReducers({
   session,
-  comments,
+  comments
 });
 
 
