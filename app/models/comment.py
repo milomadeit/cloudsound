@@ -7,8 +7,8 @@ class Comment(db.Model):
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
-    song_id= db.Column(db.Integer,db.ForeignKey(Song.id), nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    song_id= db.Column(db.Integer, db.ForeignKey(Song.id))
     user_id = db.Column(db.Integer, db.ForeignKey(User.id))
     content = db.Column(db.String(100), nullable=False)
 
