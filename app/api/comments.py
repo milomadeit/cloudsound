@@ -1,13 +1,16 @@
 from flask import Blueprint, jsonify
 from app.models.comment import Comment
+from app.models.user import User
+from ..models import db
 
 comments_bp = Blueprint('comments_bp', __name__)
 
 
-@comments_bp.route('/<int:track_id>/comments')
+# Get Comments
+@comments_bp.route('tracks/<int:track_id>/comments')
 def get_comments_by_track_id(track_id):
-  comments = Comment.query.all()
-  # comments = Comment.query.filter(Comment.song_id == track_id)
+  comments = Comment.query.filter(Comment.song_id == track_id)
+
   track_comments = [
     {
       'id': comment.id,
@@ -16,4 +19,11 @@ def get_comments_by_track_id(track_id):
     }
     for comment in comments]
 
+  for comment in track_comments:
+    user = User.query.get(comment['user_id'])
+    comment['author'] = user.username
+
   return jsonify(track_comments)
+
+
+# Edit Comment
