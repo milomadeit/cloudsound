@@ -28,3 +28,4 @@ def undo_songs():
         db.session.execute(text("DELETE FROM songs"))
 
     db.session.commit()
+    
