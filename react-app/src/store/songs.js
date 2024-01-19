@@ -1,4 +1,5 @@
 const STORE_SONG = "songs/STORE_SONG";
+const STORE_SONGS = "songs/STORE_SONGS";
 
 const storeSong = (song) => {
   return {
@@ -7,11 +8,16 @@ const storeSong = (song) => {
   };
 };
 
+const storeSongs = (songs) => {
+  return {
+    type: STORE_SONGS,
+    songs,
+  };
+};
+
 export const uploadSong = (inputSong) => async (dispatch) => {
   const response = await fetch(`/api/songs/upload`, {
     method: "POST",
-    // headers: { "Content-Type": "application/json" },
-    // body: JSON.stringify(inputSong),
     body: inputSong,
   });
   const song = await response.json();
@@ -19,8 +25,17 @@ export const uploadSong = (inputSong) => async (dispatch) => {
   return song;
 };
 
+export const getAllSongs = () => async (dispatch) => {
+  const response = await fetch(`/api/songs`, {
+    method: "GET",
+  });
+  const songs = await response.json();
+  dispatch(storeSongs(songs));
+  return songs;
+};
+
 const initialState = { allSongs: {} };
-const songsReducer = (state = initialState, action) => {
+export default function reducer(state = initialState, action) {
   switch (action.type) {
     case STORE_SONG: {
       const newSong = action.song;
@@ -30,9 +45,18 @@ const songsReducer = (state = initialState, action) => {
       };
     }
 
+    case STORE_SONGS: {
+      const allSongs = action.songs.reduce(
+        (acc, song) => ({ ...acc, [song.id]: song }),
+        {}
+      );
+      return {
+        ...state,
+        allSongs: { ...state.allSongs, ...allSongs },
+      };
+    }
+
     default:
       return state;
   }
-};
-
-export default songsReducer;
+}
