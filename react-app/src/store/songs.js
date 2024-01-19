@@ -28,6 +28,9 @@ export const uploadSong = (inputSong) => async (dispatch) => {
 export const getAllSongs = () => async (dispatch) => {
   const response = await fetch(`/api/songs`, {
     method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
   const songs = await response.json();
   dispatch(storeSongs(songs));

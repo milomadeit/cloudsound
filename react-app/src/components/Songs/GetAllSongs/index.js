@@ -21,6 +21,14 @@ const GetAllSongs = () => {
   const folkSongs = songs.filter((s) => s.genre === FOLK);
   const hipHopSongs = songs.filter((s) => s.genre === HIP_HOP);
   const jazzSongs = songs.filter((s) => s.genre === JAZZ);
+  const otherSongs = songs.filter(
+    (s) =>
+      s.genre !== POP &&
+      s.genre !== LATIN &&
+      s.genre !== FOLK &&
+      s.genre !== HIP_HOP &&
+      s.genre !== JAZZ
+  );
 
   return (
     <div>
@@ -67,6 +75,16 @@ const GetAllSongs = () => {
       <div>
         <h2>Jazz</h2>
         {jazzSongs.map((song) => (
+          <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
+            <div>{song.title}</div>
+            <div>{song.artist}</div>
+          </NavLink>
+        ))}
+      </div>
+
+      <div>
+        <h2>Others</h2>
+        {otherSongs.map((song) => (
           <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
             <div>{song.title}</div>
             <div>{song.artist}</div>
