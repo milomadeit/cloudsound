@@ -3,7 +3,7 @@ from ..forms.song_validation_form import SongForm
 from .s3buckets import get_unique_filename, upload_file_to_s3, remove_file_from_s3
 from ..models import db, Song
 from flask_login import current_user
-
+from werkzeug.datastructures import CombinedMultiDict
 song_routes = Blueprint('songs', __name__)
 
 #  upload a song
@@ -12,34 +12,37 @@ def SongUpload():
     if current_user:
 	# Merge request.form and request.files into a single dictionary
         # form_data = {**request.form, **request.files}
-        form = SongForm(formdata=request.files)  # Initialize form with combined data
+        form =  SongForm(CombinedMultiDict((request.files, request.form)))   # Initialize form with combined data
         form['csrf_token'].data = request.cookies['csrf_token']
+        print(request.form)
+        print(request.files)
 
         if form.validate_on_submit():
-            song_file = request.form['song'].data  # Access the file part from merged data
-            song_title = request.form['title'].data  # Access the title text
-            artist = request.form['artist'].data
-            genre = request.form['genre'].data
+            # File data is accessed from request.files
+            song_file = request.files.get('song')
 
             if song_file: # check if file is there
-                unique_filename = get_unique_filename(song_title)
+                unique_file = get_unique_filename(song_file.filename)
                 upload = upload_file_to_s3(song_file)
+                print(request.form.get('title'))
+
+                print(upload)
 
                 if 'url' not in upload:
-                    return 'upload failed'
+                    return jsonify('upload failed')
 
                 url = upload['url']
 
                 new_song = Song(
-                    user_id = current_user.id, # how to get dynamic user id?
-                    title=song_title,
-                    artist=artist,
-                    genre=genre,
-                    song_url=url
-			    )
+                user_id=current_user.id,
+                title=request.form.get('title'),
+                artist=request.form.get('artist'),
+                genre=form.get('genre'),
+                song_url=url
+                )
                 db.session.add(new_song)
                 db.session.commit()
-                return jsonify(new_song)
+                return jsonify(new_song.to_dict)
         if form.errors:
             return jsonify(form.errors)
 

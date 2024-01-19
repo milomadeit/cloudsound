@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import Cookies from "js-cookie";
 import { uploadSong } from "../../../store/songs";
 
 const UploadSong = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [songFile, setSongFile] = useState(null);
-  const [title, setTitle] = useState(null);
-  const [artist, setArtist] = useState(null);
-  const [genre, setGenre] = useState(null);
+  const [title, setTitle] = useState('');
+  const [artist, setArtist] = useState('');
+  const [genre, setGenre] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -21,11 +20,19 @@ const UploadSong = () => {
     formData.append("artist", artist);
     formData.append("genre", genre);
 
-    console.log("Cookies.attributes() :::: ", Cookies.attributes);
-
     setLoading(true);
-    await dispatch(uploadSong(formData));
-    history.push("/");
+    try {
+      const response = await dispatch(uploadSong(formData));
+      if (response.ok) {
+        history.push("/");
+      }
+      else {
+        console.log('song upload failed')
+      }
+    } catch (error) {
+      console.error('an error occurred', error)
+    }
+    setLoading(false)
   };
 
   return (

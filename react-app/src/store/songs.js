@@ -14,9 +14,18 @@ export const uploadSong = (inputSong) => async (dispatch) => {
     // body: JSON.stringify(inputSong),
     body: inputSong,
   });
-  const song = await response.json();
-  dispatch(storeSong(song));
-  return song;
+
+  if (response.ok) {
+    console.log('okaaayyyyy')
+    console.log(response.json(), 'my responnnnseeeeeee')
+    const song = await response.json();
+    await dispatch(storeSong(song));
+    return song
+  }
+
+  const errorData = await response.json();
+  console.log(errorData)
+  return errorData
 };
 
 const initialState = { allSongs: {} };
