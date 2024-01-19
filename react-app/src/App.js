@@ -29,9 +29,6 @@ function App() {
             <SignupFormPage />
           </Route>
 
-          <Route path="/">
-            <GetAllSongs />
-          </Route>
           {sessionUser && (
             <Route path="/songs/new">
               <UploadSong />
@@ -39,6 +36,10 @@ function App() {
           )}
           <Route path="/tracks/:track_id/comments">
             <GetComments />
+          </Route>
+
+          <Route path="/">
+            <GetAllSongs />
           </Route>
         </Switch>
       )}
