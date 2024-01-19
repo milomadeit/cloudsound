@@ -56,6 +56,7 @@ def SongEdit(songId):
 	    # Merge request.form and request.files into a single dictionary
         form_data = {**request.form, **request.files}
         form = SongForm(formdata=form_data)  # Initialize form with combined data
+        form['csrf_token'].data = request.cookies['csrf_token']
 
         if form.validate_on_submit():
             song_file = form.song.data
@@ -121,14 +122,15 @@ def UserSongs():
         return jsonify({'error': 'must be logged in to view your songs'}), 401
 
     user_songs = Song.query.filter_by(user_id=current_user.id)
-    songs_list = [{'title': song.title, 'artist': song.artist, 'genre': song.genre, 'song_url': song.song_url, 'likes': song.likes} for song in user_songs]
+    songs_list = [{'id':song.id, 'title': song.title, 'artist': song.artist, 'genre': song.genre, 'song_url': song.song_url, 'likes': song.likes} for song in user_songs]
 
     return jsonify(songs_list)
 
 
 # get all songs
-@song_routes.route('/')
+@song_routes.route('')
 def AllSongs():
     all_songs = Song.query.all()
+    songs_list = [{'id':song.id, 'title': song.title, 'artist': song.artist, 'genre': song.genre, 'song_url': song.song_url, 'likes': song.likes} for song in all_songs]
 
-    return jsonify(all_songs)
+    return jsonify(songs_list)
