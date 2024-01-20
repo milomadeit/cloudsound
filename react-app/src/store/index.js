@@ -4,9 +4,10 @@ import session from "./session";
 import songsReducer from "./songs";
 import comments from './comments';
 
+
 const rootReducer = combineReducers({
   session,
-  songsReducer,
+  songs,
   comments,
 });
 

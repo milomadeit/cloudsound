@@ -2,14 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { uploadSong } from "../../../store/songs";
+import { FOLK, HIP_HOP, JAZZ, LATIN, POP } from "../../../constants/genre";
 
 const UploadSong = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [songFile, setSongFile] = useState(null);
-  const [title, setTitle] = useState('');
-  const [artist, setArtist] = useState('');
-  const [genre, setGenre] = useState('');
+  const [title, setTitle] = useState("");
+  const [artist, setArtist] = useState("");
+  const [genre, setGenre] = useState("");
   const [loading, setLoading] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -28,7 +29,6 @@ const UploadSong = () => {
 
     if (isMounted) setLoading(true);
 
-    setLoading(true);
     try {
       const result = await dispatch(uploadSong(formData));
       if (result.ok) {
@@ -68,13 +68,18 @@ const UploadSong = () => {
       </div>
       <div>
         <label htmlFor="genre">Genre</label>
-        <input
-          type="text"
-          value={genre}
-          onChange={(e) => setGenre(e.target.value)}
-          placeholder="genre"
+        <select
+          name="genre"
           id="genre"
-        />
+          onChange={(e) => setGenre(e.target.value)}
+        >
+          <option value="">--Please choose an option--</option>
+          <option value={POP}>Pop</option>
+          <option value={LATIN}>Latin</option>
+          <option value={FOLK}>Folk</option>
+          <option value={HIP_HOP}>Hip-Hop</option>
+          <option value={JAZZ}>Jazz</option>
+        </select>
       </div>
       <div>
         <input

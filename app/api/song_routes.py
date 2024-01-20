@@ -55,6 +55,7 @@ def SongEdit(songId):
     if not current_user:
         return jsonify({'error': 'must be logged in to edit a song'}), 401
 
+
     current_song = Song.query.filter_by(id=songId).first()
     if not current_song:
         return jsonify({'error': 'song not found'}), 404
@@ -117,21 +118,22 @@ def DeleteSong(songId):
         return jsonify({'error': 'An error occurred during deletion'}), 500
 
 # get all songs by user id
-@song_routes.route('/:username')
+@song_routes.route('/current')
 def UserSongs():
 
     if not current_user:
         return jsonify({'error': 'must be logged in to view your songs'}), 401
 
     user_songs = Song.query.filter_by(user_id=current_user.id)
-    songs_list = [{'title': song.title, 'artist': song.artist, 'genre': song.genre, 'song_url': song.song_url, 'likes': song.likes} for song in user_songs]
+    songs_list = [{'id':song.id, 'title': song.title, 'artist': song.artist, 'genre': song.genre, 'song_url': song.song_url, 'likes': song.likes} for song in user_songs]
 
     return jsonify(songs_list)
 
 
 # get all songs
-@song_routes.route('/')
+@song_routes.route('')
 def AllSongs():
     all_songs = Song.query.all()
+    songs_list = [{'id':song.id, 'title': song.title, 'artist': song.artist, 'genre': song.genre, 'song_url': song.song_url, 'likes': song.likes} for song in all_songs]
 
-    return jsonify(all_songs)
+    return jsonify(songs_list)
