@@ -38,6 +38,8 @@ const ManageSongs = () => {
           <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
             <div>{song.title}</div>
             <div>{song.artist}</div>
+            <button>Edit</button>
+            <button>Delete</button>
             <br />
           </NavLink>
         ))}
@@ -49,6 +51,8 @@ const ManageSongs = () => {
           <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
             <div>{song.title}</div>
             <div>{song.artist}</div>
+            <button>Edit</button>
+            <button>Delete</button>
             <br />
           </NavLink>
         ))}
@@ -60,6 +64,8 @@ const ManageSongs = () => {
           <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
             <div>{song.title}</div>
             <div>{song.artist}</div>
+            <button>Edit</button>
+            <button>Delete</button>
             <br />
           </NavLink>
         ))}
@@ -71,6 +77,8 @@ const ManageSongs = () => {
           <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
             <div>{song.title}</div>
             <div>{song.artist}</div>
+            <button>Edit</button>
+            <button>Delete</button>
             <br />
           </NavLink>
         ))}
@@ -82,6 +90,8 @@ const ManageSongs = () => {
           <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
             <div>{song.title}</div>
             <div>{song.artist}</div>
+            <button>Edit</button>
+            <button>Delete</button>
             <br />
           </NavLink>
         ))}
@@ -93,6 +103,8 @@ const ManageSongs = () => {
           <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
             <div>{song.title}</div>
             <div>{song.artist}</div>
+            <button>Edit</button>
+            <button>Delete</button>
             <br />
           </NavLink>
         ))}
