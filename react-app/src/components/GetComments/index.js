@@ -12,17 +12,17 @@ function GetComments() {
   useEffect(() => {
     dispatch(commentActions.get_comments_thunk(track_id))
       .then(() => setIsLoaded(true))
-  }, [dispatch]);
+  }, [dispatch, track_id]);
 
   const comments = Object.values(useSelector((state) => state.comments));
-  const username = useSelector((state) => state.session.user.username);
 
   return (
     <>
+      <h3>Comments:</h3>
       {isLoaded && (
         comments.map((comment) =>
           <div key={comment.id}>
-            <span>User: {username}</span>
+            <span>User: {comment.author}</span>
             <div>
               Says: {comment.content}
             </div>

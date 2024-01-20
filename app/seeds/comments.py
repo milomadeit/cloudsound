@@ -1,4 +1,4 @@
-from app.models import db, Comment, environment, SCHEMA,
+from app.models import db, Comment, environment, SCHEMA
 from sqlalchemy.sql import text
 
 
@@ -9,11 +9,11 @@ def seed_comments():
     comment2 = Comment(
         user_id=2, song_id=2, content='Not my cup of tea')
     comment3 = Comment(
-        user_id=1, song_id=3 content='Too slow for me')
+        user_id=1, song_id=3, content='Too slow for me')
     comment4 = Comment(
         user_id=1, song_id=1,content='My wedding song <3')
     comment5 = Comment(
-        user_id=1,song_id=2 content='Fire')
+        user_id=1,song_id=2, content='Fire')
 
     db.session.add(comment1)
     db.session.add(comment2)
