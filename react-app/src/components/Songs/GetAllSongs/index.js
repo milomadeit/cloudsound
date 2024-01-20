@@ -38,6 +38,7 @@ const GetAllSongs = () => {
           <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
             <div>{song.title}</div>
             <div>{song.artist}</div>
+            <br />
           </NavLink>
         ))}
       </div>
@@ -48,6 +49,7 @@ const GetAllSongs = () => {
           <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
             <div>{song.title}</div>
             <div>{song.artist}</div>
+            <br />
           </NavLink>
         ))}
       </div>
@@ -58,6 +60,7 @@ const GetAllSongs = () => {
           <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
             <div>{song.title}</div>
             <div>{song.artist}</div>
+            <br />
           </NavLink>
         ))}
       </div>
@@ -68,6 +71,7 @@ const GetAllSongs = () => {
           <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
             <div>{song.title}</div>
             <div>{song.artist}</div>
+            <br />
           </NavLink>
         ))}
       </div>
@@ -78,6 +82,7 @@ const GetAllSongs = () => {
           <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
             <div>{song.title}</div>
             <div>{song.artist}</div>
+            <br />
           </NavLink>
         ))}
       </div>
@@ -88,6 +93,7 @@ const GetAllSongs = () => {
           <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
             <div>{song.title}</div>
             <div>{song.artist}</div>
+            <br />
           </NavLink>
         ))}
       </div>

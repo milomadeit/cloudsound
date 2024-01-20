@@ -8,6 +8,7 @@ import Navigation from "./components/Navigation";
 import UploadSong from "./components/Songs/UploadSong";
 import GetComments from "./components/GetComments";
 import GetAllSongs from "./components/Songs/GetAllSongs";
+import GetSong from "./components/Songs/GetSong";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,6 +35,9 @@ function App() {
               <UploadSong />
             </Route>
           )}
+          <Route exact path="/songs/:songId">
+            <GetSong />
+          </Route>
           <Route path="/tracks/:track_id/comments">
             <GetComments />
           </Route>
