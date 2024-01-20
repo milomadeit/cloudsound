@@ -28,10 +28,17 @@ export const uploadSong = (inputSong) => async (dispatch) => {
     method: "POST",
     body: inputSong,
   });
-  const song = await response.json();
-  dispatch(storeSong(song));
-  return song;
+
+  if (response.ok) {
+    const songData = await response.json();
+    dispatch(storeSong(songData));
+    return { ok: true, data: songData };
+  } else {
+    const errorData = response.json();
+    return { ok: false, data: errorData };
+  }
 };
+
 
 export const getAllSongs = () => async (dispatch) => {
   const response = await fetch(`/api/songs`, {
@@ -58,7 +65,7 @@ export const getCurrentUserSongs = () => async (dispatch) => {
 };
 
 const initialState = { allSongs: {}, currentUserSongs: {} };
-export default function reducer(state = initialState, action) {
+export default function songsReducer(state = initialState, action) {
   switch (action.type) {
     case STORE_SONG: {
       const newSong = action.song;

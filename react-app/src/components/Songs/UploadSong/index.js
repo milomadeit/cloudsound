@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { uploadSong } from "../../../store/songs";
@@ -12,6 +12,12 @@ const UploadSong = () => {
   const [artist, setArtist] = useState("");
   const [genre, setGenre] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+    return () => setIsMounted(false); // Cleanup function to set isMounted to false
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,9 +27,21 @@ const UploadSong = () => {
     formData.append("artist", artist);
     formData.append("genre", genre);
 
-    setLoading(true);
-    await dispatch(uploadSong(formData));
-    history.push("/");
+    if (isMounted) setLoading(true);
+
+    try {
+      const result = await dispatch(uploadSong(formData));
+      if (result.ok) {
+        history.push("/");
+      } else {
+        console.log('Song upload failed:', result.data);
+        // Handle the error data
+      }
+    } catch (error) {
+      console.error('An error occurred', error);
+      // Handle network or other unexpected errors
+    }
+    setLoading(false);
   };
 
   return (
