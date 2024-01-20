@@ -3,13 +3,14 @@ import { useSelector } from 'react-redux';
 import './SongPlayer.css';
 
 const SongPlayer = () => {
-    const currentUserSongsObject = useSelector((state) => state.songs.allSongs);
-    const currentUserSongs = Object.values(currentUserSongsObject);
+    const currentSongsObject = useSelector((state) => state.songsReducer.allSongs);
+    const currentSongs = Object.values(currentSongsObject);
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
     const audioRef = useRef(null);
 
-    const currentTrack = currentUserSongs[currentTrackIndex];
+    const currentTrack = currentSongs[currentSongs.length-1];
+    console.log(currentSongs)
 
     useEffect(() => {
         if (audioRef.current) {
@@ -26,7 +27,7 @@ const SongPlayer = () => {
                 audioRef.current.pause();
             }
         };
-    }, [isPlaying, currentTrack]);
+    }, [isPlaying, currentSongs]);
 
     if (!currentTrack?.song_url) {
         return <div>...loading</div>;
@@ -38,13 +39,13 @@ const SongPlayer = () => {
 
     const handlePrevTrack = () => {
         setCurrentTrackIndex(prevIndex =>
-            prevIndex - 1 < 0 ? currentUserSongs.length - 1 : prevIndex - 1
+            prevIndex - 1 < 0 ? currentSongs.length - 1 : prevIndex - 1
         );
     };
 
     const handleNextTrack = () => {
         setCurrentTrackIndex(prevIndex =>
-            prevIndex < currentUserSongs.length - 1 ? prevIndex + 1 : 0
+            prevIndex < currentSongs.length - 1 ? prevIndex + 1 : 0
         );
     };
 
