@@ -12,7 +12,7 @@ function GetComments() {
   useEffect(() => {
     dispatch(commentActions.get_comments_thunk(track_id))
       .then(() => setIsLoaded(true))
-  }, [dispatch]);
+  }, [dispatch,track_id]);
 
   const comments = Object.values(useSelector((state) => state.comments));
   const username = useSelector((state) => state.session.user.username);

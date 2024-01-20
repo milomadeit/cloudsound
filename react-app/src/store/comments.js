@@ -1,3 +1,4 @@
+
 // constants
 const GET_COMMENTS = 'GET_COMMENTS';
 const ADD_COMMENT = 'ADD_COMMENT';
@@ -13,7 +14,7 @@ const get_comments = (comments) => {
   }
 }
 
-const addComment = (comment, song_id) => {
+const addComment = (comment) => {
   return {
     type: ADD_COMMENT,
     comment
@@ -43,15 +44,16 @@ export const get_comments_thunk = (track_id) => async (dispatch) => {
 
   return data
 }
-export const postCommentThunk=(comment,songId)=>async(dispatch)=>{
-  const res =await fetch(`/api/tracks/${songId}/comments`, {
+export const postCommentThunk=(payload)=>async(dispatch)=>{
+
+  const res =await fetch(`/api/tracks/${payload.trackId}/comments`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(comment),
+    body: JSON.stringify(payload),
 })
 if(res.ok){
   const data = await res.json();
-  dispatch(addComment(comment))
+  dispatch(addComment(data))
 return data
 }
 return res
@@ -65,7 +67,8 @@ const comments = (state = {}, action) => {
       action.payload.map((comment) => new_state[comment.id] = comment)
       return new_state
     case ADD_COMMENT:
-      return { ...state, [action.comment.id]: comment.data };
+      console.log(action.comment)
+      return { ...state, [action.comment.id]: action.comment };
 
     default:
       return state;

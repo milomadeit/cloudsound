@@ -6,6 +6,7 @@ import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import GetComments from "./components/GetComments";
+import CreateSongComment from "./components/CreateSongComment";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,12 +26,13 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          <Route path="/tracks/:track_id/comments">
-            <GetComments />
-          </Route>
-          <Route path="/tracks/:track_id/comments/new">
+          <Route exact path="/tracks/:trackId/comments/new">
             <CreateSongComment />
           </Route>
+          <Route exact path="/tracks/:track_id/comments">
+            <GetComments />
+          </Route>
+
         </Switch>
       )}
     </>
