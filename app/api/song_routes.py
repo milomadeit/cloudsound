@@ -115,7 +115,7 @@ def DeleteSong(songId):
         return jsonify({'error': 'An error occurred during deletion'}), 500
 
 # get all songs by user id
-@song_routes.route('/:username')
+@song_routes.route('/current')
 def UserSongs():
 
     if not current_user:
