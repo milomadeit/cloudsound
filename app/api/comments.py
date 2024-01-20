@@ -27,3 +27,12 @@ def get_comments_by_track_id(track_id):
 
 
 # Edit Comment
+@comments_bp.route('/tracks/<int:track_id>/comments/<int:comment_id>', methods=['PUT'])
+def edit_comment(comment_id):
+  comment = Comment.query.get(comment_id)
+
+  # do stuff..
+  # comment.content = 'updated content'
+  # db.session.commit()
+
+  return 'Comment successfully updated.'
