@@ -39,12 +39,10 @@ def SongUpload():
                 )
                 db.session.add(new_song)
                 db.session.commit()
-                print(new_song.to_dict(), 'yoooooooooooooooo')
                 response_data = new_song.to_dict()
                 return (jsonify(response_data), 200)
 
         if form.errors:
-            console.log(form.errors, 'errrorrrs')
             return jsonify(form.errors)
 
     return 'must be logged in to upload a song'
@@ -114,7 +112,6 @@ def DeleteSong(songId):
         return jsonify({'message': 'song deleted successfully'}), 200
     except Exception as e:
         db.session.rollback()
-        print(f"error deleting song: {e}")
         return jsonify({'error': 'An error occurred during deletion'}), 500
 
 # get all songs by user id
