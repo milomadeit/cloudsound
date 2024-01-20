@@ -7,8 +7,6 @@ const GetSong = () => {
   const dispatch=useDispatch();
   const { songId } = useParams();
   const song = useSelector((state) => state.songsReducer.allSongs[parseInt(songId)]);
-  console.log(songId)
-  console.log(song)
 
   useEffect(() => {
     dispatch(getAllSongs())
