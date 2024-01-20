@@ -20,11 +20,18 @@ function Navigation({ isLoaded }) {
         </li>
       )}
       {isLoaded && sessionUser && (
-        <li>
-          <NavLink exact to="/songs/new">
-            Upload
-          </NavLink>
-        </li>
+        <>
+          <li>
+            <NavLink exact to="/songs/new">
+              Upload
+            </NavLink>
+          </li>
+          <li>
+            <NavLink exact to="/songs/current">
+              Manage My Songs
+            </NavLink>
+          </li>
+        </>
       )}
     </ul>
   );
