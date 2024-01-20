@@ -10,21 +10,19 @@ const storeSong = (song) => {
 export const uploadSong = (inputSong) => async (dispatch) => {
   const response = await fetch(`/api/songs/upload`, {
     method: "POST",
-    // headers: { "Content-Type": "application/json" },
-    // body: JSON.stringify(inputSong),
     body: inputSong,
   });
 
   if (response.ok) {
-    const song = await response.json();
-    await dispatch(storeSong(song));
-    return song
+    const songData = await response.json();
+    dispatch(storeSong(songData));
+    return { ok: true, data: songData };
+  } else {
+    const errorData = response.json();
+    return { ok: false, data: errorData };
   }
-
-  const errorData = await response.json();
-  console.log(errorData)
-  return errorData
 };
+
 
 const initialState = { allSongs: {} };
 const songsReducer = (state = initialState, action) => {
