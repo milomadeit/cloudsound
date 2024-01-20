@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import './SongPlayer.css';
 
 const SongPlayer = () => {
-    const currentUserSongsObject = useSelector((state) => state.songs.currentUserSongs);
+    const currentUserSongsObject = useSelector((state) => state.songs.allSongs);
     const currentUserSongs = Object.values(currentUserSongsObject);
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
