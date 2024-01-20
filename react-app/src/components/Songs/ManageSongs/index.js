@@ -6,7 +6,7 @@ import { FOLK, HIP_HOP, JAZZ, LATIN, POP } from "../../../constants/genre";
 
 const ManageSongs = () => {
   const dispatch = useDispatch();
-  const currentUserSongs = useSelector((state) => state.songs.currentUserSongs);
+  const currentUserSongs = useSelector((state) => state.songsReducer.currentUserSongs);
   const songs = Object.values(currentUserSongs);
   const [loading, setLoading] = useState(false);
 

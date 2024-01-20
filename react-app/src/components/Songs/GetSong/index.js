@@ -1,10 +1,23 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { getAllSongs } from "../../../store/songs";
 
 const GetSong = () => {
+  const dispatch=useDispatch();
   const { songId } = useParams();
-  const song = useSelector((state) => state.songs.allSongs[songId]);
+  const song = useSelector((state) => state.songsReducer.allSongs[parseInt(songId)]);
+  console.log(songId)
+  console.log(song)
+
+  useEffect(() => {
+    dispatch(getAllSongs())
+
+  }, [dispatch])
+
+  if (!song?.title) {
+    return <div>...loading</div>
+  }
 
   return (
     <div>
