@@ -86,6 +86,22 @@ export const deleteSong = (songId) => async (dispatch) => {
   }
 };
 
+export const editSong = (songId, inputSong) => async (dispatch) => {
+  const response = await fetch(`/api/songs/${songId}`, {
+    method: "PUT",
+    body: inputSong,
+  });
+
+  if (response.ok) {
+    const songData = await response.json();
+    dispatch(storeSong(songData));
+    return { ok: true, data: songData };
+  } else {
+    const errorData = response.json();
+    return { ok: false, errors: errorData };
+  }
+};
+
 const initialState = { allSongs: {}, currentUserSongs: {} };
 export default function songsReducer(state = initialState, action) {
   switch (action.type) {
