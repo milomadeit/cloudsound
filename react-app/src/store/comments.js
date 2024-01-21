@@ -44,19 +44,21 @@ export const get_comments_thunk = (track_id) => async (dispatch) => {
 
   return data
 }
-export const postCommentThunk=(payload)=>async(dispatch)=>{
-
-  const res =await fetch(`/api/tracks/${payload.trackId}/comments`, {
+export const postCommentThunk=(formData,trackId)=>async(dispatch)=>{
+console.log(formData)
+console.log(trackId)
+  const res =await fetch(`/api/tracks/${trackId}/comments`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
+
+    body: formData,
 })
 if(res.ok){
+  
   const data = await res.json();
   dispatch(addComment(data))
-return data
+return formData
 }
-return res
+return "wwwttfff"
 }
 
 // reducer

@@ -24,18 +24,15 @@ function CreateSongComment() {
 
 
     setErrors({});
-    const payload={comment,trackId}
-    dispatch(postCommentThunk(payload)).then(newSpot=>history.push(`/tracks/${trackId}/comments`)).catch(
+    const formData = new FormData();
+    formData.append("comment", comment);
+
+    dispatch(postCommentThunk(formData,trackId)).then(res=>history.push(`/tracks/${trackId}/comments`))
+    .catch(
       async (res) => {
-        console.log(res)
-
-        // const myData = await res.json();
 
 
-        // if (myData && myData.errors) {
-        //     setErrors(myData.errors);
-
-        //  };
+         console.log(res)
 
 });
 
@@ -73,3 +70,13 @@ function CreateSongComment() {
 }
 
 export default CreateSongComment;
+
+
+// dispatch(postCommentThunk(formData,trackId)).then(res=>history.push(`/tracks/${trackId}/comments`))
+//     .catch(
+//       async (res) => {
+
+
+//          console.log("Add comment")
+
+// });
