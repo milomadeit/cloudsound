@@ -37,18 +37,19 @@ function App() {
               <UploadSong />
             </Route>
           )}
+
           {sessionUser && (
             <Route path="/songs/:songId/edit">
               <EditSong />
             </Route>
           )}
+
           <Route exact path="/songs/current">
             <ManageSongs />
           </Route>
+
           <Route exact path="/songs/:songId">
             <GetSong />
-          </Route>
-          <Route path="/tracks/:track_id/comments">
             <GetComments />
           </Route>
 

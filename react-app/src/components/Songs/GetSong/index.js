@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { getAllSongs } from "../../../store/songs";
 
 const GetSong = () => {
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
   const { songId } = useParams();
   const song = useSelector((state) => state.songsReducer.allSongs[parseInt(songId)]);
 

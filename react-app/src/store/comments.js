@@ -36,8 +36,8 @@ const get_comments = (comments) => {
 
 
 // thunks
-export const get_comments_thunk = (track_id) => async (dispatch) => {
-  const res = await fetch(`/api/tracks/${track_id}/comments`);
+export const get_comments_thunk = (songId) => async (dispatch) => {
+  const res = await fetch(`/api/songs/${songId}/comments`);
   const data = await res.json();
   dispatch(get_comments(data))
 

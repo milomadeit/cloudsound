@@ -2,17 +2,19 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import * as commentActions from '../../store/comments';
+import * as likeActions from '../../store/likes';
 
 
 function GetComments() {
   const dispatch = useDispatch();
-  const { track_id } = useParams();
+  const { songId } = useParams();
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
-    dispatch(commentActions.get_comments_thunk(track_id))
+    dispatch(likeActions.get_likes_thunk(songId))
+    dispatch(commentActions.get_comments_thunk(songId))
       .then(() => setIsLoaded(true))
-  }, [dispatch, track_id]);
+  }, [dispatch, songId]);
 
   const comments = Object.values(useSelector((state) => state.comments));
 

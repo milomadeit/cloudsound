@@ -7,11 +7,11 @@ comments_bp = Blueprint('comments_bp', __name__)
 
 
 # Get Comments
-@comments_bp.route('tracks/<int:track_id>/comments')
-def get_comments_by_track_id(track_id):
-  comments = Comment.query.filter(Comment.song_id == track_id)
+@comments_bp.route('songs/<int:songId>/comments')
+def get_comments_by_song_id(songId):
+  comments = Comment.query.filter(Comment.song_id == songId)
 
-  track_comments = [
+  song_comments = [
     {
       'id': comment.id,
       'user_id': comment.user_id,
@@ -19,11 +19,11 @@ def get_comments_by_track_id(track_id):
     }
     for comment in comments]
 
-  for comment in track_comments:
+  for comment in song_comments:
     user = User.query.get(comment['user_id'])
     comment['author'] = user.username
 
-  return jsonify(track_comments)
+  return jsonify(song_comments)
 
 
 # Edit Comment
