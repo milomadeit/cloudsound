@@ -22,3 +22,19 @@ def get_likes_by_song_id(songId):
   for like in likes]
 
   return jsonify(song_likes)
+
+
+# Add Like
+@likes_bp.route('songs/<int:songId>/likes/new')
+def add_like(songId):
+  # song = ...
+
+
+  # if song:
+  #   return 'added like'
+
+
+  # else:
+  #   return 'song not found'
+
+  return 'added like'
