@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { NavLink, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { getCurrentUserSongs } from "../../../store/songs";
-import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 import { FOLK, HIP_HOP, JAZZ, LATIN, POP } from "../../../constants/genre";
+import OpenModalButton from "../../OpenModalButton";
+import DeleteSongModal from "../DeleteSongModal";
 
 const ManageSongs = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
-  const currentUserSongs = useSelector((state) => state.songsReducer.currentUserSongs);
+  const currentUserSongs = useSelector(
+    (state) => state.songsReducer.currentUserSongs
+  );
   const songs = Object.values(currentUserSongs);
   const [loading, setLoading] = useState(false);
 
@@ -38,8 +43,13 @@ const ManageSongs = () => {
           <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
             <div>{song.title}</div>
             <div>{song.artist}</div>
-            <button>Edit</button>
-            <button>Delete</button>
+            <button onClick={() => history.push(`/songs/${song.id}/edit`)}>
+              Edit
+            </button>
+            <OpenModalButton
+              buttonText="Delete"
+              modalComponent={<DeleteSongModal song={song} />}
+            />
             <br />
           </NavLink>
         ))}
@@ -51,8 +61,13 @@ const ManageSongs = () => {
           <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
             <div>{song.title}</div>
             <div>{song.artist}</div>
-            <button>Edit</button>
-            <button>Delete</button>
+            <button onClick={() => history.push(`/songs/${song.id}/edit`)}>
+              Edit
+            </button>
+            <OpenModalButton
+              buttonText="Delete"
+              modalComponent={<DeleteSongModal song={song} />}
+            />
             <br />
           </NavLink>
         ))}
@@ -64,8 +79,13 @@ const ManageSongs = () => {
           <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
             <div>{song.title}</div>
             <div>{song.artist}</div>
-            <button>Edit</button>
-            <button>Delete</button>
+            <button onClick={() => history.push(`/songs/${song.id}/edit`)}>
+              Edit
+            </button>
+            <OpenModalButton
+              buttonText="Delete"
+              modalComponent={<DeleteSongModal song={song} />}
+            />
             <br />
           </NavLink>
         ))}
@@ -77,8 +97,13 @@ const ManageSongs = () => {
           <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
             <div>{song.title}</div>
             <div>{song.artist}</div>
-            <button>Edit</button>
-            <button>Delete</button>
+            <button onClick={() => history.push(`/songs/${song.id}/edit`)}>
+              Edit
+            </button>
+            <OpenModalButton
+              buttonText="Delete"
+              modalComponent={<DeleteSongModal song={song} />}
+            />
             <br />
           </NavLink>
         ))}
@@ -90,8 +115,13 @@ const ManageSongs = () => {
           <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
             <div>{song.title}</div>
             <div>{song.artist}</div>
-            <button>Edit</button>
-            <button>Delete</button>
+            <button onClick={() => history.push(`/songs/${song.id}/edit`)}>
+              Edit
+            </button>
+            <OpenModalButton
+              buttonText="Delete"
+              modalComponent={<DeleteSongModal song={song} />}
+            />
             <br />
           </NavLink>
         ))}
@@ -100,13 +130,18 @@ const ManageSongs = () => {
       <div>
         <h2>Others</h2>
         {otherSongs.map((song) => (
-          <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
+          <div>
             <div>{song.title}</div>
             <div>{song.artist}</div>
-            <button>Edit</button>
-            <button>Delete</button>
+            <button onClick={() => history.push(`/songs/${song.id}/edit`)}>
+              Edit
+            </button>
+            <OpenModalButton
+              buttonText="Delete"
+              modalComponent={<DeleteSongModal song={song} />}
+            />
             <br />
-          </NavLink>
+          </div>
         ))}
       </div>
     </div>
