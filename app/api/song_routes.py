@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request, redirect
 from ..forms.song_validation_form import SongForm
 from .s3buckets import get_unique_filename, upload_file_to_s3, remove_file_from_s3
 from ..models import db, Song
+from app.models.like import Like
 from flask_login import current_user
 from werkzeug.datastructures import CombinedMultiDict
 song_routes = Blueprint('songs', __name__)
@@ -132,5 +133,11 @@ def UserSongs():
 def AllSongs():
     all_songs = Song.query.all()
     songs_list = [song.to_dict() for song in all_songs]
+
+    for song in songs_list:
+        num_likes = Like.query.filter(Like.song_id == song['id']).count()
+
+        if num_likes:
+            song['likes'] = num_likes
 
     return jsonify(songs_list)

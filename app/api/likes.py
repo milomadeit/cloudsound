@@ -24,9 +24,25 @@ def get_likes_by_song_id(songId):
   return jsonify(song_likes)
 
 
-# Add Like
-@likes_bp.route('songs/<int:songId>/likes/new')
-def add_like(songId):
+# Create Like
+@likes_bp.route('songs/<int:songId>/likes/new', methods=['POST'])
+def create_like(songId):
+  # song = ...
+
+
+  # if song:
+  #   return 'added like'
+
+
+  # else:
+  #   return 'song not found'
+
+  return 'added like'
+
+
+# Delete Like
+@likes_bp.route('songs/<int:songId>/likes/delete')
+def delete_like(likeId):
   # song = ...
 
 

@@ -20,11 +20,11 @@ const GetSong = () => {
   return (
     <div>
       <h1>{song.title}</h1>
-      <h2>{song.artist}</h2>
+      <h2>By: {song.artist}</h2>
 
-      <h3>{song.genre}</h3>
+      <h3>Genre: {song.genre}</h3>
 
-      <h3>{song.likes}</h3>
+      <h3>Likes: {song.likes}</h3>
     </div>
   );
 };
