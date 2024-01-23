@@ -51,19 +51,18 @@ export const postCommentThunk=(formData,trackId)=>async(dispatch)=>{
 
     body: formData,
 })
+
 if(res.ok){
 
-<<<<<<< Updated upstream
-=======
 
 
->>>>>>> Stashed changes
   const data = await res.json();
-  console.log(data)
 
-//   if(data.comment.length){
-//  return data.comment[0]
-//    }
+
+
+  if(data.comment){
+  return data.comment[0]
+    }
   dispatch(addComment(data))
  return data
 }
@@ -79,7 +78,7 @@ const comments = (state = {}, action) => {
       action.payload.map((comment) => new_state[comment.id] = comment)
       return new_state
     case ADD_COMMENT:
-      console.log(action.comment)
+      
       return { ...state, [action.comment.id]: action.comment };
 
     default:

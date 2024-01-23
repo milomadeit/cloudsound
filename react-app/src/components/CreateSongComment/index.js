@@ -28,9 +28,18 @@ function CreateSongComment() {
     formData.append("comment", comment);
 
     dispatch(postCommentThunk(formData,trackId)).then(res=>{
+        if(typeof res ==="string"){
 
-        console.log(res)
-        history.push(`/tracks/${trackId}/comments`)})
+            errors.content=res
+            console.log(errors)
+            setErrors(errors)
+        }
+        if(typeof res !=="string"){
+
+
+        history.push(`/tracks/${trackId}/comments`)
+        }
+    })
 
 
 
@@ -39,41 +48,36 @@ function CreateSongComment() {
 
 
   return (
-    <div className="post-a-comment">
-    <h1>Post a comment!</h1>
+<>
+        {errors.content ? (<>{errors.content}</>) : (
+            <div className="post-a-comment">
+             <h1>Post a comment!</h1>
 
-     <form onSubmit={handleSubmit}>
+             <form onSubmit={handleSubmit}>
 
-            <div className="errors">{errors.comment}</div>
-           <div className="input-field-1">
-            <label>
-                Comment:
-                <input
-                    type="text"
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                    placeholder="Comment"
-                />
-            </label>
+                    <div className="errors">{errors.comment}</div>
+                   <div className="input-field-1">
+                    <label>
+                        Comment:
+                        <input
+                            type="text"
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                            placeholder="Comment"
+                        />
+                    </label>
 
 
-            <button id="submit-for-post-a-comment"type="submit" >Submit</button>
-</div>
-        </form>
+                    <button id="submit-for-post-a-comment"type="submit" >Submit</button>
         </div>
+                </form>
+</div>
+        )}
+
+      </>
 
 
   );
 }
 
 export default CreateSongComment;
-
-
-// dispatch(postCommentThunk(formData,trackId)).then(res=>history.push(`/tracks/${trackId}/comments`))
-//     .catch(
-//       async (res) => {
-
-
-//          console.log("Add comment")
-
-// });

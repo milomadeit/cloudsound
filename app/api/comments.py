@@ -3,6 +3,7 @@ from app.models.comment import Comment
 from app.models.db import db
 from app.forms.comment_validation_form import CommentForm
 from flask_login import current_user
+from sqlalchemy import desc
 
 comments_bp = Blueprint('comments_bp', __name__)
 
@@ -44,12 +45,18 @@ def post_comment(id):
 
           db.session.add(new_comment)
           db.session.commit()
+         
 
-          return jsonify(new_comment)
+          res_comment={
+            "id":new_comment.id,
+            "content":comment,
+            "user_id":current_user.id
+          }
+
+
+          return jsonify(res_comment)
+
+
       if form.errors:
-
-
-
-
           return jsonify(form.errors)
   return jsonify("Login please")
