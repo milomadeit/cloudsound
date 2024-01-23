@@ -45,15 +45,14 @@ export const get_comments_thunk = (track_id) => async (dispatch) => {
   return data
 }
 export const postCommentThunk=(formData,trackId)=>async(dispatch)=>{
-console.log(formData)
-console.log(trackId)
+
   const res =await fetch(`/api/tracks/${trackId}/comments`, {
     method: "POST",
 
     body: formData,
 })
 if(res.ok){
-  
+
   const data = await res.json();
   dispatch(addComment(data))
 return formData
