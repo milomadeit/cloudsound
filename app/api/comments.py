@@ -1,7 +1,8 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify,request,redirect
 from app.models.comment import Comment
+from app.models.db import db
 from app.forms.comment_validation_form import CommentForm
-
+from flask_login import current_user
 
 comments_bp = Blueprint('comments_bp', __name__)
 
@@ -29,13 +30,26 @@ def get_comment_form(id):
 @comments_bp.route("/tracks/<int:id>/comments", methods=['POST'])
 def post_comment(id):
   form=CommentForm()
-  if current_user:
-      if form.validate_on_submit():
-          comment=form.comment.data
 
-          new_comment=Comment(user_id=current_user.id,song_id={id},comment=comment)
+  form['csrf_token'].data = request.cookies['csrf_token']
+  if current_user:
+
+      if form.validate_on_submit():
+
+
+
+          comment=form.data.get("comment")
+
+          new_comment=Comment(user_id=current_user.id,song_id=id,content=comment)
 
           db.session.add(new_comment)
           db.session.commit()
-          return redirect("/")
-  return "Bad Data"
+
+          return jsonify(new_comment)
+      if form.errors:
+
+
+
+
+          return jsonify(form.errors)
+  return jsonify("Login please")

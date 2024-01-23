@@ -27,14 +27,11 @@ function CreateSongComment() {
     const formData = new FormData();
     formData.append("comment", comment);
 
-    dispatch(postCommentThunk(formData,trackId)).then(res=>history.push(`/tracks/${trackId}/comments`))
-    .catch(
-      async (res) => {
+    dispatch(postCommentThunk(formData,trackId)).then(res=>{
 
+        console.log(res)
+        history.push(`/tracks/${trackId}/comments`)})
 
-         console.log(res)
-
-});
 
 
 }

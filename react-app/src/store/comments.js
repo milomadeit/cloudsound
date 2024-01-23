@@ -53,11 +53,22 @@ export const postCommentThunk=(formData,trackId)=>async(dispatch)=>{
 })
 if(res.ok){
 
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
   const data = await res.json();
+  console.log(data)
+
+//   if(data.comment.length){
+//  return data.comment[0]
+//    }
   dispatch(addComment(data))
-return formData
+ return data
 }
-return "wwwttfff"
+
+return res
 }
 
 // reducer
