@@ -25,7 +25,7 @@ def SongUpload():
                 upload = upload_file_to_s3(song_file)
 
                 if 'url' not in upload:
-                    return jsonify('upload failed')
+                    return jsonify('upload failed'), 500
 
                 url = upload['url']
 
