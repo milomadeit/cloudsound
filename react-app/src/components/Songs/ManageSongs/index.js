@@ -9,6 +9,7 @@ import DeleteSongModal from "../DeleteSongModal";
 const ManageSongs = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.session.user);
   const currentUserSongs = useSelector(
     (state) => state.songsReducer.currentUserSongs
   );
