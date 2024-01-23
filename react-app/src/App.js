@@ -7,6 +7,8 @@ import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import UploadSong from "./components/Songs/UploadSong";
 import GetComments from "./components/GetComments";
+import CreatePlaylist from "./components/Playlists/CreatePlaylist";
+import Playlists from "./components/Playlists/index";
 import GetAllSongs from "./components/Songs/GetAllSongs";
 import GetSong from "./components/Songs/GetSong";
 import ManageSongs from "./components/Songs/ManageSongs";
@@ -52,9 +54,18 @@ function App() {
             <GetComments />
           </Route>
 
+          <Route path="/playlists/new">
+            <CreatePlaylist />
+          </Route>
+
+          <Route path="/playlists">
+            <Playlists />
+          </Route>
+
           <Route path="/">
             <GetAllSongs />
           </Route>
+
         </Switch>
       )}
     </>
