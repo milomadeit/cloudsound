@@ -31,6 +31,16 @@ function Navigation({ isLoaded }) {
               Manage My Songs
             </NavLink>
           </li>
+          <li>
+            <NavLink exact to="/playlists/new">
+              Create Playlist
+            </NavLink>
+          </li>
+          <li>
+            <NavLink exact to="/playlists">
+              My Playlists
+            </NavLink>
+          </li>
         </>
       )}
     </ul>

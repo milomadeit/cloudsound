@@ -6,7 +6,7 @@ const ADD_COMMENT = 'ADD_COMMENT';
 // const DELETE_COMMENT = 'DELETE_COMMENT';
 
 
-// actions
+// ACTIONS
 const get_comments = (comments) => {
   return {
     type: GET_COMMENTS,
@@ -36,7 +36,7 @@ const addComment = (comment) => {
 // }
 
 
-// thunks
+// THUNKS
 export const get_comments_thunk = (track_id) => async (dispatch) => {
   const res = await fetch(`/api/tracks/${track_id}/comments`);
   const data = await res.json();
@@ -70,7 +70,7 @@ if(res.ok){
 return res
 }
 
-// reducer
+// REDUCER
 const comments = (state = {}, action) => {
   let new_state = {};
   switch (action.type) {
