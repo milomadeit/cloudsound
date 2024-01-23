@@ -51,6 +51,9 @@
 
   }
 
+  .song-box-info h3:hover {
+	text-decoration: underline;
+  }
   
   .song-box-info p {
 	margin: 0;

@@ -1,6 +1,7 @@
 const STORE_SONG = "songs/STORE_SONG";
 const STORE_SONGS = "songs/STORE_SONGS";
 const STORE_CURRENT_USER_SONGS = "songs/STORE_CURRENT_USER_SONGS";
+const SET_CURRENT_SONG = 'SET_CURRENT_SONG';
 
 const storeSong = (song) => {
   return {
@@ -20,6 +21,13 @@ const storeCurrentUserSongs = (songs) => {
   return {
     type: STORE_CURRENT_USER_SONGS,
     songs,
+  };
+};
+
+export const setCurrentSong = (song) => {
+  return {
+      type: SET_CURRENT_SONG,
+      payload: song,
   };
 };
 
@@ -64,7 +72,7 @@ export const getCurrentUserSongs = () => async (dispatch) => {
   return songs;
 };
 
-const initialState = { allSongs: {}, currentUserSongs: {} };
+const initialState = { allSongs: {}, currentUserSongs: {}, currentSong: {} };
 export default function songsReducer(state = initialState, action) {
   switch (action.type) {
     case STORE_SONG: {
@@ -96,7 +104,12 @@ export default function songsReducer(state = initialState, action) {
         currentUserSongs: { ...state.currentUserSongs, ...currentUserSongs },
       };
     }
-
+    case SET_CURRENT_SONG: {
+      return {
+          ...state,
+          currentSong: action.payload,
+      };
+    }
     default:
       return state;
   }

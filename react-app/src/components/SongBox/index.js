@@ -1,11 +1,26 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { setCurrentSong } from '../../store/songs';
 import './SongBox.css';
 
 const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_url, user_id }) => {
-    const user = useSelector((state) => state.session.user);
+	const dispatch = useDispatch();
+	const user = useSelector((state) => state.session.user);
 	const history = useHistory();
+	const playSong = () => {
+        dispatch(setCurrentSong({
+            id,
+            artist,
+            title,
+            genre,
+            play_count,
+            likes,
+            song_url,
+            image_url,
+            user_id
+        }));
+    };
     
 	const navigateToSongDetail = (id) => {
         history.push(`/songs/${id}`);
@@ -27,12 +42,12 @@ const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_
 	
 
     return (
-        <div className='song-box' onClick={() => navigateToSongDetail(id)}>
+        <div className='song-box'onClick={playSong} >
             <img src={image_url} alt={`${title} cover image`} className='song-box-image' />
             <div className='song-box-header'>
                 <div className='song-box-info'>
-                    <h3>{title}</h3>
-                    <p>{artist}</p>
+                    <h3 onClick={() => navigateToSongDetail(id)}>{title}</h3>
+                    <p onClick={() => navigateToSongDetail(id)}>{artist}</p>
                 <span className="genre-tag">{genre}</span>
                 </div>
             </div>
