@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import './SongPlayer.css';
+// import './SongPlayer.css';
 
 const SongPlayer = () => {
     const currentSongsObject = useSelector((state) => state.songsReducer.allSongs);

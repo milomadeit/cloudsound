@@ -11,6 +11,7 @@ import GetAllSongs from "./components/Songs/GetAllSongs";
 import GetSong from "./components/Songs/GetSong";
 import ManageSongs from "./components/Songs/ManageSongs";
 import EditSong from "./components/Songs/EditSong";
+import SongPlayer from "./components/SongPlayer";
 
 function App() {
   const dispatch = useDispatch();
@@ -57,6 +58,7 @@ function App() {
           </Route>
         </Switch>
       )}
+      <SongPlayer />
     </>
   );
 }

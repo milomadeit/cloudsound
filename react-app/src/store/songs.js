@@ -2,6 +2,7 @@ const STORE_SONG = "songs/STORE_SONG";
 const STORE_SONGS = "songs/STORE_SONGS";
 const STORE_CURRENT_USER_SONGS = "songs/STORE_CURRENT_USER_SONGS";
 const REMOVE_SONG = "songs/REMOVE_SONG";
+const SET_CURRENT_SONG = 'SET_CURRENT_SONG';
 
 const storeSong = (song) => {
   return {
@@ -24,10 +25,17 @@ const storeCurrentUserSongs = (songs) => {
   };
 };
 
+
 const removeSong = (songId) => {
   return {
     type: REMOVE_SONG,
     songId,
+
+export const setCurrentSong = (song) => {
+  return {
+      type: SET_CURRENT_SONG,
+      payload: song,
+
   };
 };
 
@@ -71,6 +79,7 @@ export const getCurrentUserSongs = () => async (dispatch) => {
   return songs;
 };
 
+
 export const deleteSong = (songId) => async (dispatch) => {
   const response = await fetch(`/api/songs/${songId}`, {
     method: "DELETE",
@@ -102,7 +111,8 @@ export const editSong = (songId, inputSong) => async (dispatch) => {
   }
 };
 
-const initialState = { allSongs: {}, currentUserSongs: {} };
+
+const initialState = { allSongs: {}, currentUserSongs: {}, currentSong: {} };
 export default function songsReducer(state = initialState, action) {
   switch (action.type) {
     case STORE_SONG: {
@@ -147,6 +157,12 @@ export default function songsReducer(state = initialState, action) {
       };
     }
 
+    case SET_CURRENT_SONG: {
+      return {
+          ...state,
+          currentSong: action.payload,
+      };
+    }
     default:
       return state;
   }
