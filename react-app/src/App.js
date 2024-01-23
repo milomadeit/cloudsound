@@ -10,6 +10,7 @@ import GetComments from "./components/GetComments";
 import GetAllSongs from "./components/Songs/GetAllSongs";
 import GetSong from "./components/Songs/GetSong";
 import ManageSongs from "./components/Songs/ManageSongs";
+import EditSong from "./components/Songs/EditSong";
 import SongPlayer from "./components/SongPlayer";
 
 function App() {
@@ -35,6 +36,11 @@ function App() {
           {sessionUser && (
             <Route path="/songs/new">
               <UploadSong />
+            </Route>
+          )}
+          {sessionUser && (
+            <Route path="/songs/:songId/edit">
+              <EditSong />
             </Route>
           )}
           <Route exact path="/songs/current">
