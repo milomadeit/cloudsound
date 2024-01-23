@@ -11,11 +11,21 @@ song_routes = Blueprint('songs', __name__)
 def SongUpload():
     if current_user:
 	# Merge request.form and request.files into a single dictionary
+        form_data = {**request.form, **request.files}
+        form = SongForm(formdata=form_data)  # Initialize form with combined data
+
         # form_data = {**request.form, **request.files}
         form =  SongForm(CombinedMultiDict((request.files, request.form)))   # Initialize form with combined data
         form['csrf_token'].data = request.cookies['csrf_token']
 
         if form.validate_on_submit():
+            song_file = form.song.data  # Access the file part from merged data
+            song_title = form.title.data  # Access the title text
+            artist = form.artist.data
+            genre = form.genre.data
+
+
+
             # File data is accessed from request.files
             song_file = request.files.get('song')
 
@@ -25,9 +35,12 @@ def SongUpload():
                 upload = upload_file_to_s3(song_file)
 
                 if 'url' not in upload:
-                    return jsonify('upload failed')
+                    return 'upload failed'
+
+                    return jsonify('upload failed'), 500
 
                 url = upload['url']
+
 
                 # create new song in table
                 new_song = Song(
@@ -59,6 +72,25 @@ def SongEdit(songId):
     if not current_song:
         return jsonify({'error': 'song not found'}), 404
 
+	    # Merge request.form and request.files into a single dictionary
+        form_data = {**request.form, **request.files}
+        form = SongForm(formdata=form_data)  # Initialize form with combined data
+
+        if form.validate_on_submit():
+            song_file = form.song.data
+            song_title = form.title.data
+            artist = form.artist.data
+            genre = form.genre.data
+
+            # update the current song details
+            current_song.title = song_title
+            current_song.artist = artist
+            current_song.genre = genre
+
+            if song_file:
+                old_song_url = current_song.song_url
+                remove_file_from_s3(old_song_url)
+                upload = upload_file_to_s3(song_file)
     form = SongForm(CombinedMultiDict((request.files, request.form)))  # Initialize form with combined data
     form['csrf_token'].data = request.cookies['csrf_token']
 
@@ -71,6 +103,7 @@ def SongEdit(songId):
             if 'url' not in upload:
                 return jsonify({'error': 'Upload failed'}), 500
 
+                current_song.song_url =  upload['url']
             old_song_url = current_song.song_url
             remove_file_from_s3(old_song_url)
             current_song.song_url = upload['url']
@@ -132,6 +165,8 @@ def UserSongs():
 @song_routes.route('')
 def AllSongs():
     all_songs = Song.query.all()
+
+    return jsonify(all_songs)
     songs_list = [song.to_dict() for song in all_songs]
 
     return jsonify(songs_list)

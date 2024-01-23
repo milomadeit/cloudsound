@@ -7,11 +7,15 @@ import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import UploadSong from "./components/Songs/UploadSong";
 import GetComments from "./components/GetComments";
+import CreatePlaylist from "./components/Playlists/CreatePlaylist";
+import Playlists from "./components/Playlists/index";
 import GetAllSongs from "./components/Songs/GetAllSongs";
 import GetSong from "./components/Songs/GetSong";
 import ManageSongs from "./components/Songs/ManageSongs";
 import EditSong from "./components/Songs/EditSong";
 import SongPlayer from "./components/SongPlayer";
+import CreateSongComment from "./components/CreateSongComment";
+import PlaylistDetails from "./components/Playlists/PlaylistDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -43,19 +47,40 @@ function App() {
               <EditSong />
             </Route>
           )}
+
           <Route exact path="/songs/current">
             <ManageSongs />
           </Route>
+
           <Route exact path="/songs/:songId">
             <GetSong />
           </Route>
-          <Route path="/tracks/:track_id/comments">
+          <Route exact path="/tracks/:trackId/comments/new">
+            <CreateSongComment />
+          </Route>
+          <Route exact path="/tracks/:track_id/comments">
             <GetComments />
+          </Route>
+
+          {sessionUser && (
+            <Route path="/playlists/new">
+              <CreatePlaylist />
+            </Route>
+          )}
+
+          <Route path="/playlists/:playlist_id">
+            <PlaylistDetails />
+          </Route>
+
+          <Route path="/playlists">
+            <Playlists />
           </Route>
 
           <Route path="/">
             <GetAllSongs />
           </Route>
+
+
         </Switch>
       )}
       <SongPlayer />
