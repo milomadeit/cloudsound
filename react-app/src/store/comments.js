@@ -38,7 +38,7 @@ const addComment = (comment) => {
 
 // thunks
 export const get_comments_thunk = (track_id) => async (dispatch) => {
-  const res = await fetch(`/api/${track_id}/comments`);
+  const res = await fetch(`/api/tracks/${track_id}/comments`);
   const data = await res.json();
   dispatch(get_comments(data))
 

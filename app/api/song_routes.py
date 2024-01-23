@@ -3,11 +3,8 @@ from ..forms.song_validation_form import SongForm
 from .s3buckets import get_unique_filename, upload_file_to_s3, remove_file_from_s3
 from ..models import db, Song
 from flask_login import current_user
-
+from werkzeug.datastructures import CombinedMultiDict
 song_routes = Blueprint('songs', __name__)
-
-# on dev branch
-@song_routes.route('/upload/', methods=['POST'])
 
 #  upload a song
 @song_routes.route('/upload', methods=['POST'])
@@ -17,6 +14,10 @@ def SongUpload():
         form_data = {**request.form, **request.files}
         form = SongForm(formdata=form_data)  # Initialize form with combined data
 
+        # form_data = {**request.form, **request.files}
+        form =  SongForm(CombinedMultiDict((request.files, request.form)))   # Initialize form with combined data
+        form['csrf_token'].data = request.cookies['csrf_token']
+
         if form.validate_on_submit():
             song_file = form.song.data  # Access the file part from merged data
             song_title = form.title.data  # Access the title text
@@ -25,25 +26,36 @@ def SongUpload():
 
 
 
+            # File data is accessed from request.files
+            song_file = request.files.get('song')
+
             if song_file: # check if file is there
-                unique_filename = get_unique_filename(song_title)
+                # create unique filename from file
+                song_file.filename = get_unique_filename(song_file.filename)
                 upload = upload_file_to_s3(song_file)
 
                 if 'url' not in upload:
                     return 'upload failed'
 
+                    return jsonify('upload failed'), 500
+
                 url = upload['url']
 
+
+                # create new song in table
                 new_song = Song(
-                    user_id = current_user.id, # how to get dynamic user id?
-                    title=song_title,
-                    artist=artist,
-                    genre=genre,
-                    song_url=url
-			    )
+                user_id=current_user.id,
+                title=request.form.get('title'),
+                artist=request.form.get('artist'),
+                genre=request.form.get('genre'),
+                song_url=url
+                )
                 db.session.add(new_song)
                 db.session.commit()
-                return jsonify(new_song)
+                response_data = new_song.to_dict()
+                print(response_data, 'dataaaaaaa')
+                return (jsonify(response_data), 200)
+
         if form.errors:
             return jsonify(form.errors)
 
@@ -52,10 +64,13 @@ def SongUpload():
 # edit a song
 @song_routes.route('/<int:songId>', methods=['PUT'])
 def SongEdit(songId):
-    if current_user:
-        current_song = Song.query.filter_by(id=int(songId)).first()
-        if not current_song:
-            return ('Song not found')
+    if not current_user:
+        return jsonify({'error': 'must be logged in to edit a song'}), 401
+
+
+    current_song = Song.query.filter_by(id=songId).first()
+    if not current_song:
+        return jsonify({'error': 'song not found'}), 404
 
 	    # Merge request.form and request.files into a single dictionary
         form_data = {**request.form, **request.files}
@@ -76,19 +91,36 @@ def SongEdit(songId):
                 old_song_url = current_song.song_url
                 remove_file_from_s3(old_song_url)
                 upload = upload_file_to_s3(song_file)
+    form = SongForm(CombinedMultiDict((request.files, request.form)))  # Initialize form with combined data
+    form['csrf_token'].data = request.cookies['csrf_token']
 
-                if 'url' not in upload:
-                    return 'upload failed'
+    if form.validate_on_submit():
+        if 'song' in request.files:
+            song_file = request.files['song']
+            song_file.filename = get_unique_filename(song_file.filename)
+            upload = upload_file_to_s3(song_file)
+
+            if 'url' not in upload:
+                return jsonify({'error': 'Upload failed'}), 500
 
                 current_song.song_url =  upload['url']
+            old_song_url = current_song.song_url
+            remove_file_from_s3(old_song_url)
+            current_song.song_url = upload['url']
 
-                db.session.commit()
-                return jsonify(current_song)
+        current_song.title = form.title.data or current_song.title
+        current_song.artist = form.artist.data or current_song.artist
+        current_song.genre = form.genre.data or current_song.genre
 
-        if form.errors:
-            return jsonify(form.errors)
+        db.session.commit()
+        response_data = current_song.to_dict()  # Assuming you have a to_dict method
+        return jsonify(response_data), 200
 
-    return 'must be logged in to edit a song'
+    if form.errors:
+        return jsonify(form.errors), 400
+
+    return jsonify({'error': 'Invalid request'}), 400
+
 
 
 # delete song by id
@@ -114,25 +146,27 @@ def DeleteSong(songId):
         return jsonify({'message': 'song deleted successfully'}), 200
     except Exception as e:
         db.session.rollback()
-        print(f"error deleting song: {e}")
         return jsonify({'error': 'An error occurred during deletion'}), 500
 
 # get all songs by user id
-@song_routes.route('/:username')
+@song_routes.route('/current')
 def UserSongs():
 
     if not current_user:
         return jsonify({'error': 'must be logged in to view your songs'}), 401
 
     user_songs = Song.query.filter_by(user_id=current_user.id)
-    songs_list = [{'title': song.title, 'artist': song.artist, 'genre': song.genre, 'song_url': song.song_url, 'likes': song.likes} for song in user_songs]
+    songs_list = [song.to_dict() for song in user_songs]
 
     return jsonify(songs_list)
 
 
 # get all songs
-@song_routes.route('/')
+@song_routes.route('')
 def AllSongs():
     all_songs = Song.query.all()
 
     return jsonify(all_songs)
+    songs_list = [song.to_dict() for song in all_songs]
+
+    return jsonify(songs_list)
