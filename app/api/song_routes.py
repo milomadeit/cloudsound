@@ -11,21 +11,11 @@ song_routes = Blueprint('songs', __name__)
 def SongUpload():
     if current_user:
 	# Merge request.form and request.files into a single dictionary
-        form_data = {**request.form, **request.files}
-        form = SongForm(formdata=form_data)  # Initialize form with combined data
-
         # form_data = {**request.form, **request.files}
         form =  SongForm(CombinedMultiDict((request.files, request.form)))   # Initialize form with combined data
         form['csrf_token'].data = request.cookies['csrf_token']
 
         if form.validate_on_submit():
-            song_file = form.song.data  # Access the file part from merged data
-            song_title = form.title.data  # Access the title text
-            artist = form.artist.data
-            genre = form.genre.data
-
-
-
             # File data is accessed from request.files
             song_file = request.files.get('song')
 
@@ -35,12 +25,9 @@ def SongUpload():
                 upload = upload_file_to_s3(song_file)
 
                 if 'url' not in upload:
-                    return 'upload failed'
-
-                    return jsonify('upload failed'), 500
+                    return jsonify('upload failed')
 
                 url = upload['url']
-
 
                 # create new song in table
                 new_song = Song(
@@ -52,11 +39,12 @@ def SongUpload():
                 )
                 db.session.add(new_song)
                 db.session.commit()
+                print(new_song.to_dict(), 'yoooooooooooooooo')
                 response_data = new_song.to_dict()
-                print(response_data, 'dataaaaaaa')
                 return (jsonify(response_data), 200)
 
         if form.errors:
+            console.log(form.errors, 'errrorrrs')
             return jsonify(form.errors)
 
     return 'must be logged in to upload a song'
@@ -72,25 +60,6 @@ def SongEdit(songId):
     if not current_song:
         return jsonify({'error': 'song not found'}), 404
 
-	    # Merge request.form and request.files into a single dictionary
-        form_data = {**request.form, **request.files}
-        form = SongForm(formdata=form_data)  # Initialize form with combined data
-
-        if form.validate_on_submit():
-            song_file = form.song.data
-            song_title = form.title.data
-            artist = form.artist.data
-            genre = form.genre.data
-
-            # update the current song details
-            current_song.title = song_title
-            current_song.artist = artist
-            current_song.genre = genre
-
-            if song_file:
-                old_song_url = current_song.song_url
-                remove_file_from_s3(old_song_url)
-                upload = upload_file_to_s3(song_file)
     form = SongForm(CombinedMultiDict((request.files, request.form)))  # Initialize form with combined data
     form['csrf_token'].data = request.cookies['csrf_token']
 
@@ -103,7 +72,6 @@ def SongEdit(songId):
             if 'url' not in upload:
                 return jsonify({'error': 'Upload failed'}), 500
 
-                current_song.song_url =  upload['url']
             old_song_url = current_song.song_url
             remove_file_from_s3(old_song_url)
             current_song.song_url = upload['url']
@@ -146,6 +114,7 @@ def DeleteSong(songId):
         return jsonify({'message': 'song deleted successfully'}), 200
     except Exception as e:
         db.session.rollback()
+        print(f"error deleting song: {e}")
         return jsonify({'error': 'An error occurred during deletion'}), 500
 
 # get all songs by user id
@@ -156,7 +125,7 @@ def UserSongs():
         return jsonify({'error': 'must be logged in to view your songs'}), 401
 
     user_songs = Song.query.filter_by(user_id=current_user.id)
-    songs_list = [song.to_dict() for song in user_songs]
+    songs_list = [{'id':song.id, 'title': song.title, 'artist': song.artist, 'genre': song.genre, 'song_url': song.song_url, 'likes': song.likes} for song in user_songs]
 
     return jsonify(songs_list)
 
@@ -165,8 +134,6 @@ def UserSongs():
 @song_routes.route('')
 def AllSongs():
     all_songs = Song.query.all()
-
-    return jsonify(all_songs)
-    songs_list = [song.to_dict() for song in all_songs]
+    songs_list = [{'id':song.id, 'title': song.title, 'artist': song.artist, 'genre': song.genre, 'song_url': song.song_url, 'likes': song.likes} for song in all_songs]
 
     return jsonify(songs_list)
