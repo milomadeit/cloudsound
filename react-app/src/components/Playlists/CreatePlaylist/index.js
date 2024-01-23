@@ -18,6 +18,7 @@ const CreatePlaylist = () => {
     formData.append('user_id', userId);
 
     dispatch(playlistActions.create_playlist_thunk(formData));
+    dispatch(playlistActions.get_playlists_thunk());
     history.push('/playlists')
   }
 

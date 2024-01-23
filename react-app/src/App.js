@@ -44,19 +44,24 @@ function App() {
               <EditSong />
             </Route>
           )}
+
           <Route exact path="/songs/current">
             <ManageSongs />
           </Route>
+
           <Route exact path="/songs/:songId">
             <GetSong />
           </Route>
+
           <Route path="/tracks/:track_id/comments">
             <GetComments />
           </Route>
 
-          <Route path="/playlists/new">
-            <CreatePlaylist />
-          </Route>
+          {sessionUser && (
+            <Route path="/playlists/new">
+              <CreatePlaylist />
+            </Route>
+          )}
 
           <Route path="/playlists">
             <Playlists />
