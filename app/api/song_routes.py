@@ -105,6 +105,7 @@ def DeleteSong(songId):
 
     # check if user is the owner of the song
     if song.user_id != current_user.id:
+
         return jsonify({'error': 'unauthorized'}), 403
 
     try:
@@ -125,7 +126,7 @@ def UserSongs():
         return jsonify({'error': 'must be logged in to view your songs'}), 401
 
     user_songs = Song.query.filter_by(user_id=current_user.id)
-    songs_list = [{'id':song.id, 'title': song.title, 'artist': song.artist, 'genre': song.genre, 'song_url': song.song_url, 'likes': song.likes} for song in user_songs]
+    songs_list = [{'id':song.id, 'title': song.title, 'artist': song.artist, 'genre': song.genre, 'song_url': song.song_url, 'likes': song.likes, 'user_id': song.user_id} for song in user_songs]
 
     return jsonify(songs_list)
 

@@ -3,14 +3,15 @@ import { useSelector } from 'react-redux';
 // import './SongPlayer.css';
 
 const SongPlayer = () => {
-    const currentSongsObject = useSelector((state) => state.songsReducer.allSongs);
+    const currentSongsObject = useSelector((state) => state.songsReducer.currentSong);
     const currentSongs = Object.values(currentSongsObject);
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
     const audioRef = useRef(null);
 
-    const currentTrack = currentSongs[currentSongs.length-1];
-    
+    const currentTrack = useSelector((state) => state.songsReducer.currentSong);
+
+    console.log(currentTrack)
 
     useEffect(() => {
         if (audioRef.current) {
@@ -27,7 +28,7 @@ const SongPlayer = () => {
                 audioRef.current.pause();
             }
         };
-    }, [isPlaying, currentSongs]);
+    }, [isPlaying, currentTrack]);
 
     if (!currentTrack?.song_url) {
         return <div>...loading</div>;
