@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllSongs } from "../../../store/songs";
 import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 import { FOLK, HIP_HOP, JAZZ, LATIN, POP } from "../../../constants/genre";
+import SongBox from "../../SongBox";
 
 const GetAllSongs = () => {
   const dispatch = useDispatch();
@@ -35,66 +36,96 @@ const GetAllSongs = () => {
       <div>
         <h2>Pop</h2>
         {popSongs.map((song) => (
-          <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
-            <div>{song.title}</div>
-            <div>{song.artist}</div>
-            <br />
-          </NavLink>
+          <SongBox 
+          id={song.id}
+          artist={song.artist}
+          title={song.title}
+          genre={song.genre}
+          image_url={song.image_url}
+          play_count={song.play_count}
+          likes={song.likes}
+          song_url={song.url}
+          />
         ))}
       </div>
 
       <div>
         <h2>Latin</h2>
         {latinSongs.map((song) => (
-          <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
-            <div>{song.title}</div>
-            <div>{song.artist}</div>
-            <br />
-          </NavLink>
+         <SongBox
+         id={song.id} 
+         artist={song.artist}
+         title={song.title}
+         genre={song.genre}
+         image_url={song.image_url}
+         play_count={song.play_count}
+         likes={song.likes}
+         song_url={song.url}
+         />
         ))}
       </div>
 
       <div>
         <h2>Folk</h2>
         {folkSongs.map((song) => (
-          <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
-            <div>{song.title}</div>
-            <div>{song.artist}</div>
-            <br />
-          </NavLink>
+          <SongBox 
+          id={song.id}
+          artist={song.artist}
+          title={song.title}
+          genre={song.genre}
+          image_url={song.image_url}
+          play_count={song.play_count}
+          likes={song.likes}
+          song_url={song.url}
+          />
         ))}
       </div>
 
       <div>
         <h2>Hip-Hop</h2>
         {hipHopSongs.map((song) => (
-          <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
-            <div>{song.title}</div>
-            <div>{song.artist}</div>
-            <br />
-          </NavLink>
+          <SongBox 
+          id={song.id}
+          artist={song.artist}
+          title={song.title}
+          genre={song.genre}
+          image_url={song.image_url}
+          play_count={song.play_count}
+          likes={song.likes}
+          song_url={song.url}
+          />
         ))}
       </div>
 
       <div>
         <h2>Jazz</h2>
         {jazzSongs.map((song) => (
-          <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
-            <div>{song.title}</div>
-            <div>{song.artist}</div>
-            <br />
-          </NavLink>
+          <SongBox 
+          id={song.id}
+          artist={song.artist}
+          title={song.title}
+          genre={song.genre}
+          image_url={song.image_url}
+          play_count={song.play_count}
+          likes={song.likes}
+          song_url={song.url}
+          />
         ))}
       </div>
 
       <div>
         <h2>Others</h2>
         {otherSongs.map((song) => (
-          <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
-            <div>{song.title}</div>
-            <div>{song.artist}</div>
-            <br />
-          </NavLink>
+          <SongBox 
+          id={song.id}
+          artist={song.artist}
+          title={song.title}
+          genre={song.genre}
+          image_url={song.image_url}
+          play_count={song.play_count}
+          likes={song.likes}
+          song_url={song.url}
+          />
         ))}
       </div>
     </div>
