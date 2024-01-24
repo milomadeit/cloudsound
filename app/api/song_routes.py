@@ -26,7 +26,7 @@ def SongUpload():
                 upload = upload_file_to_s3(song_file)
 
                 if 'url' not in upload:
-                    return jsonify('upload failed')
+                    return jsonify({'error': 'upload failed'}), 500
 
                 url = upload['url']
 
@@ -46,8 +46,7 @@ def SongUpload():
                 return (jsonify(response_data), 200)
 
         if form.errors:
-            console.log(form.errors, 'errrorrrs')
-            return jsonify(form.errors)
+            return jsonify(form.errors), 400
 
     return 'must be logged in to upload a song'
 
@@ -78,9 +77,9 @@ def SongEdit(songId):
             remove_file_from_s3(old_song_url)
             current_song.song_url = upload['url']
 
-        current_song.title = form.title.data or current_song.title
-        current_song.artist = form.artist.data or current_song.artist
-        current_song.genre = form.genre.data or current_song.genre
+        current_song.title = request.form.get('title') or current_song.title
+        current_song.artist = request.form.get('artist') or current_song.artist
+        current_song.genre = request.form.get('genre') or current_song.genre
 
         db.session.commit()
         response_data = current_song.to_dict()  # Assuming you have a to_dict method

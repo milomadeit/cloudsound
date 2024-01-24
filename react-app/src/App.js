@@ -33,6 +33,7 @@ function App() {
           <Route path="/login">
             <LoginFormPage />
           </Route>
+
           <Route path="/signup">
             <SignupFormPage />
           </Route>
@@ -42,6 +43,7 @@ function App() {
               <UploadSong />
             </Route>
           )}
+
           {sessionUser && (
             <Route path="/songs/:songId/edit">
               <EditSong />
@@ -54,12 +56,11 @@ function App() {
 
           <Route exact path="/songs/:songId">
             <GetSong />
-          </Route>
-          <Route exact path="/tracks/:trackId/comments/new">
-            <CreateSongComment />
-          </Route>
-          <Route exact path="/tracks/:track_id/comments">
             <GetComments />
+          </Route>
+
+          <Route exact path="/songs/:songId/comments/new">
+            <CreateSongComment />
           </Route>
 
           {sessionUser && (
@@ -79,7 +80,6 @@ function App() {
           <Route path="/">
             <GetAllSongs />
           </Route>
-
 
         </Switch>
       )}
