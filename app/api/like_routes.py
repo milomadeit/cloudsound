@@ -64,6 +64,6 @@ def UnlikeSong(trackId):
     db.session.commit()
     payload = {
         'likes': song.likes,
-        'trackId': trackId
+        'track_id': trackId
     }
     return jsonify(payload), 200

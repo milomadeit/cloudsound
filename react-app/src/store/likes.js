@@ -2,35 +2,35 @@ const LIKE_SONG = 'likes/LIKE_SONG';
 const UNLIKE_SONG = 'likes/UNLIKE_SONG';
 const GET_LIKES = 'likes/GET_LIKES';
 
-const like = (songId, likeCount) => {
+const like = (trackId, likeCount) => {
     return {
         type: LIKE_SONG,
-        payload: { songId, likeCount },
+        payload: { trackId, likeCount },
     };
 };
 
-const unlike = (songId, likeCount) => {
+const unlike = (trackId, likeCount) => {
     return {
         type: UNLIKE_SONG,
-        payload: { songId, likeCount },
+        payload: { trackId, likeCount },
     };
 };
 
 
-const getLikes = (likes, songId) => {
+const getLikes = (trackId, likeCount) => {
     return {
         type: GET_LIKES,
-        payload: {likes, songId}
+        payload: {trackId, likeCount}
     };
 };
 
 
-export const likeSong = (songId) => async (dispatch) => {
+export const likeSong = (trackId) => async (dispatch) => {
     try {
-        const response = await fetch(`/api/likes/tracks/${songId}`, { method: "POST" });
+        const response = await fetch(`/api/likes/tracks/${trackId}`, { method: "POST" });
         if (!response.ok) throw new Error('Response not OK');
         const { likeCount } = await response.json();
-        dispatch(like(songId, likeCount));
+        dispatch(like(trackId, likeCount));
     } catch (error) {
         console.error("Error liking song:", error);
     }
@@ -43,7 +43,7 @@ export const unlikeSong = (trackId) => async (dispatch) => {
             method: "DELETE",
         });
         if (!response.ok)throw new Error('Response not OK');
-        const {likes, trackId}= await response.json()
+        const {likes, trackId} = await response.json()
         dispatch(unlike(trackId, likes))
         
     } catch (error) {
@@ -60,7 +60,7 @@ export const likeCount = (trackId) => async (dispatch) => {
 
 	if (response.ok) {
 		const {likes, track_id} = await response.json();
-        dispatch(getLikes(likes, trackId))
+        dispatch(getLikes(track_id, likes))
 		return {likes, trackId};
 	}
 
@@ -78,39 +78,39 @@ const initialState = {
 const likes = (state = initialState, action) => {
     switch (action.type) {
         case LIKE_SONG: {
-            const { songId, likeCount } = action.payload;
+            const { trackId, likeCount } = action.payload;
             return {
                 ...state,
                 likedSongs: {
                     ...state.likedSongs,
-                    [songId]: {
-                        ...state.likedSongs[songId],
+                    [trackId]: {
+                        ...state.likedSongs[trackId],
                         likes: likeCount, // update
                     },
                 },
             };
         }
         case UNLIKE_SONG: {
-            const { songId, likeCount } = action.payload;
+            const { trackId, likeCount } = action.payload;
             return {
                 ...state,
                 likedSongs: {
                     ...state.likedSongs,
-                    [songId]: {
-                        ...state.likedSongs[songId],
+                    [trackId]: {
+                        ...state.likedSongs[trackId],
                         likes: likeCount,
                     },
                 },
             };
         }
         case GET_LIKES: {
-            const { songId, likes } = action.payload;
+            const { trackId, likes } = action.payload;
             return {
                 ...state,
                 likedSongs: {
                     ...state.likedSongs,
-                    [songId]: {
-                        ...state.likedSongs[songId],
+                    [trackId]: {
+                        ...state.likedSongs[trackId],
                         likes: likes, // update
                     },
                 },
