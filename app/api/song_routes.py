@@ -6,6 +6,7 @@ from flask_login import current_user
 from werkzeug.datastructures import CombinedMultiDict
 song_routes = Blueprint('songs', __name__)
 
+
 #  upload a song
 @song_routes.route('/upload', methods=['POST'])
 def SongUpload():
@@ -30,12 +31,13 @@ def SongUpload():
                 url = upload['url']
 
                 # create new song in table
+                print(request.form.get('user_id', 'userr from python'))
                 new_song = Song(
-                    user_id=current_user.id,
-                    title=request.form.get('title'),
-                    artist=request.form.get('artist'),
-                    genre=request.form.get('genre'),
-                    song_url=url
+                user_id=request.form.get('user_id'),
+                title=request.form.get('title'),
+                artist=request.form.get('artist'),
+                genre=request.form.get('genre'),
+                song_url=url
                 )
                 db.session.add(new_song)
                 db.session.commit()
@@ -104,6 +106,7 @@ def DeleteSong(songId):
 
     # check if user is the owner of the song
     if song.user_id != current_user.id:
+
         return jsonify({'error': 'unauthorized'}), 403
 
     try:
@@ -124,7 +127,8 @@ def UserSongs():
         return jsonify({'error': 'must be logged in to view your songs'}), 401
 
     user_songs = Song.query.filter_by(user_id=current_user.id)
-    songs_list = [{'id':song.id, 'title': song.title, 'artist': song.artist, 'genre': song.genre, 'song_url': song.song_url, 'likes': song.likes} for song in user_songs]
+    songs_list = [{'id':song.id, 'title': song.title, 'artist': song.artist, 'genre': song.genre, 'song_url': song.song_url, 'likes': song.likes, 'play_count': song.play_count, 'user_id': song.user_id} for song in user_songs]
+
 
     return jsonify(songs_list)
 
@@ -133,6 +137,6 @@ def UserSongs():
 @song_routes.route('')
 def AllSongs():
     all_songs = Song.query.all()
-    songs_list = [{'id':song.id, 'title': song.title, 'artist': song.artist, 'genre': song.genre, 'song_url': song.song_url, 'likes': song.likes} for song in all_songs]
+    songs_list = [{'id':song.id, 'title': song.title, 'artist': song.artist, 'genre': song.genre, 'song_url': song.song_url, 'likes': song.likes, 'play_count': song.play_count, 'user_id':song.user_id} for song in all_songs]
 
     return jsonify(songs_list)

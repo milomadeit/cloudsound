@@ -5,9 +5,9 @@ def seed_songs():
     song1 = Song(
         user_id=1, artist='PrincessK', title='Sweet', genre='edm', song_url='https://cloudsoundsongs.s3.amazonaws.com/sweet.mp3')
     song2 = Song(
-        user_id=2, artist='BeatLorde', title='Chill vibesss', genre='synth', song_url='https://cloudsoundsongs.s3.amazonaws.com/old+school+2.mp3')
+        user_id=1, artist='BeatLorde', title='Chill vibesss', genre='synth', song_url='https://cloudsoundsongs.s3.amazonaws.com/old+school+2.mp3')
     song3 = Song(
-        user_id=3, artist='Don Ron', title='For the homies', genre='underground', song_url='https://cloudsoundsongs.s3.amazonaws.com/Moore+Kismet+-+Rumor+(ft.+WYN).mp3')
+        user_id=1, artist='Don Ron', title='For the homies', genre='underground', song_url='https://cloudsoundsongs.s3.amazonaws.com/Moore+Kismet+-+Rumor+(ft.+WYN).mp3')
 
     db.session.add(song1)
     db.session.add(song2)

@@ -10,11 +10,8 @@ const DeleteSongModal = ({ song }) => {
 
   const onDeleteSong = async () => {
     const data = await dispatch(deleteSong(song.id));
-    if (data.errors) {
-      setErrors(data.errors);
-    } else {
+    
       closeModal();
-    }
   };
 
   return (

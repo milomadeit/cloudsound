@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllSongs } from "../../../store/songs";
-import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 import { FOLK, HIP_HOP, JAZZ, LATIN, POP } from "../../../constants/genre";
 import SongBox from "../../SongBox";
 
@@ -44,7 +43,8 @@ const GetAllSongs = () => {
           image_url={song.image_url}
           play_count={song.play_count}
           likes={song.likes}
-          song_url={song.url}
+          song_url={song.song_url}
+          user_id={song.user_id}
           />
         ))}
       </div>
@@ -60,7 +60,8 @@ const GetAllSongs = () => {
          image_url={song.image_url}
          play_count={song.play_count}
          likes={song.likes}
-         song_url={song.url}
+         song_url={song.song_url}
+         user_id={song.user_id}
          />
         ))}
       </div>
@@ -76,7 +77,8 @@ const GetAllSongs = () => {
           image_url={song.image_url}
           play_count={song.play_count}
           likes={song.likes}
-          song_url={song.url}
+          song_url={song.song_url}
+          user_id={song.user_id}
           />
         ))}
       </div>
@@ -92,7 +94,8 @@ const GetAllSongs = () => {
           image_url={song.image_url}
           play_count={song.play_count}
           likes={song.likes}
-          song_url={song.url}
+          song_url={song.song_url}
+          user_id={song.user_id}
           />
         ))}
       </div>
@@ -108,7 +111,8 @@ const GetAllSongs = () => {
           image_url={song.image_url}
           play_count={song.play_count}
           likes={song.likes}
-          song_url={song.url}
+          song_url={song.song_url}
+          user_id={song.user_id}
           />
         ))}
       </div>
@@ -124,7 +128,8 @@ const GetAllSongs = () => {
           image_url={song.image_url}
           play_count={song.play_count}
           likes={song.likes}
-          song_url={song.url}
+          song_url={song.song_url}
+          user_id={song.user_id}
           />
         ))}
       </div>

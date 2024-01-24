@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { uploadSong } from "../../../store/songs";
 import { FOLK, HIP_HOP, JAZZ, LATIN, POP } from "../../../constants/genre";
@@ -13,11 +13,13 @@ const UploadSong = () => {
   const [genre, setGenre] = useState("");
   const [loading, setLoading] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const user = useSelector((state) => state.session.user);
 
   useEffect(() => {
+    console.log(user.id, 'userrrrr')
     setIsMounted(true);
     return () => setIsMounted(false); // Cleanup function to set isMounted to false
-  }, []);
+  }, [dispatch, user.id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,6 +28,7 @@ const UploadSong = () => {
     formData.append("title", title);
     formData.append("artist", artist);
     formData.append("genre", genre);
+    formData.append('user_id', parseInt(user.id) )
 
     if (isMounted) setLoading(true);
 
