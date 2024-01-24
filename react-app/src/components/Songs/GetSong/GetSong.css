@@ -1,6 +1,6 @@
-#submit-for-post-a-comment {
+#delete-comment-button{
     border: none;
     cursor: pointer;
     appearance: none;
     background-color: inherit;
-  }
+}

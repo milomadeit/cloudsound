@@ -79,3 +79,19 @@ def edit_comment(comment_id):
   # db.session.commit()
 
   return 'Comment successfully updated.'
+
+# Delete Comment
+
+@comments_bp.route("/tracks/<int:trackId>/comments/<int:commentId>",methods=["DELETE"])
+def delete_comment(trackId,commentId):
+  try:
+
+    comment= Comment.query.filter_by(id=commentId).first()
+    db.session.delete(comment)
+    db.session.commit()
+
+
+    return jsonify(comment.id), 200
+  except Exception as e:
+    db.session.rollback()
+    return jsonify({'error': 'An error occurred during deletion'}), 500

@@ -5,12 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import "./CreateSongComment.css";
 import { postCommentThunk } from "../../store/comments";
 import { useParams,useHistory} from 'react-router-dom';
-
+import image from "./logo-create-comment/message.png"
 
 function CreateSongComment() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { trackId } = useParams();
+  
 
 
 
@@ -34,11 +35,7 @@ function CreateSongComment() {
             console.log(errors)
             setErrors(errors)
         }
-        if(typeof res !=="string"){
 
-
-        history.push(`/tracks/${trackId}/comments`)
-        }
     })
 
 
@@ -51,24 +48,25 @@ function CreateSongComment() {
 <>
         {errors.content ? (<>{errors.content}</>) : (
             <div className="post-a-comment">
-             <h1>Post a comment!</h1>
+
 
              <form onSubmit={handleSubmit}>
 
                     <div className="errors">{errors.comment}</div>
                    <div className="input-field-1">
                     <label>
-                        Comment:
+
                         <input
                             type="text"
                             value={comment}
                             onChange={(e) => setComment(e.target.value)}
-                            placeholder="Comment"
+                            placeholder="Write a comment"
+                            required
                         />
                     </label>
 
 
-                    <button id="submit-for-post-a-comment"type="submit" >Submit</button>
+                    <button id="submit-for-post-a-comment"type="submit" ><img id="send-logo"src={image} style={{width:"20px", height:"20px"}}/></button>
         </div>
                 </form>
 </div>

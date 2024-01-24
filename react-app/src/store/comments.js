@@ -3,7 +3,7 @@
 const GET_COMMENTS = 'GET_COMMENTS';
 const ADD_COMMENT = 'ADD_COMMENT';
 // const EDIT_COMMENT = 'EDIT_COMMENT';
-// const DELETE_COMMENT = 'DELETE_COMMENT';
+const DELETE_COMMENT = 'DELETE_COMMENT';
 
 
 // actions
@@ -28,12 +28,12 @@ const addComment = (comment) => {
 //   }
 // }
 
-// const delete_comment = (comment_id) => {
-//   return {
-//     type: DELETE_COMMENT,
-//     payload: comment_id
-//   }
-// }
+const deleteComment = (id) => {
+  return {
+    type: DELETE_COMMENT,
+    id
+  }
+}
 
 
 // thunks
@@ -70,6 +70,24 @@ if(res.ok){
 return res
 }
 
+export const deleteCommentThunk = (trackId,commentId) => async (dispatch) => {
+  console.log(trackId)
+  console.log(commentId)
+
+  const response=await fetch(`/api/tracks/${trackId}/comments/${commentId}`, {
+    method: "DELETE",
+
+});
+if (response.ok) {
+  const id = await response.json();
+
+  dispatch(deleteComment(id));
+  return "Comment removed";
+}
+return response
+
+}
+
 // reducer
 const comments = (state = {}, action) => {
   let new_state = {};
@@ -78,8 +96,13 @@ const comments = (state = {}, action) => {
       action.payload.map((comment) => new_state[comment.id] = comment)
       return new_state
     case ADD_COMMENT:
-      
+
       return { ...state, [action.comment.id]: action.comment };
+    case DELETE_COMMENT:
+      console.log(action.id)
+      const newState = { ...state };
+      delete newState[action.id];
+      return newState;
 
     default:
       return state;
