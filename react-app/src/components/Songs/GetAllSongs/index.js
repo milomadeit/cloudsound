@@ -44,7 +44,7 @@ const GetAllSongs = () => {
           image_url={song.image_url}
           play_count={song.play_count}
           likes={song.likes}
-          song_url={song.url}
+          song_url={song.song_url}
           user_id={song.user_id}
           />
         ))}
@@ -61,7 +61,7 @@ const GetAllSongs = () => {
          image_url={song.image_url}
          play_count={song.play_count}
          likes={song.likes}
-         song_url={song.url}
+         song_url={song.song_url}
          user_id={song.user_id}
          />
         ))}
@@ -78,7 +78,7 @@ const GetAllSongs = () => {
           image_url={song.image_url}
           play_count={song.play_count}
           likes={song.likes}
-          song_url={song.url}
+          song_url={song.song_url}
           user_id={song.user_id}
           />
         ))}
@@ -95,7 +95,7 @@ const GetAllSongs = () => {
           image_url={song.image_url}
           play_count={song.play_count}
           likes={song.likes}
-          song_url={song.url}
+          song_url={song.song_url}
           user_id={song.user_id}
           />
         ))}
@@ -112,7 +112,7 @@ const GetAllSongs = () => {
           image_url={song.image_url}
           play_count={song.play_count}
           likes={song.likes}
-          song_url={song.url}
+          song_url={song.song_url}
           user_id={song.user_id}
           />
         ))}
@@ -129,7 +129,7 @@ const GetAllSongs = () => {
           image_url={song.image_url}
           play_count={song.play_count}
           likes={song.likes}
-          song_url={song.url}
+          song_url={song.song_url}
           user_id={song.user_id}
           />
         ))}

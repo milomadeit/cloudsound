@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { setCurrentSong } from '../../store/songs';
 import './SongBox.css';
 import DeleteSongModal from '../Songs/DeleteSongModal';
+import OpenModalButton from '../OpenModalButton';
 
 const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_url, user_id }) => {
     const dispatch = useDispatch();
@@ -61,7 +62,10 @@ const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_
                 {isOwner && (
                     <span>
                         <button className="edit-button" type='button'>Edit</button>
-                        <button className="delete-button" type='button' onClick={showDeleteModal}>Delete</button>
+                        <OpenModalButton
+              buttonText="Delete"
+              modalComponent={<DeleteSongModal song={song} />}
+            />
                     </span>
                 )}
             </div>
