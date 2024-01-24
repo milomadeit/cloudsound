@@ -17,40 +17,39 @@ const unlike = (songId, likeCount) => {
 };
 
 
-const getLikes = (likes) => {
+const getLikes = (likes, songId) => {
     return {
         type: GET_LIKES,
-        payload: likes,
+        payload: {likes, songId}
     };
 };
 
 
-export const likeSong = (trackId) => async (dispatch) => {
-    const response = await fetch(`/api/likes/tracks/${trackId}`, {
-        method: "POST",
-    });
-    if (response.ok) {
+export const likeSong = (songId) => async (dispatch) => {
+    try {
+        const response = await fetch(`/api/likes/tracks/${songId}`, { method: "POST" });
+        if (!response.ok) throw new Error('Response not OK');
         const { likeCount } = await response.json();
-        dispatch(like(trackId, likeCount)); 
-    } else {
-        const errors = await response.json();
-        console.log(errors);
-        return errors;
+        dispatch(like(songId, likeCount));
+    } catch (error) {
+        console.error("Error liking song:", error);
     }
 };
 
+
 export const unlikeSong = (trackId) => async (dispatch) => {
-    const response = await fetch(`/api/likes/tracks/${trackId}`, {
-        method: "DELETE",
-    });
-    if (response.ok) {
-        const { likeCount } = await response.json();
-        dispatch(unlike(trackId, likeCount)); 
-    } else {
-        const errors = await response.json(); 
-        console.log(errors);
-        return errors;
+    try {
+        const response = await fetch(`/api/likes/tracks/${trackId}`, {
+            method: "DELETE",
+        });
+        if (!response.ok)throw new Error('Response not OK');
+        const {likes, trackId}= await response.json()
+        dispatch(unlike(trackId, likes))
+        
+    } catch (error) {
+        console.error("Error liking song:", error);
     }
+    
 };
 
 
@@ -60,9 +59,9 @@ export const likeCount = (trackId) => async (dispatch) => {
 	});
 
 	if (response.ok) {
-		const likes = await response.json();
-        console.log(likes, 'liiiikkeeees')
-		return likes;
+		const {likes, track_id} = await response.json();
+        dispatch(getLikes(likes, trackId))
+		return {likes, trackId};
 	}
 
 	const errors = response.json();
@@ -79,16 +78,16 @@ const initialState = {
 const likes = (state = initialState, action) => {
     switch (action.type) {
         case LIKE_SONG: {
-            const {songId, likeCount } = action.payload;
+            const { songId, likeCount } = action.payload;
             return {
                 ...state,
                 likedSongs: {
-                  ...state.likedSongs,
+                    ...state.likedSongs,
                     [songId]: {
                         ...state.likedSongs[songId],
-                        like: likeCount,
+                        likes: likeCount, // update
                     },
-                },  
+                },
             };
         }
         case UNLIKE_SONG: {
@@ -99,16 +98,22 @@ const likes = (state = initialState, action) => {
                     ...state.likedSongs,
                     [songId]: {
                         ...state.likedSongs[songId],
-                        likes: likeCount, 
+                        likes: likeCount,
                     },
                 },
             };
         }
         case GET_LIKES: {
-      
+            const { songId, likes } = action.payload;
             return {
                 ...state,
-              
+                likedSongs: {
+                    ...state.likedSongs,
+                    [songId]: {
+                        ...state.likedSongs[songId],
+                        likes: likes, // update
+                    },
+                },
             };
         }
         default:

@@ -5,23 +5,23 @@ import { setCurrentSong } from '../../store/songs';
 import './SongBox.css';
 import DeleteSongModal from '../Songs/DeleteSongModal';
 import OpenModalButton from '../OpenModalButton';
-import { likeSong, unlikeSong, likeCount } from '../../store/likes';
+import { likeSong, likeCount } from '../../store/likes';
 
 const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_url, user_id }) => {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.session.user);
     const history = useHistory();
-    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isOwner, setIsOwner ] = useState(false);
     const song = { id, artist, title, genre, play_count, likes, song_url, image_url, user_id };
-    const song_likes = useSelector(state => state.songsReducer.allSongs[id].likes);
-    const currentSongLikes = song?.likes;
-
-
-    useEffect(() => {
+    const song_likes = useSelector((state) => state.likes.likedSongs[id]?.likes)
+    useEffect( () => {
         setIsOwner(user?.id === song.user_id);
+       
         dispatch(likeCount(id))
-    }, [user, song, song_likes]);
+
+
+
+    }, [dispatch, id, user, song.user_id, song_likes]);
     
     
     
@@ -36,19 +36,8 @@ const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_
         history.push(`/songs/${id}`);
     };
 
-    const showDeleteModal = (e) => {
-        e.stopPropagation();
-        setIsDeleteModalOpen(true);
-    };
-
-    const closeDeleteModal = () => {
-        setIsDeleteModalOpen(false);
-    };
-
     const likeSongClick = async () => {
-
-       likes += 1
-       const like = await dispatch(likeSong(id, likes))
+       const like = await dispatch(likeSong(id, song_likes))
     }
 
 
@@ -56,7 +45,7 @@ const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_
 
     return (
         <div className='song-box' onClick={playSong}>
-            <img src={image_url} alt={`${title} cover image`} className='song-box-image' />
+            <img src={image_url} alt={`${title} cover art`} className='song-box-image' />
             <div className='song-box-header'>
                 <div className='song-box-info'>
                     <h3 onClick={() => navigateToSongDetail(id)}>{title}</h3>
@@ -79,7 +68,6 @@ const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_
                     </span>
                 )}
             </div>
-            {isDeleteModalOpen && <DeleteSongModal song={song} closeModal={closeDeleteModal} />}
         </div>
     );
 };

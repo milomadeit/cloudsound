@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllSongs } from "../../../store/songs";
-import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 import { FOLK, HIP_HOP, JAZZ, LATIN, POP } from "../../../constants/genre";
 import SongBox from "../../SongBox";
 

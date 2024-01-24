@@ -17,8 +17,17 @@ const ManageSongs = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+
+    if (!user) {
+      // Redirect to home if no user is logged in
+      history.push('/');
+      return; // Stop execution to avoid unnecessary dispatch
+    }
+
+
     dispatch(getCurrentUserSongs()).then(() => setLoading(false));
-  }, [dispatch]);
+  }, [dispatch, user, history]);
+
 
   if (loading) return <h1>Loading...</h1>;
 

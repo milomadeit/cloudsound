@@ -19,7 +19,7 @@ const UploadSong = () => {
     console.log(user.id, 'userrrrr')
     setIsMounted(true);
     return () => setIsMounted(false); // Cleanup function to set isMounted to false
-  }, []);
+  }, [dispatch, user.id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

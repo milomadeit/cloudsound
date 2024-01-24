@@ -10,7 +10,7 @@ def SongLikes(trackId):
     likes = Like.query.filter_by(song_id=trackId).all()
     song_likes = [like.to_dict() for like in likes]
     num_likes = len(song_likes)
-    return jsonify({"like count": num_likes} )
+    return jsonify({"likes": num_likes, 'track_id': trackId} )
 
 
 #  post like for a song
@@ -40,7 +40,7 @@ def LikeSong(trackId):
         song.likes = 0
     song.likes = song.likes + 1
     db.session.commit()
-    return jsonify({'message': 'like song successful'}), 200
+    return jsonify({'message': 'like song successful', 'likeCount': song.likes}), 200
 
 # remove like for a song
 @like_routes.route('/tracks/<int:trackId>', methods=['DELETE'])
@@ -62,4 +62,8 @@ def UnlikeSong(trackId):
     db.session.delete(like)
     song.likes = song.likes - 1
     db.session.commit()
-    return jsonify({'message': 'unlike song successful'}), 200
+    payload = {
+        'likes': song.likes,
+        'trackId': trackId
+    }
+    return jsonify(payload), 200
