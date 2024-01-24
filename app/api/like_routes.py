@@ -8,8 +8,9 @@ like_routes = Blueprint('likes', __name__)
 @like_routes.route('/tracks/<int:trackId>')
 def SongLikes(trackId):
     likes = Like.query.filter_by(song_id=trackId).all()
-    songs_likes = [like.to_dict() for like in likes]
-    return jsonify(songs_likes)
+    song_likes = [like.to_dict() for like in likes]
+    num_likes = len(song_likes)
+    return jsonify({"like count": num_likes} )
 
 
 #  post like for a song

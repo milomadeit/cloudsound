@@ -5,6 +5,7 @@ import { setCurrentSong } from '../../store/songs';
 import './SongBox.css';
 import DeleteSongModal from '../Songs/DeleteSongModal';
 import OpenModalButton from '../OpenModalButton';
+import { likeSong, unlikeSong, likeCount } from '../../store/likes';
 
 const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_url, user_id }) => {
     const dispatch = useDispatch();
@@ -13,11 +14,14 @@ const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isOwner, setIsOwner ] = useState(false);
     const song = { id, artist, title, genre, play_count, likes, song_url, image_url, user_id };
+    const song_likes = useSelector(state => state.songsReducer.allSongs[id].likes);
+    const currentSongLikes = song?.likes;
 
 
     useEffect(() => {
         setIsOwner(user?.id === song.user_id);
-    }, [user, song]);
+        dispatch(likeCount(id))
+    }, [user, song, song_likes]);
     
     
     
@@ -41,6 +45,12 @@ const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_
         setIsDeleteModalOpen(false);
     };
 
+    const likeSongClick = async () => {
+
+       likes += 1
+       const like = await dispatch(likeSong(id, likes))
+    }
+
 
    
 
@@ -56,9 +66,9 @@ const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_
             </div>
             <div className="song-stats"></div>
             <div className="song-box-actions">
-                <button className='song-box-like' type='button'>Like</button> 
+                <button className='song-box-like' type='button' onClick={() => likeSongClick()}>Like</button> 
                 <button>Add to Playlist</button>
-				<span>{play_count < 1 || 'undefined' ?  0 : play_count} plays {likes < 1 ? 0 : likes } likes </span>
+				<span>{play_count < 1 || 'undefined' ?  0 : play_count} plays {song_likes < 1 ? 0 : song_likes } likes </span>
                 {isOwner && (
                     <span>
                         <button className="edit-button" type='button'>Edit</button>

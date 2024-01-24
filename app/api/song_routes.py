@@ -6,6 +6,7 @@ from flask_login import current_user
 from werkzeug.datastructures import CombinedMultiDict
 song_routes = Blueprint('songs', __name__)
 
+
 #  upload a song
 @song_routes.route('/upload', methods=['POST'])
 def SongUpload():
