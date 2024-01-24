@@ -17,10 +17,10 @@ const unlike = (trackId, likeCount) => {
 };
 
 
-const getLikes = (trackId, likeCount) => {
+const getLikes = (trackId, likes) => {
     return {
         type: GET_LIKES,
-        payload: {trackId, likeCount}
+        payload: {trackId, likes}
     };
 };
 
@@ -61,7 +61,7 @@ export const likeCount = (trackId) => async (dispatch) => {
 	if (response.ok) {
 		const {likes, track_id} = await response.json();
         dispatch(getLikes(track_id, likes))
-		return {likes, trackId};
+		return {likes, track_id};
 	}
 
 	const errors = response.json();
