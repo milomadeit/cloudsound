@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { setCurrentSong } from '../../store/songs';
@@ -10,9 +10,16 @@ const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_
     const user = useSelector((state) => state.session.user);
     const history = useHistory();
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-
+    const [isOwner, setIsOwner ] = useState(false);
     const song = { id, artist, title, genre, play_count, likes, song_url, image_url, user_id };
 
+
+    useEffect(() => {
+        setIsOwner(user?.id === song.user_id);
+    }, [user, song]);
+    
+    
+    
 
     // extra functions
 
@@ -33,12 +40,8 @@ const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_
         setIsDeleteModalOpen(false);
     };
 
-    const isOwner = () => {
-        if( user.id === song.user_id) {
-            return true
-        }
-        return false
-    }
+
+   
 
     return (
         <div className='song-box' onClick={playSong}>
@@ -55,7 +58,7 @@ const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_
                 <button className='song-box-like' type='button'>Like</button> 
                 <button>Add to Playlist</button>
 				<span>{play_count < 1 || 'undefined' ?  0 : play_count} plays {likes < 1 ? 0 : likes } likes </span>
-                {user?.id === song.user_id && (
+                {isOwner && (
                     <span>
                         <button className="edit-button" type='button'>Edit</button>
                         <button className="delete-button" type='button' onClick={showDeleteModal}>Delete</button>

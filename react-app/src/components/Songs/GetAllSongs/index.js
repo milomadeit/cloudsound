@@ -45,6 +45,7 @@ const GetAllSongs = () => {
           play_count={song.play_count}
           likes={song.likes}
           song_url={song.url}
+          user_id={song.user_id}
           />
         ))}
       </div>
@@ -61,6 +62,7 @@ const GetAllSongs = () => {
          play_count={song.play_count}
          likes={song.likes}
          song_url={song.url}
+         user_id={song.user_id}
          />
         ))}
       </div>
@@ -77,6 +79,7 @@ const GetAllSongs = () => {
           play_count={song.play_count}
           likes={song.likes}
           song_url={song.url}
+          user_id={song.user_id}
           />
         ))}
       </div>
@@ -93,6 +96,7 @@ const GetAllSongs = () => {
           play_count={song.play_count}
           likes={song.likes}
           song_url={song.url}
+          user_id={song.user_id}
           />
         ))}
       </div>
@@ -109,6 +113,7 @@ const GetAllSongs = () => {
           play_count={song.play_count}
           likes={song.likes}
           song_url={song.url}
+          user_id={song.user_id}
           />
         ))}
       </div>
@@ -125,6 +130,7 @@ const GetAllSongs = () => {
           play_count={song.play_count}
           likes={song.likes}
           song_url={song.url}
+          user_id={song.user_id}
           />
         ))}
       </div>

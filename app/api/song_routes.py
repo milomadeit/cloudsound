@@ -30,8 +30,9 @@ def SongUpload():
                 url = upload['url']
 
                 # create new song in table
+                print(request.form.get('user_id', 'userr from python'))
                 new_song = Song(
-                user_id=current_user.id,
+                user_id=request.form.get('user_id'),
                 title=request.form.get('title'),
                 artist=request.form.get('artist'),
                 genre=request.form.get('genre'),
@@ -126,7 +127,8 @@ def UserSongs():
         return jsonify({'error': 'must be logged in to view your songs'}), 401
 
     user_songs = Song.query.filter_by(user_id=current_user.id)
-    songs_list = [{'id':song.id, 'title': song.title, 'artist': song.artist, 'genre': song.genre, 'song_url': song.song_url, 'likes': song.likes, 'user_id': song.user_id} for song in user_songs]
+    songs_list = [{'id':song.id, 'title': song.title, 'artist': song.artist, 'genre': song.genre, 'song_url': song.song_url, 'likes': song.likes, 'play_count': song.play_count, 'user_id': song.user_id} for song in user_songs]
+
 
     return jsonify(songs_list)
 
@@ -135,6 +137,6 @@ def UserSongs():
 @song_routes.route('')
 def AllSongs():
     all_songs = Song.query.all()
-    songs_list = [{'id':song.id, 'title': song.title, 'artist': song.artist, 'genre': song.genre, 'song_url': song.song_url, 'likes': song.likes} for song in all_songs]
+    songs_list = [{'id':song.id, 'title': song.title, 'artist': song.artist, 'genre': song.genre, 'song_url': song.song_url, 'likes': song.likes, 'play_count': song.play_count, 'user_id':song.user_id} for song in all_songs]
 
     return jsonify(songs_list)
