@@ -8,42 +8,53 @@ function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
 
   return (
-    <ul>
-      <li>
-        <NavLink exact to="/">
-          Home
-        </NavLink>
-      </li>
-      {isLoaded && (
-        <li>
-          <ProfileButton user={sessionUser} />
-        </li>
-      )}
+    <nav className="navigation-nav">
+      <NavLink
+        activeClassName="navigation-active-link"
+        className="navigation-link navigation-home-button"
+        exact
+        to="/"
+      >
+        CloudSound
+      </NavLink>
       {isLoaded && sessionUser && (
         <>
-          <li>
-            <NavLink exact to="/songs/new">
-              Upload
-            </NavLink>
-          </li>
-          <li>
-            <NavLink exact to="/songs/current">
-              Manage My Songs
-            </NavLink>
-          </li>
-          <li>
-            <NavLink exact to="/playlists/new">
-              Create Playlist
-            </NavLink>
-          </li>
-          <li>
-            <NavLink exact to="/playlists">
-              My Playlists
-            </NavLink>
-          </li>
+          <NavLink
+            activeClassName="navigation-active-link"
+            className="navigation-link"
+            exact
+            to="/songs/new"
+          >
+            Upload
+          </NavLink>
+          <NavLink
+            activeClassName="navigation-active-link"
+            className="navigation-link"
+            exact
+            to="/songs/current"
+          >
+            Manage My Songs
+          </NavLink>
+          <NavLink
+            activeClassName="navigation-active-link"
+            className="navigation-link"
+            exact
+            to="/playlists/new"
+          >
+            Create Playlist
+          </NavLink>
+          <NavLink
+            activeClassName="navigation-active-link"
+            className="navigation-link"
+            exact
+            to="/playlists"
+          >
+            My Playlists
+          </NavLink>
         </>
       )}
-    </ul>
+      {isLoaded && <ProfileButton user={sessionUser} />}
+    </nav>
   );
 }
 
