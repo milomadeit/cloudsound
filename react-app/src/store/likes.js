@@ -32,7 +32,7 @@ export const likeSong = (trackId) => async (dispatch) => {
         const { likeCount } = await response.json();
         dispatch(like(trackId, likeCount));
     } catch (error) {
-        console.error("Error liking song:", error);
+       return error
     }
 };
 
@@ -43,18 +43,18 @@ export const unlikeSong = (trackId) => async (dispatch) => {
             method: "DELETE",
         });
         if (!response.ok)throw new Error('Response not OK');
-        const {likes, trackId} = await response.json()
-        dispatch(unlike(trackId, likes))
+        const {likes, track_id} = await response.json()
+        dispatch(unlike(track_id, likes))
         
     } catch (error) {
-        console.error("Error liking song:", error);
+        return error
     }
     
 };
 
 
 export const likeCount = (trackId) => async (dispatch) => {
-	const response = await fetch(`api/likes/tracks/${trackId}`, {
+	const response = await fetch(`/api/likes/tracks/${trackId}`, {
 		method: 'GET',
 	});
 
