@@ -11,6 +11,7 @@
 .navigation-active-link {
   background-color: #292523;
   text-decoration: none;
+  border-radius: 10px;
 }
 
 .navigation-link {
@@ -25,6 +26,7 @@
 .navigation-home-button {
   font-size: 24px;
   font-weight: bold;
+  color: #ff5500;
 }
 
 .profile-dropdown {
@@ -45,4 +47,14 @@
 
 .profile-user-details {
   padding: 5px 10px;
+}
+
+.profile-button {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
 }
