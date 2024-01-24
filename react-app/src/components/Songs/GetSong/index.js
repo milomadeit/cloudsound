@@ -23,8 +23,8 @@ const GetSong = () => {
       <h2>{song.artist}</h2>
 
       <h3>{song.genre}</h3>
-
       <h3>{song.likes}</h3>
+      
     </div>
   );
 };
