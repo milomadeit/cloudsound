@@ -37,7 +37,7 @@ const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_
     };
 
     const likeSongClick = async () => {
-       const like = await dispatch(likeSong(id, song_likes))
+        dispatch(likeSong(id, song_likes))
     }
 
 
