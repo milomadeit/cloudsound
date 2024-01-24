@@ -40,7 +40,7 @@ const GetSong = () => {
     e.preventDefault()
     const commentId=e.currentTarget.value
     dispatch(commentActions.deleteCommentThunk(trackId,commentId))
-    
+
 }
   return (
     <div>
@@ -65,7 +65,7 @@ const GetSong = () => {
              {comment.content}
 
           </div>
-{sessionUser && sessionUser.id===comment.user_id && (<span><NavLink exact to="/"><img id="logo4"src={image4} style={{width:"20px", height:"20px"}}/>edit</NavLink><button id="delete-comment-button" value={comment.id} onClick={handleClickDelete} >{comment.id}<img id="logo3"src={image3} style={{width:"20px", height:"20px"}}/></button></span>)}
+{sessionUser && sessionUser.id===comment.user_id && (<span><NavLink exact to="/"><img id="logo4"src={image4} style={{width:"20px", height:"20px"}}/>edit</NavLink><button id="delete-comment-button" value={comment.id} onClick={handleClickDelete} ><img id="logo3"src={image3} style={{width:"20px", height:"20px"}}/></button></span>)}
 
           <hr></hr>
         </div>
