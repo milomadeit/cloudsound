@@ -1,11 +1,11 @@
 from flask import Blueprint, jsonify, request, redirect
 from ..forms.song_validation_form import SongForm
+from ..forms.song_edit_form import SongEditForm
 from .s3buckets import get_unique_filename, upload_file_to_s3, remove_file_from_s3
 from ..models import db, Song
 from flask_login import current_user
 from werkzeug.datastructures import CombinedMultiDict
 song_routes = Blueprint('songs', __name__)
-
 
 #  upload a song
 @song_routes.route('/upload', methods=['POST'])
@@ -31,7 +31,6 @@ def SongUpload():
                 url = upload['url']
 
                 # create new song in table
-                print(request.form.get('user_id', 'userr from python'))
                 new_song = Song(
                 user_id=request.form.get('user_id'),
                 title=request.form.get('title'),
@@ -41,7 +40,6 @@ def SongUpload():
                 )
                 db.session.add(new_song)
                 db.session.commit()
-                print(new_song.to_dict(), 'yoooooooooooooooo')
                 response_data = new_song.to_dict()
                 return (jsonify(response_data), 200)
 
@@ -61,7 +59,7 @@ def SongEdit(songId):
     if not current_song:
         return jsonify({'error': 'song not found'}), 404
 
-    form = SongForm(CombinedMultiDict((request.files, request.form)))  # Initialize form with combined data
+    form = SongEditForm(CombinedMultiDict((request.files, request.form)))  # Initialize form with combined data
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
@@ -86,6 +84,7 @@ def SongEdit(songId):
         return jsonify(response_data), 200
 
     if form.errors:
+        print(form.errors, 'yooooooooo')
         return jsonify(form.errors), 400
 
     return jsonify({'error': 'Invalid request'}), 400
