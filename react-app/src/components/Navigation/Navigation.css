@@ -2,7 +2,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 2px solid gray;
   background-color: #333333;
   height: 50px;
   padding: 0 30px;
@@ -31,14 +30,17 @@
 
 .profile-dropdown {
   position: absolute;
-  right: 10px;
+  right: 28px;
   top: 50px;
   padding: 12px;
-  border: 2px solid black;
   display: flex;
   flex-flow: column;
-  background-color: aliceblue;
-  border-radius: 4px;
+  background-color: white;
+  border-right: 1px solid #666;
+  border-left: 1px solid #666;
+  border-bottom: 1px solid #666;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
 }
 
 .hidden {
@@ -46,7 +48,19 @@
 }
 
 .profile-user-details {
-  padding: 5px 10px;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  height: 50px;
+  justify-content: space-evenly;
+}
+
+.signout-btn {
+  border: none;
+  color: #333333;
+  background-color: #f58b55;
+  height: 25px;
+  border-radius: 4px;
 }
 
 .profile-button {
