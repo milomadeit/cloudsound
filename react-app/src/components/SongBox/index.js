@@ -5,8 +5,8 @@ import { setCurrentSong } from '../../store/songs';
 import './SongBox.css';
 import DeleteSongModal from '../Songs/DeleteSongModal';
 import OpenModalButton from '../OpenModalButton';
-import { likeSong, likeCount } from '../../store/likes';
-import { userLikes, unlikeSong } from '../../store/likes';
+import { likeSong, likeCount, userLikes, unlikeSong } from '../../store/likes';
+
 
 const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_url, user_id }) => {
     const dispatch = useDispatch();
@@ -35,7 +35,10 @@ const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_
     
     const navigateToSongDetail = (e, id) => {
         e.stopPropagation()
-        history.push(`/songs/${id}`);
+        history.push({
+            pathname: `/songs/${id}`, 
+            state: {song: song}
+        });
     };
 
     const navigateToEditSong = (e, id) => {
