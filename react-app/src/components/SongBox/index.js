@@ -33,11 +33,14 @@ const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_
         dispatch(setCurrentSong(song));
     };
     
-    const navigateToSongDetail = (id) => {
+    const navigateToSongDetail = (e, id) => {
+        e.stopPropagation()
         history.push(`/songs/${id}`);
     };
     
-    const likeSongClick = async () => {
+    const likeSongClick = async (e) => {
+        e.stopPropagation()
+        
         if (isLiked) {
             await dispatch(unlikeSong(id)); 
             await dispatch(userLikes(user.id))
@@ -53,14 +56,14 @@ const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_
             <img src={image_url} alt={`${title} cover art`} className='song-box-image' />
             <div className='song-box-header'>
                 <div className='song-box-info'>
-                    <h3 onClick={() => navigateToSongDetail(id)}>{title}</h3>
-                    <p onClick={() => navigateToSongDetail(id)}>{artist}</p>
+                    <h3 onClick={(e) => navigateToSongDetail(e,id)}>{title}</h3>
+                    <p onClick={(e) => navigateToSongDetail(e,id)}>{artist}</p>
                     <span className="genre-tag">{genre}</span>
                 </div>
             </div>
             <div className="song-stats"></div>
             <div className="song-box-actions">
-                <button className='song-box-like' type='button' onClick={() => likeSongClick()}>
+                <button className='song-box-like' type='button' onClick={(e) => likeSongClick(e)}>
                 {isLiked ? 'Unlike' : 'Like'}
                 </button>
                 <button>Add to Playlist</button>
