@@ -1,6 +1,9 @@
+import { getAllSongs } from "./songs";
+
 const LIKE_SONG = 'likes/LIKE_SONG';
 const UNLIKE_SONG = 'likes/UNLIKE_SONG';
 const GET_LIKES = 'likes/GET_LIKES';
+const SET_USER_LIKES = 'likes/SET_USER_LIKES';
 
 const like = (trackId, likeCount) => {
     return {
@@ -24,6 +27,13 @@ const getLikes = (trackId, likes) => {
     };
 };
 
+const setUserLikes = (likedSongIds) => {
+    return {
+        type: SET_USER_LIKES,
+        payload: likedSongIds,
+    };
+};
+
 
 export const likeSong = (trackId) => async (dispatch) => {
     try {
@@ -31,6 +41,7 @@ export const likeSong = (trackId) => async (dispatch) => {
         if (!response.ok) throw new Error('Response not OK');
         const { likeCount } = await response.json();
         dispatch(like(trackId, likeCount));
+        dispatch(getAllSongs())
     } catch (error) {
        return error
     }
@@ -45,6 +56,7 @@ export const unlikeSong = (trackId) => async (dispatch) => {
         if (!response.ok)throw new Error('Response not OK');
         const {likes, track_id} = await response.json()
         dispatch(unlike(track_id, likes))
+        dispatch(getAllSongs())
         
     } catch (error) {
         return error
@@ -68,6 +80,18 @@ export const likeCount = (trackId) => async (dispatch) => {
 	return errors;
 
 }
+
+export const userLikes = (userId) => async (dispatch) => {
+    try {
+        const response = await fetch(`/api/likes/${userId}`);
+        if (!response.ok) throw new Error('Failed to fetch user likes');
+        const likedSongIds= await response.json();
+        console.log(likedSongIds)
+        dispatch(setUserLikes(likedSongIds));
+    } catch (error) {
+        return error
+    }
+};
 
 
 const initialState = {
@@ -116,6 +140,17 @@ const likes = (state = initialState, action) => {
                 },
             };
         }
+        case SET_USER_LIKES: {
+            const likedTrackIds = action.payload;
+            const updatedLikedSongs = {};
+            likedTrackIds.forEach(trackId => {
+                updatedLikedSongs[trackId] = { liked: true };
+            });
+            return {
+                ...state,
+                likedSongs: updatedLikedSongs,
+            };
+        }        
         default:
             return state;
     }

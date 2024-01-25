@@ -33,6 +33,7 @@ const ManageSongs = () => {
         <h2>Recent Uploads</h2>
         {songs.map((song) => (
           <SongBox 
+          key={song.id}
           id={song.id}
           artist={song.artist}
           title={song.title}
