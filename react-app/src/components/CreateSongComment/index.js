@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
+import "./CreateSongComment.css";
 import { postCommentThunk } from "../../store/comments";
 import { useParams,useHistory} from 'react-router-dom';
 import image from "./logo-create-comment/message.png"
@@ -17,22 +18,22 @@ function CreateSongComment() {
   const [comment, setComment] = useState("");
   const [errors, setErrors] = useState({});
 
-  const user = useSelector((state) => state.session.user);
-  if (!user) { return history.push(`/`) };
-
+  const user= useSelector((state) => state.session.user);
+  if(!user){return history.push(`/`)};
   const handleSubmit = (e) => {
     e.preventDefault();
+
 
     setErrors({});
     const formData = new FormData();
     formData.append("comment", comment);
 
-    dispatch(postCommentThunk(formData, songId))
-      .then((res) => {
-        if (typeof res === "string") {
-          errors.content = res
-          console.log(errors)
-          setErrors(errors)
+    dispatch(postCommentThunk(formData,trackId)).then(res=>{
+        if(typeof res ==="string"){
+
+            errors.content=res
+            console.log(errors)
+            setErrors(errors)
         }
 
     })
@@ -49,7 +50,7 @@ setComment("")
             <div className="post-a-comment">
 
 
-          <form onSubmit={handleSubmit}>
+             <form onSubmit={handleSubmit}>
 
                     <div className="errors">{errors.comment}</div>
                    <div className="input-field-1">

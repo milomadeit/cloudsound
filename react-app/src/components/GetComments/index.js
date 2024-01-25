@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import * as commentActions from '../../store/comments';
 
 
@@ -16,20 +16,6 @@ function GetComments() {
   }, [dispatch, track_id]);
 
   const comments = Object.values(useSelector((state) => state.comments));
-  const currUser = useSelector((state) => state.session.user);
-
-  useEffect(() => {
-    dispatch(commentActions.get_comments_thunk(songId))
-  }, [dispatch]);
-
-  // check if user has already commented
-  useEffect(() => {
-    comments.map((comment) => {
-      if (currUser.id === comment.user_id) {
-        setCommented(true)
-      }
-    })
-  }, [comments])
 
   return (
     <>
