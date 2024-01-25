@@ -12,7 +12,7 @@ BUCKET_NAME = os.environ.get("S3_BUCKET")
 S3_LOCATION = f"https://{BUCKET_NAME}.s3.amazonaws.com/"
 
 # allowed extensions for songs
-ALLOWED_EXTENSIONS = {"mp3", "mp4", "wav", "flac", "aiff"}
+ALLOWED_EXTENSIONS = {"mp3", "mp4", "wav", "flac", "aiff", "m4a"}
 
 # need location of images bucket
 

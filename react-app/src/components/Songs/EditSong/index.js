@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams, useLocation} from "react-router-dom";
 import { editSong } from "../../../store/songs";
 import { FOLK, HIP_HOP, JAZZ, LATIN, POP } from "../../../constants/genre";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 const EditSong = () => {
   const history = useHistory();
+  const location = useLocation();
   const dispatch = useDispatch();
   const { songId } = useParams();
-  const song = useSelector(
-    (state) => state.songsReducer.currentUserSongs[parseInt(songId)]
-  );
+  const song = location.state.song;
   const [songFile, setSongFile] = useState(null);
   const [title, setTitle] = useState(song.title);
   const [artist, setArtist] = useState(song.artist);
@@ -26,6 +24,13 @@ const EditSong = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const form_errors = {};
+    if (!songFile) form_errors.songFile = 'Please attach song'
+    if (artist.length < 1) form_errors.artist = 'Please include artist name'
+    if (title.length < 1) form_errors.title = "Please include a title for your song"
+    if (!genre) form_errors.genre = "Please select a genre"
+
+
     const formData = new FormData();
     formData.append("song", songFile);
     formData.append("title", title);
