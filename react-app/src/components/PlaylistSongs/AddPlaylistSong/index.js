@@ -26,15 +26,8 @@ const AddSongToPL = () => {
       formData.append('playlistId', playlistId);
       formData.append('songId', songId);
 
-      // for (const pair of formData.entries()) {
-      //   console.log(pair[0], pair[1]);
-      // }
-
       dispatch(plSongActions.add_song_to_pl(formData, playlistId))
     }
-
-    // console.log('*** PL id ***', playlistId)
-    // console.log('*** Song id ***', songId)
   }
 
   return (
