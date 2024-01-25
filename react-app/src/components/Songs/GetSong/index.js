@@ -12,6 +12,7 @@ import {  useState } from "react";
 import image1 from "./logo/heart.png"
 import image2 from "./logo/add-to-playlist-3.png"
 import image3 from "./logo/delete-2.png"
+import image4 from "./logo/edit.png"
 
 
 import * as commentActions from '../../../store/comments'
@@ -81,7 +82,7 @@ const GetSong = () => {
 
 
 {sessionUser && sessionUser.id===comment.user_id && (<span><OpenModalButton
-              buttonText="Edit"
+              buttonText={<img id="logo2"src={image4} style={{width:"20px", height:"20px"}}/>}
               modalComponent={<EditCommentModal props={{comment,trackId}} />}
             /><button id="delete-comment-button" value={comment.id} onClick={handleClickDelete} ><img id="logo3"src={image3} style={{width:"20px", height:"20px"}}/></button></span>)}
 
