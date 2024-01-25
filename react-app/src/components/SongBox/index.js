@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { setCurrentSong } from '../../store/songs';
@@ -7,26 +7,20 @@ import DeleteSongModal from '../Songs/DeleteSongModal';
 import OpenModalButton from '../OpenModalButton';
 import { likeSong, likeCount } from '../../store/likes';
 
+
 const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_url, user_id }) => {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.session.user);
     const history = useHistory();
-    const [isOwner, setIsOwner ] = useState(false);
+    const [isOwner, setIsOwner] = useState(false);
     const song = { id, artist, title, genre, play_count, likes, song_url, image_url, user_id };
     const song_likes = useSelector((state) => state.likes.likedSongs[id]?.likes)
-    useEffect( () => {
+
+
+    useEffect(() => {
         setIsOwner(user?.id === song.user_id);
-       
         dispatch(likeCount(id))
-
-
-
     }, [dispatch, id, user, song.user_id, song_likes]);
-    
-    
-    
-
-    // extra functions
 
     const playSong = () => {
         dispatch(setCurrentSong(song));
@@ -41,8 +35,6 @@ const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_
     }
 
 
-   
-
     return (
         <div className='song-box' onClick={playSong}>
             <img src={image_url} alt={`${title} cover art`} className='song-box-image' />
@@ -53,18 +45,24 @@ const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_
                     <span className="genre-tag">{genre}</span>
                 </div>
             </div>
+
             <div className="song-stats"></div>
+
             <div className="song-box-actions">
-                <button className='song-box-like' type='button' onClick={() => likeSongClick()}>Like</button> 
-                <button>Add to Playlist</button>
-				<span>{play_count < 1 || 'undefined' ?  0 : play_count} plays {song_likes < 1 ? 0 : song_likes } likes </span>
+                <button className='song-box-like' type='button' onClick={() => likeSongClick()}>Like</button>
+
+                <button
+                    onClick={() => history.push(`/playlists/add-song/${id}`)}
+                >Add to Playlist</button>
+
+                <span>{play_count < 1 || 'undefined' ? 0 : play_count} plays {song_likes < 1 ? 0 : song_likes} likes </span>
                 {isOwner && (
                     <span>
                         <button className="edit-button" type='button'>Edit</button>
                         <OpenModalButton
-              buttonText="Delete"
-              modalComponent={<DeleteSongModal song={song} />}
-            />
+                            buttonText="Delete"
+                            modalComponent={<DeleteSongModal song={song} />}
+                        />
                     </span>
                 )}
             </div>

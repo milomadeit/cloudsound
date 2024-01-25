@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllSongs } from "../../../store/songs";
 import { FOLK, HIP_HOP, JAZZ, LATIN, POP } from "../../../constants/genre";
 import SongBox from "../../SongBox";
+import * as playlistActions from '../../../store/playlists';
 
 const GetAllSongs = () => {
   const dispatch = useDispatch();
@@ -12,6 +13,7 @@ const GetAllSongs = () => {
 
   useEffect(() => {
     dispatch(getAllSongs()).then(() => setLoading(false));
+    dispatch(playlistActions.get_playlists_thunk());
   }, [dispatch]);
 
   if (loading) return <h1>Loading...</h1>;
@@ -35,16 +37,16 @@ const GetAllSongs = () => {
       <div>
         <h2>Pop</h2>
         {popSongs.map((song) => (
-          <SongBox 
-          id={song.id}
-          artist={song.artist}
-          title={song.title}
-          genre={song.genre}
-          image_url={song.image_url}
-          play_count={song.play_count}
-          likes={song.likes}
-          song_url={song.song_url}
-          user_id={song.user_id}
+          <SongBox
+            id={song.id}
+            artist={song.artist}
+            title={song.title}
+            genre={song.genre}
+            image_url={song.image_url}
+            play_count={song.play_count}
+            likes={song.likes}
+            song_url={song.song_url}
+            user_id={song.user_id}
           />
         ))}
       </div>
@@ -52,33 +54,33 @@ const GetAllSongs = () => {
       <div>
         <h2>Latin</h2>
         {latinSongs.map((song) => (
-         <SongBox
-         id={song.id} 
-         artist={song.artist}
-         title={song.title}
-         genre={song.genre}
-         image_url={song.image_url}
-         play_count={song.play_count}
-         likes={song.likes}
-         song_url={song.song_url}
-         user_id={song.user_id}
-         />
+          <SongBox
+            id={song.id}
+            artist={song.artist}
+            title={song.title}
+            genre={song.genre}
+            image_url={song.image_url}
+            play_count={song.play_count}
+            likes={song.likes}
+            song_url={song.song_url}
+            user_id={song.user_id}
+          />
         ))}
       </div>
 
       <div>
         <h2>Folk</h2>
         {folkSongs.map((song) => (
-          <SongBox 
-          id={song.id}
-          artist={song.artist}
-          title={song.title}
-          genre={song.genre}
-          image_url={song.image_url}
-          play_count={song.play_count}
-          likes={song.likes}
-          song_url={song.song_url}
-          user_id={song.user_id}
+          <SongBox
+            id={song.id}
+            artist={song.artist}
+            title={song.title}
+            genre={song.genre}
+            image_url={song.image_url}
+            play_count={song.play_count}
+            likes={song.likes}
+            song_url={song.song_url}
+            user_id={song.user_id}
           />
         ))}
       </div>
@@ -86,16 +88,16 @@ const GetAllSongs = () => {
       <div>
         <h2>Hip-Hop</h2>
         {hipHopSongs.map((song) => (
-          <SongBox 
-          id={song.id}
-          artist={song.artist}
-          title={song.title}
-          genre={song.genre}
-          image_url={song.image_url}
-          play_count={song.play_count}
-          likes={song.likes}
-          song_url={song.song_url}
-          user_id={song.user_id}
+          <SongBox
+            id={song.id}
+            artist={song.artist}
+            title={song.title}
+            genre={song.genre}
+            image_url={song.image_url}
+            play_count={song.play_count}
+            likes={song.likes}
+            song_url={song.song_url}
+            user_id={song.user_id}
           />
         ))}
       </div>
@@ -103,16 +105,16 @@ const GetAllSongs = () => {
       <div>
         <h2>Jazz</h2>
         {jazzSongs.map((song) => (
-          <SongBox 
-          id={song.id}
-          artist={song.artist}
-          title={song.title}
-          genre={song.genre}
-          image_url={song.image_url}
-          play_count={song.play_count}
-          likes={song.likes}
-          song_url={song.song_url}
-          user_id={song.user_id}
+          <SongBox
+            id={song.id}
+            artist={song.artist}
+            title={song.title}
+            genre={song.genre}
+            image_url={song.image_url}
+            play_count={song.play_count}
+            likes={song.likes}
+            song_url={song.song_url}
+            user_id={song.user_id}
           />
         ))}
       </div>
@@ -120,16 +122,16 @@ const GetAllSongs = () => {
       <div>
         <h2>Others</h2>
         {otherSongs.map((song) => (
-          <SongBox 
-          id={song.id}
-          artist={song.artist}
-          title={song.title}
-          genre={song.genre}
-          image_url={song.image_url}
-          play_count={song.play_count}
-          likes={song.likes}
-          song_url={song.song_url}
-          user_id={song.user_id}
+          <SongBox
+            id={song.id}
+            artist={song.artist}
+            title={song.title}
+            genre={song.genre}
+            image_url={song.image_url}
+            play_count={song.play_count}
+            likes={song.likes}
+            song_url={song.song_url}
+            user_id={song.user_id}
           />
         ))}
       </div>
