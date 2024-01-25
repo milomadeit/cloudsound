@@ -14,9 +14,9 @@ def add_pl_song(playlistId):
   songId = request.form.get('songId')
   playlistId = request.form.get('playlistId')
 
-  add_song = playlist_songs(song_Id=songId, playlist_id=playlistId)
+  add_song = playlist_songs.insert().values(song_id=songId, playlist_id=playlistId)
 
-  db.session.add(add_song)
+  db.session.execute(add_song)
   db.session.commit()
 
   return jsonify('Song added to Playlist!')
