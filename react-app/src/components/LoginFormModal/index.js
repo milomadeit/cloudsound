@@ -55,10 +55,10 @@ function LoginFormModal() {
       </form>
 
       {errors && errors["email"] && (
-        <p className="login-error">{errors["email"]}</p>
+        <p className="p-error">{errors["email"]}</p>
       )}
       {errors && errors["password"] && (
-        <p className="login-error">{errors["password"]}</p>
+        <p className="p-error">{errors["password"]}</p>
       )}
     </div>
   );

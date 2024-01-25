@@ -14,7 +14,7 @@
   justify-content: space-evenly;
 }
 
-.signun-label-input-div {
+.signup-label-input-div {
   display: flex;
   align-items: center;
   width: 100%;
@@ -39,9 +39,4 @@
   font-size: 16px;
   background-color: #ff5500;
   width: 100%;
-}
-
-.signup-error {
-  color: red;
-  margin: 0;
 }

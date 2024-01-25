@@ -32,7 +32,7 @@ function SignupFormModal() {
   return (
     <div className="signup-modal-div">
       <form className="signup-form" onSubmit={handleSubmit}>
-        <div className="signun-label-input-div">
+        <div className="signup-label-input-div">
           <label className="signup-label">Email :</label>
           <input
             className="signup-input-text"
@@ -42,7 +42,7 @@ function SignupFormModal() {
             required
           />
         </div>
-        <div className="signun-label-input-div">
+        <div className="signup-label-input-div">
           <label className="signup-label">Username :</label>
           <input
             className="signup-input-text"
@@ -52,7 +52,7 @@ function SignupFormModal() {
             required
           />
         </div>
-        <div className="signun-label-input-div">
+        <div className="signup-label-input-div">
           <label className="signup-label">Password :</label>
           <input
             className="signup-input-text"
@@ -62,7 +62,7 @@ function SignupFormModal() {
             required
           />
         </div>
-        <div className="signun-label-input-div">
+        <div className="signup-label-input-div">
           <label className="signup-label">Confirm Password :</label>
           <input
             className="signup-input-text"
@@ -78,13 +78,13 @@ function SignupFormModal() {
       </form>
 
       {errors && errors["username"] && (
-        <p className="signup-error">{errors["username"]}</p>
+        <p className="p-error">{errors["username"]}</p>
       )}
       {errors && errors["email"] && (
-        <p className="signup-error">{errors["email"]}</p>
+        <p className="p-error">{errors["email"]}</p>
       )}
       {errors && errors["password"] && (
-        <p className="signup-error">{errors["password"]}</p>
+        <p className="p-error">{errors["password"]}</p>
       )}
     </div>
   );
