@@ -13,6 +13,7 @@ const UploadSong = () => {
   const [genre, setGenre] = useState("");
   const [loading, setLoading] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [errors, setErrors] = useState({})
   const user = useSelector((state) => state.session.user);
 
   useEffect(() => {
@@ -23,6 +24,17 @@ const UploadSong = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const form_errors = {};
+    if (!songFile) form_errors.songFile = 'Please attach song'
+    if (artist.length < 1) form_errors.artist = 'Please include artist name'
+    if (title.length < 1) form_errors.title = "Please include a title for your song"
+    if (!genre) form_errors.genre = "Please select a genre"
+
+    if (Object.keys(form_errors).length > 0) {
+      setErrors(form_errors)
+      return;
+    }
+
     const formData = new FormData();
     formData.append("song", songFile);
     formData.append("title", title);
@@ -50,6 +62,9 @@ const UploadSong = () => {
   return (
     <form onSubmit={handleSubmit} encType="multipart/form-data">
       <div>
+      {errors.title && (
+            <p>{errors.title}</p>
+          )}
         <label htmlFor="title">Title</label>
         <input
           type="text"
@@ -60,6 +75,9 @@ const UploadSong = () => {
         />
       </div>
       <div>
+      {errors.artist && (
+            <p>{errors.artist}</p>
+          )}
         <label htmlFor="artist">Artist</label>
         <input
           type="text"
@@ -70,6 +88,9 @@ const UploadSong = () => {
         />
       </div>
       <div>
+      {errors.genre && (
+            <p>{errors.genre}</p>
+          )}
         <label htmlFor="genre">Genre</label>
         <select
           name="genre"
@@ -85,6 +106,9 @@ const UploadSong = () => {
         </select>
       </div>
       <div>
+      {errors.songFile && (
+            <p>{errors.songFile}</p>
+          )}
         <input
           type="file"
           accept="audio/*"

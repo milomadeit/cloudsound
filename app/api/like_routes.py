@@ -1,8 +1,21 @@
 from flask import Blueprint, jsonify
-from ..models import db, Like, Song
+from ..models import db, Like, Song, User
 from flask_login import current_user
 
 like_routes = Blueprint('likes', __name__)
+
+
+# get user's liked songs
+@like_routes.route('/<int:userId>')
+def UserLikes(userId):
+    if not current_user.is_authenticated:
+        return jsonify({'error': 'must be logged in to view liked songs'}), 401
+    
+    # user = User.query.filter_by(User.id == current_user.id)
+    likes = Like.query.filter_by(user_id=current_user.id).all()
+    song_ids = [like.song_id for like in likes]
+    return jsonify(song_ids)
+    
 
 #  get likes of a song
 @like_routes.route('/tracks/<int:trackId>')

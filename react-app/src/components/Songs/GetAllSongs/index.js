@@ -35,7 +35,8 @@ const GetAllSongs = () => {
       <div>
         <h2>Pop</h2>
         {popSongs.map((song) => (
-          <SongBox 
+          <SongBox
+          key={song.id} 
           id={song.id}
           artist={song.artist}
           title={song.title}
@@ -53,6 +54,7 @@ const GetAllSongs = () => {
         <h2>Latin</h2>
         {latinSongs.map((song) => (
          <SongBox
+         key={song.id}
          id={song.id} 
          artist={song.artist}
          title={song.title}
@@ -70,6 +72,7 @@ const GetAllSongs = () => {
         <h2>Folk</h2>
         {folkSongs.map((song) => (
           <SongBox 
+          key={song.id}
           id={song.id}
           artist={song.artist}
           title={song.title}
@@ -86,7 +89,8 @@ const GetAllSongs = () => {
       <div>
         <h2>Hip-Hop</h2>
         {hipHopSongs.map((song) => (
-          <SongBox 
+          <SongBox
+          key={song.id} 
           id={song.id}
           artist={song.artist}
           title={song.title}
@@ -103,7 +107,8 @@ const GetAllSongs = () => {
       <div>
         <h2>Jazz</h2>
         {jazzSongs.map((song) => (
-          <SongBox 
+          <SongBox
+          key={song.id} 
           id={song.id}
           artist={song.artist}
           title={song.title}
@@ -121,6 +126,7 @@ const GetAllSongs = () => {
         <h2>Others</h2>
         {otherSongs.map((song) => (
           <SongBox 
+          key={song.id}
           id={song.id}
           artist={song.artist}
           title={song.title}
