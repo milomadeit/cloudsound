@@ -1,26 +1,32 @@
+
+import { editCommentThunk } from "../../store/comments";
+import { useModal } from "../../context/Modal";
 import React, { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import "./CreateSongComment.css";
+import "./EditCommentModal.css";
 import { postCommentThunk } from "../../store/comments";
 import { useParams,useHistory} from 'react-router-dom';
-import image from "./logo-create-comment/message.png"
+import image from "../CreateSongComment/logo-create-comment/message.png"
 
-function CreateSongComment() {
-  const dispatch = useDispatch();
+
+const EditCommentModal = (props) => {
+
+const { closeModal } = useModal();
+const dispatch = useDispatch();
   const history = useHistory();
-  const { trackId } = useParams();
+  const commentId=props.props.comment.id
+  const trackId=props.props.trackId
+  const content=props.props.comment.content
 
-
-
-
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState(`${content}`);
   const [errors, setErrors] = useState({});
+
 
   const user= useSelector((state) => state.session.user);
   if(!user){return history.push(`/`)};
-  const handleSubmit = (e) => {
+ const handleSubmit = (e) => {
     e.preventDefault();
 
 
@@ -28,26 +34,27 @@ function CreateSongComment() {
     const formData = new FormData();
     formData.append("comment", comment);
 
-    dispatch(postCommentThunk(formData,trackId)).then(res=>{
+    dispatch(editCommentThunk(formData,trackId,commentId)).then(res=>{
         if(typeof res ==="string"){
 
             errors.content=res
             console.log(errors)
             setErrors(errors)
         }
+closeModal()
 
     })
-setComment("")
-
-
 }
 
 
 
+
   return (
-<>
+   
+
+    <>
         {errors.content ? (<>{errors.content}</>) : (
-            <div className="post-a-comment">
+            <div className="edit-a-comment">
 
 
              <form onSubmit={handleSubmit}>
@@ -76,6 +83,6 @@ setComment("")
 
 
   );
-}
+};
 
-export default CreateSongComment;
+export default EditCommentModal;

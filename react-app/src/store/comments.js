@@ -2,7 +2,7 @@
 // constants
 const GET_COMMENTS = 'GET_COMMENTS';
 const ADD_COMMENT = 'ADD_COMMENT';
-// const EDIT_COMMENT = 'EDIT_COMMENT';
+const EDIT_COMMENT = 'EDIT_COMMENT';
 const DELETE_COMMENT = 'DELETE_COMMENT';
 
 
@@ -21,12 +21,12 @@ const addComment = (comment) => {
   }
  }
 
-// const edit_comment = (comment_id) => {
-//   return {
-//     type: EDIT_COMMENT,
-//     payload: comment_id
-//   }
-// }
+const editComment = (comment) => {
+  return {
+    type: EDIT_COMMENT,
+    comment
+  }
+}
 
 const deleteComment = (id) => {
   return {
@@ -70,6 +70,31 @@ if(res.ok){
 return res
 }
 
+export const editCommentThunk=(formData,trackId,commentId)=>async(dispatch)=>{
+
+  const res =await fetch(`/api/tracks/${trackId}/comments/${commentId}`, {
+    method: "PUT",
+
+    body: formData,
+})
+
+if(res.ok){
+
+
+
+  const data = await res.json();
+
+
+
+  if(data.comment){
+  return data.comment[0]
+    }
+  dispatch(editComment(data))
+ return data
+}
+
+return res
+}
 export const deleteCommentThunk = (trackId,commentId) => async (dispatch) => {
   console.log(trackId)
   console.log(commentId)
@@ -96,6 +121,9 @@ const comments = (state = {}, action) => {
       action.payload.map((comment) => new_state[comment.id] = comment)
       return new_state
     case ADD_COMMENT:
+
+      return { ...state, [action.comment.id]: action.comment };
+      case EDIT_COMMENT:
 
       return { ...state, [action.comment.id]: action.comment };
     case DELETE_COMMENT:

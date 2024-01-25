@@ -1,16 +1,18 @@
 import React, { useEffect } from "react";
+
 import { useSelector, useDispatch } from "react-redux";
-import { NavLink,Route } from "react-router-dom";
+import { NavLink} from "react-router-dom";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { getAllSongs } from "../../../store/songs";
 import "./GetSong.css";
 import CreateSongComment from "../../CreateSongComment";
-
+import OpenModalButton from "../../OpenModalButton";
+import EditCommentModal from "../../EditCommentModal";
 import {  useState } from "react";
 import image1 from "./logo/heart.png"
 import image2 from "./logo/add-to-playlist-3.png"
 import image3 from "./logo/delete-2.png"
-import image4 from "./logo/edit.png"
+
 
 import * as commentActions from '../../../store/comments'
 const GetSong = () => {
@@ -22,8 +24,9 @@ const GetSong = () => {
 
   const comments = Object.values(useSelector((state) => state.comments));
   const sessionUser = useSelector((state) => state.session.user);
+
   const song = useSelector((state) => state.songsReducer.allSongs[parseInt(songId)]);
-   console.log(sessionUser)
+   
 
 
   useEffect(() => {
@@ -42,6 +45,9 @@ const GetSong = () => {
     dispatch(commentActions.deleteCommentThunk(trackId,commentId))
 
 }
+
+
+
   return (
     <div>
 
@@ -57,20 +63,29 @@ const GetSong = () => {
 
       <div>
       <h3>Comments:</h3>
-    {isLoaded && (
+    {isLoaded &&(
       comments.map((comment) =>
-        <div key={comment.id}>
-          <span>User: {comment.author}</span>
-          <div>
-             {comment.content}
 
-          </div>
-{sessionUser && sessionUser.id===comment.user_id && (<span><NavLink exact to="/"><img id="logo4"src={image4} style={{width:"20px", height:"20px"}}/>edit</NavLink><button id="delete-comment-button" value={comment.id} onClick={handleClickDelete} ><img id="logo3"src={image3} style={{width:"20px", height:"20px"}}/></button></span>)}
+        <div key={comment.id}>
+
+        <div>User: {comment.author}</div>
+        <div>
+           {comment.content}
+
+        </div>
+
+
+
+
+{sessionUser && sessionUser.id===comment.user_id && (<span><OpenModalButton
+              buttonText="Edit"
+              modalComponent={<EditCommentModal props={{comment,trackId}} />}
+            /><button id="delete-comment-button" value={comment.id} onClick={handleClickDelete} ><img id="logo3"src={image3} style={{width:"20px", height:"20px"}}/></button></span>)}
 
           <hr></hr>
         </div>
-      )
-    )}
+      ))
+    }
   </div>
 
 
@@ -79,3 +94,5 @@ const GetSong = () => {
 };
 
 export default GetSong;
+
+// button id="edit-comment-button" value={comment.id} onClick={onClickEdit}><img id="logo4"src={image4} style={{width:"20px", height:"20px"}}/>edit</button>
