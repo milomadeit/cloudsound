@@ -78,13 +78,13 @@ function SignupFormModal() {
       </form>
 
       {errors && errors["username"] && (
-        <p className="signup-error">{errors["username"]}</p>
+        <p className="p-error">{errors["username"]}</p>
       )}
       {errors && errors["email"] && (
-        <p className="signup-error">{errors["email"]}</p>
+        <p className="p-error">{errors["email"]}</p>
       )}
       {errors && errors["password"] && (
-        <p className="signup-error">{errors["password"]}</p>
+        <p className="p-error">{errors["password"]}</p>
       )}
     </div>
   );

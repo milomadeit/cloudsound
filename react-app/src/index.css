@@ -6,3 +6,8 @@ body {
 button {
   cursor: pointer;
 }
+
+.p-error {
+  color: red;
+  margin: 0;
+}
