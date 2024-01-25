@@ -67,7 +67,6 @@ const UploadSong = () => {
       encType="multipart/form-data"
     >
       <div className="upload-form-label-input-div">
-        {errors.title && <p className="p-error">{errors.title}</p>}
         <label className="upload-form-label" htmlFor="title">
           Title
         </label>
@@ -80,8 +79,9 @@ const UploadSong = () => {
           id="title"
         />
       </div>
+      {errors.title && <p className="p-error">{errors.title}</p>}
+
       <div className="upload-form-label-input-div">
-        {errors.artist && <p className="p-error">{errors.artist}</p>}
         <label className="upload-form-label" htmlFor="artist">
           Artist
         </label>
@@ -94,8 +94,9 @@ const UploadSong = () => {
           id="artist"
         />
       </div>
+      {errors.artist && <p className="p-error">{errors.artist}</p>}
+
       <div className="upload-form-label-input-div">
-        {errors.genre && <p className="p-error">{errors.genre}</p>}
         <label className="upload-form-label" htmlFor="genre">
           Genre
         </label>
@@ -113,14 +114,16 @@ const UploadSong = () => {
           <option value={JAZZ}>Jazz</option>
         </select>
       </div>
+      {errors.genre && <p className="p-error">{errors.genre}</p>}
+
       <div className="upload-form-label-input-div upload-form-label-input-file-div">
-        {errors.songFile && <p className="p-error">{errors.songFile}</p>}
         <input
           type="file"
           accept="audio/*"
           onChange={(e) => setSongFile(e.target.files[0])}
         />
       </div>
+      {errors.songFile && <p className="p-error">{errors.songFile}</p>}
 
       <button className="upload-form-btn" type="submit" disabled={loading}>
         Upload Song
