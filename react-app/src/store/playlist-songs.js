@@ -10,15 +10,15 @@ const store_song = () => {
 
 
 // THUNKS
-// export const create_playlist_thunk = (formData) => async (dispatch) => {
-//   const res = await fetch(`/api/playlists/new`, {
-//     method: 'POST',
-//     body: formData
-//   })
-//   const data = await res.json();
+export const add_song_to_pl = (formData, playlistId) => async (dispatch) => {
+  const res = await fetch(`/api/playlists/${playlistId}/add`, {
+    method: 'POST',
+    body: formData
+  })
+  const data = await res.json();
 
-//   return data
-// }
+  return data
+}
 
 
 // export const get_playlists_thunk = () => async (dispatch) => {

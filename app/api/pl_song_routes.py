@@ -9,8 +9,11 @@ pl_songs_bp = Blueprint('pl_songs_bp', __name__)
 
 
 # Add Song to Playlist
-@pl_songs_bp.route('idk yet...')
-def add_pl_song():
+@pl_songs_bp.route('/playlists/<int:playlistId>/add', methods=['POST'])
+def add_pl_song(playlistId):
   # playlists = Playlist.query.filter_by(user_id = userId)
+
+  print('HIT --- the backend pl_songs route !!!')
+  print(request, '!!!')
 
   return jsonify('hello')
