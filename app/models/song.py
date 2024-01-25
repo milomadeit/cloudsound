@@ -20,8 +20,8 @@ class Song(db.Model):
 
 	user = db.relationship('User', back_populates='songs')
 	playlists = db.relationship('Playlist', secondary="playlist_songs", back_populates='songs')
-	likes_relationship = db.relationship('Like', back_populates='song')
-	comments=db.relationship("Comment", back_populates="song")
+	likes_relationship = db.relationship('Like', back_populates='song', cascade="all, delete-orphan")
+	comments=db.relationship("Comment", back_populates="song",  cascade="all, delete-orphan")
 
 
 

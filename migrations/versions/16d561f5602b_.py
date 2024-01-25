@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 2910d49be055
+Revision ID: 16d561f5602b
 Revises: 
-Create Date: 2024-01-23 16:14:41.294609
+Create Date: 2024-01-24 18:42:56.298102
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '2910d49be055'
+revision = '16d561f5602b'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -72,6 +72,14 @@ def upgrade():
     sa.PrimaryKeyConstraint('song_id', 'playlist_id')
     )
     # ### end Alembic commands ###
+    if environment == "production":
+        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE songs SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE playlists SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE comments SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE likes SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE playlist_songs SET SCHEMA {SCHEMA};")
 
 
 def downgrade():
