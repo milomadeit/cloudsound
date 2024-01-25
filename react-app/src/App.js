@@ -53,7 +53,7 @@ function App() {
           <Route exact path="/songs/current">
             <ManageSongs />
           </Route>
-          <Route exact path="/tracks/:trackId">
+          <Route exact path="/songs/:trackId">
             <GetSong />
             
           </Route>
