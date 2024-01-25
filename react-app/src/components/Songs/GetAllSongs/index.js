@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllSongs } from "../../../store/songs";
 import { FOLK, HIP_HOP, JAZZ, LATIN, POP } from "../../../constants/genre";
-import SongBox from "../../SongBox";
+import "./GetAllSongs.css";
+import GenreSongs from "../../GenreSongs";
 
 const GetAllSongs = () => {
   const dispatch = useDispatch();
@@ -31,108 +32,13 @@ const GetAllSongs = () => {
   );
 
   return (
-    <div>
-      <div>
-        <h2>Pop</h2>
-        {popSongs.map((song) => (
-          <SongBox 
-          id={song.id}
-          artist={song.artist}
-          title={song.title}
-          genre={song.genre}
-          image_url={song.image_url}
-          play_count={song.play_count}
-          likes={song.likes}
-          song_url={song.song_url}
-          user_id={song.user_id}
-          />
-        ))}
-      </div>
-
-      <div>
-        <h2>Latin</h2>
-        {latinSongs.map((song) => (
-         <SongBox
-         id={song.id} 
-         artist={song.artist}
-         title={song.title}
-         genre={song.genre}
-         image_url={song.image_url}
-         play_count={song.play_count}
-         likes={song.likes}
-         song_url={song.song_url}
-         user_id={song.user_id}
-         />
-        ))}
-      </div>
-
-      <div>
-        <h2>Folk</h2>
-        {folkSongs.map((song) => (
-          <SongBox 
-          id={song.id}
-          artist={song.artist}
-          title={song.title}
-          genre={song.genre}
-          image_url={song.image_url}
-          play_count={song.play_count}
-          likes={song.likes}
-          song_url={song.song_url}
-          user_id={song.user_id}
-          />
-        ))}
-      </div>
-
-      <div>
-        <h2>Hip-Hop</h2>
-        {hipHopSongs.map((song) => (
-          <SongBox 
-          id={song.id}
-          artist={song.artist}
-          title={song.title}
-          genre={song.genre}
-          image_url={song.image_url}
-          play_count={song.play_count}
-          likes={song.likes}
-          song_url={song.song_url}
-          user_id={song.user_id}
-          />
-        ))}
-      </div>
-
-      <div>
-        <h2>Jazz</h2>
-        {jazzSongs.map((song) => (
-          <SongBox 
-          id={song.id}
-          artist={song.artist}
-          title={song.title}
-          genre={song.genre}
-          image_url={song.image_url}
-          play_count={song.play_count}
-          likes={song.likes}
-          song_url={song.song_url}
-          user_id={song.user_id}
-          />
-        ))}
-      </div>
-
-      <div>
-        <h2>Others</h2>
-        {otherSongs.map((song) => (
-          <SongBox 
-          id={song.id}
-          artist={song.artist}
-          title={song.title}
-          genre={song.genre}
-          image_url={song.image_url}
-          play_count={song.play_count}
-          likes={song.likes}
-          song_url={song.song_url}
-          user_id={song.user_id}
-          />
-        ))}
-      </div>
+    <div className="get-all-songs-main-div">
+      <GenreSongs genre="Pop" songs={popSongs} />
+      <GenreSongs genre="Latin" songs={latinSongs} />
+      <GenreSongs genre="Folk" songs={folkSongs} />
+      <GenreSongs genre="Hip-Hop" songs={hipHopSongs} />
+      <GenreSongs genre="Jazz" songs={jazzSongs} />
+      <GenreSongs genre="Others" songs={otherSongs} />
     </div>
   );
 };
