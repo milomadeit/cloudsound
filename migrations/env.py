@@ -98,4 +98,8 @@ def run_migrations_online():
 if context.is_offline_mode():
     run_migrations_offline()
 else:
+<<<<<<< HEAD
     run_migrations_online()
+=======
+    run_migrations_online()
+>>>>>>> get-song

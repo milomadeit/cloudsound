@@ -6,9 +6,14 @@ import * as commentActions from '../../store/comments';
 
 function GetComments() {
   const dispatch = useDispatch();
-  const history = useHistory();
-  const { songId } = useParams();
-  const [commented, setCommented] = useState(false);
+
+  const { track_id } = useParams();
+  const [isLoaded, setIsLoaded] = useState(false)
+
+  useEffect(() => {
+    dispatch(commentActions.get_comments_thunk(track_id))
+      .then(() => setIsLoaded(true))
+  }, [dispatch, track_id]);
 
   const comments = Object.values(useSelector((state) => state.comments));
   const currUser = useSelector((state) => state.session.user);
@@ -28,16 +33,9 @@ function GetComments() {
 
   return (
     <>
-      <h3>Comments:</h3>
-
-      {currUser && !commented &&
-        <button
-          onClick={(e) => history.push(`/songs/${songId}/comments/new`)}
-          hidden={commented}
-        >Add Comment</button>
-      }
-
-      {comments.map((comment) =>
+    <h3>Comments:</h3>
+    {isLoaded && (
+      comments.map((comment) =>
         <div key={comment.id}>
           <span>User: {comment.author}</span>
           <div>
@@ -46,8 +44,8 @@ function GetComments() {
           <hr></hr>
         </div>
       )
-      }
-    </>
+    )}
+  </>
   )
 }
 

@@ -54,10 +54,13 @@ def post_comment(id):
           db.session.commit()
 
 
+
           res_comment={
             "id":new_comment.id,
             "content":comment,
-            "user_id":current_user.id
+            "user_id":current_user.id,
+            "author":current_user.username
+
           }
 
 
@@ -69,13 +72,54 @@ def post_comment(id):
   return jsonify("Login please")
 
 
+
+
 # Edit Comment
 @comments_bp.route('/tracks/<int:track_id>/comments/<int:comment_id>', methods=['PUT'])
-def edit_comment(comment_id):
-  comment = Comment.query.get(comment_id)
+def edit_comment(track_id,comment_id):
+  form=CommentForm()
 
-  # do stuff..
-  # comment.content = 'updated content'
-  # db.session.commit()
+  form['csrf_token'].data = request.cookies['csrf_token']
+  if current_user:
 
-  return 'Comment successfully updated.'
+      if form.validate_on_submit():
+          new_comment_content=form.data.get("comment")
+          comment = Comment.query.get(comment_id)
+          comment.content =new_comment_content
+          db.session.commit()
+
+          res_comment={
+            "id":comment.id,
+            "content":new_comment_content,
+            "user_id":current_user.id,
+            "author":current_user.username
+
+          }
+
+
+          return jsonify(res_comment)
+
+
+      if form.errors:
+          return jsonify(form.errors)
+  return jsonify("Login please")
+
+
+
+
+
+# Delete Comment
+
+@comments_bp.route("/tracks/<int:trackId>/comments/<int:commentId>",methods=["DELETE"])
+def delete_comment(trackId,commentId):
+  try:
+
+    comment= Comment.query.filter_by(id=commentId).first()
+    db.session.delete(comment)
+    db.session.commit()
+
+
+    return jsonify(comment.id), 200
+  except Exception as e:
+    db.session.rollback()
+    return jsonify({'error': 'An error occurred during deletion'}), 500

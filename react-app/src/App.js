@@ -53,13 +53,12 @@ function App() {
           <Route exact path="/songs/current">
             <ManageSongs />
           </Route>
-
-          <Route exact path="/songs/:songId">
+          <Route exact path="/tracks/:trackId">
             <GetSong />
             <GetComments />
           </Route>
 
-          <Route exact path="/songs/:songId/comments/new">
+          <Route path={["/tracks/:trackId/comments/new","/tracks/:trackId"]}>
             <CreateSongComment />
           </Route>
 
