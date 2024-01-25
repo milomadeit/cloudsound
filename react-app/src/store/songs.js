@@ -105,7 +105,7 @@ export const editSong = (songId, inputSong) => async (dispatch) => {
     dispatch(storeSong(songData));
     return { ok: true, data: songData };
   } else {
-    const errorData = response.json();
+    const errorData = await response.json();
     return { ok: false, errors: errorData };
   }
 };

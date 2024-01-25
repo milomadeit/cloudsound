@@ -37,6 +37,14 @@ const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_
         e.stopPropagation()
         history.push(`/songs/${id}`);
     };
+
+    const navigateToEditSong = (e, id) => {
+        e.stopPropagation()
+        history.push({
+            pathname: `/songs/${id}/edit`,
+            state: {song: song}
+         });
+    };
     
     const likeSongClick = async (e) => {
         e.stopPropagation()
@@ -74,7 +82,7 @@ const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_
 				<span>{play_count < 1 || 'undefined' ?  0 : play_count} plays {!song_likes ? 0 : song_likes } likes </span>
                 {isOwner && (
                     <span>
-                        <button className="edit-button" type='button'>Edit</button>
+                        <button onClick={(e) => navigateToEditSong(e, id)} className="edit-button" type='button'>Edit</button>
                         <OpenModalButton
               buttonText="Delete"
               modalComponent={<DeleteSongModal song={song} />}
