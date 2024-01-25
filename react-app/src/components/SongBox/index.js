@@ -63,10 +63,14 @@ const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_
             </div>
             <div className="song-stats"></div>
             <div className="song-box-actions">
-                <button className='song-box-like' type='button' onClick={(e) => likeSongClick(e)}>
-                {isLiked ? 'Unlike' : 'Like'}
-                </button>
-                <button>Add to Playlist</button>
+                {user && (
+                    <>
+                    <button className='song-box-like' type='button' onClick={(e) => likeSongClick(e)}>
+                    {isLiked ? 'Unlike' : 'Like'}
+                    </button>
+                    <button>Add to Playlist</button>
+                    </>
+                )}
 				<span>{play_count < 1 || 'undefined' ?  0 : play_count} plays {!song_likes ? 0 : song_likes } likes </span>
                 {isOwner && (
                     <span>
