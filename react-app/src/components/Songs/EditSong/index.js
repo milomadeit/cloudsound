@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams, useLocation} from "react-router-dom";
+import { useHistory, useParams, useLocation } from "react-router-dom";
 import { editSong } from "../../../store/songs";
 import { FOLK, HIP_HOP, JAZZ, LATIN, POP } from "../../../constants/genre";
+import "./EditSong.css";
 
 const EditSong = () => {
   const history = useHistory();
@@ -16,6 +17,7 @@ const EditSong = () => {
   const [genre, setGenre] = useState(song.genre);
   const [loading, setLoading] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     setIsMounted(true);
@@ -25,11 +27,16 @@ const EditSong = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form_errors = {};
-    if (!songFile) form_errors.songFile = 'Please attach song'
-    if (artist.length < 1) form_errors.artist = 'Please include artist name'
-    if (title.length < 1) form_errors.title = "Please include a title for your song"
-    if (!genre) form_errors.genre = "Please select a genre"
+    if (!songFile) form_errors.songFile = "Please attach song";
+    if (artist.length < 1) form_errors.artist = "Please include artist name";
+    if (title.length < 1)
+      form_errors.title = "Please include a title for your song";
+    if (!genre) form_errors.genre = "Please select a genre";
 
+    if (Object.keys(form_errors).length > 0) {
+      setErrors(form_errors);
+      return;
+    }
 
     const formData = new FormData();
     formData.append("song", songFile);
@@ -55,10 +62,17 @@ const EditSong = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} encType="multipart/form-data">
-      <div>
-        <label htmlFor="title">Title</label>
+    <form
+      className="edit-song-form"
+      onSubmit={handleSubmit}
+      encType="multipart/form-data"
+    >
+      <div className="edit-form-label-input-div">
+        <label className="edit-form-label" htmlFor="title">
+          Title
+        </label>
         <input
+          className="edit-form-input-text"
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -66,9 +80,14 @@ const EditSong = () => {
           id="title"
         />
       </div>
-      <div>
-        <label htmlFor="artist">Artist</label>
+      {errors.title && <p className="p-error">{errors.title}</p>}
+
+      <div className="edit-form-label-input-div">
+        <label className="edit-form-label" htmlFor="artist">
+          Artist
+        </label>
         <input
+          className="edit-form-input-text"
           type="text"
           value={artist}
           onChange={(e) => setArtist(e.target.value)}
@@ -76,9 +95,14 @@ const EditSong = () => {
           id="artist"
         />
       </div>
-      <div>
-        <label htmlFor="genre">Genre</label>
+      {errors.artist && <p className="p-error">{errors.artist}</p>}
+
+      <div className="edit-form-label-input-div">
+        <label className="edit-form-label" htmlFor="genre">
+          Genre
+        </label>
         <select
+          className="edit-form-input-select"
           name="genre"
           id="genre"
           onChange={(e) => setGenre(e.target.value)}
@@ -91,15 +115,20 @@ const EditSong = () => {
           <option value={JAZZ}>Jazz</option>
         </select>
       </div>
-      <div>
+      {errors.genre && <p className="p-error">{errors.genre}</p>}
+
+      <div className="edit-form-label-input-div edit-form-label-input-file-div">
         <input
           type="file"
           accept="audio/*"
           onChange={(e) => setSongFile(e.target.files[0])}
         />
       </div>
+      {errors.songFile && <p className="p-error">{errors.songFile}</p>}
 
-      <button type="submit">Submit</button>
+      <button className="edit-form-btn" type="submit" disabled={loading}>
+        Update Song
+      </button>
       {loading && <p>Loading...</p>}
     </form>
   );
