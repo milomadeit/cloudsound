@@ -82,8 +82,7 @@ const SongBox = ({
   };
 
   return (
-    // <div className="song-box" onClick={(e) => navigateToSongDetail(e, id)}>
-    <div className="song-box" onClick={(e) => navigateToSongDetail(e, id)}>
+    <div className="song-box" onClick={playSong}>
       <div className="song-box-header">
         <img
           src={image_url}
@@ -91,7 +90,10 @@ const SongBox = ({
           className="song-box-image"
         />
 
-        <div className="song-box-info">
+        <div
+          className="song-box-info"
+          onClick={(e) => navigateToSongDetail(e, id)}
+        >
           <h3>{title}</h3>
           <p>{artist}</p>
           <span className="genre-tag">{genre}</span>
@@ -111,7 +113,7 @@ const SongBox = ({
       </div> */}
 
       <div className="song-box-play-div">
-        <button className="song-box-play-btn" onClick={playSong}>
+        <button className="song-box-play-btn">
           <i className="fas fa-play" style={{ color: "#ff5500" }} />
         </button>
       </div>
