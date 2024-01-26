@@ -13,11 +13,13 @@ import heart from "../logo/heart.png"
 import addplaylist from "../logo/add-to-playlist-3.png"
 import trashbin from "../logo/delete-2.png"
 import edit from "../logo/edit.png"
+import chatcloud from "../logo/chatting.png"
+import play from "../logo/play.png"
 
 
 import * as commentActions from '../../../store/comments'
 const GetSong = () => {
-  const user = useSelector((state) => state.session.user);
+
   const history = useHistory()
   const location = useLocation();
   const [isLoaded, setIsLoaded] = useState(false)
@@ -25,7 +27,7 @@ const GetSong = () => {
   const { trackId } = useParams();
   const songId=trackId
   const comments = Object.values(useSelector((state) => state.comments));
-  const sessionUser = useSelector((state) => state.session.user);
+  const user = useSelector((state) => state.session.user);
   const song = useSelector((state) => state.songsReducer.allSongs[parseInt(songId)]);
   const isLiked = useSelector(state => state.likes.likedSongs[songId]?.liked === true);
   const [isOwner, setIsOwner ] = useState(false);
@@ -40,7 +42,7 @@ const GetSong = () => {
     if (user?.id) {
         dispatch(userLikes(user?.id));
     }
-    
+
     dispatch(commentActions.get_comments_thunk(songId))
       .then(() => setIsLoaded(true));
 
@@ -57,14 +59,14 @@ const GetSong = () => {
 
   const likeSongClick = async (e) => {
     e.stopPropagation()
-    
+
     if (isLiked) {
-        await dispatch(unlikeSong(songId)); 
+        await dispatch(unlikeSong(songId));
         await dispatch(userLikes(user.id))
     } else {
         await dispatch(likeSong(songId));
         await dispatch(userLikes(user.id))
-        
+
     }
   };
 
@@ -76,57 +78,83 @@ const GetSong = () => {
      });
 };
 
-
+console.log(song)
   return (
-    <div>
-      <div>
+    <div className="container-for-song-details">
+
+{user && (<div><CreateSongComment /></div>)}
+      <div className="first-container-for-song-details">
+
+
+    {user ? (
+      <div className="if-logged-in-features-on-song-details-page">
+
+        <span  onClick={(e) => likeSongClick(e)}><img
+      id="logo1"
+      src={heart}
+      alt="heart"
+      style={{
+        width: "20px",
+        height: "20px",
+        filter: isLiked ? "invert(20%) sepia(94%) saturate(7461%) hue-rotate(358deg) brightness(103%) contrast(119%)" : "none",
+      }}
+      onClick={(e) => likeSongClick(e)}
+    />
+    </span>
+      <span> <NavLink exact to="/"><img id="logo2"src={addplaylist} style={{width:"20px", height:"20px"}}/></NavLink></span>
+     {user.id===song.user_id && <span><button onClick={(e) => navigateToEditSong(e, song.id)}>Update song</button></span>}
+ </div>
+    ) : (<div className="empty-div-in-case-no-user"></div>)}
+
+
+
+    <div className="song-details-page-likes-and-times-played">
+    <span className="inner-song-details-page-likes-and-times-played"><div><img id="logo6" src={play} alt="play" style={{width: "20px", height: "20px"}}/>{song.play_count}</div><div> <img id="logo1" src={heart} alt="heart" style={{width: "20px", height: "20px"}}/>{song.likes}</div></span>
+    </div>
+
+    </div>
+
+
+
+
+
+      <div className="song-info-on-song-details-page">
         <h1>{song.title}</h1>
         <h2>{song.artist}</h2>
         <h3>{song.genre}</h3>
-        <h3>{song.likes}</h3>
+
+
 
       </div>
-      {user && (
-        <div>
-          <span  onClick={(e) => likeSongClick(e)}><img
-        id="logo1"
-        src={heart}
-        alt="heart"
-        style={{
-          width: "20px",
-          height: "20px",
-          filter: isLiked ? "invert(20%) sepia(94%) saturate(7461%) hue-rotate(358deg) brightness(103%) contrast(119%)" : "none",
-        }}
-        onClick={(e) => likeSongClick(e)}
-      />
-      </span>
-        <span> <NavLink exact to="/"><img id="logo2"src={addplaylist} style={{width:"20px", height:"20px"}}/></NavLink></span>
-        <span><button onClick={(e) => navigateToEditSong(e, song.id)}>Edit</button></span>
-        
-        <CreateSongComment />
-        </div>
-      )}
-      <div>
-        <h3>Comments:</h3>
+
+
+      <div className="comments-container-for-song-details-page">
+
+      {comments.length===1 && <span className="chatcloud-and-number-of-comments"><div><img id="logo5"src={chatcloud} style={{width:"20px", height:"20px"}}/></div><div><h3>{comments.length} comment</h3></div></span>}
+      {comments.length>1 && <span className="chatcloud-and-number-of-comments"><div><img id="logo5"src={chatcloud} style={{width:"20px", height:"20px"}}/></div><div><h3>{comments.length} comments</h3></div></span>}
+      {comments.length===0 && <span className="chatcloud-and-number-of-comments"><div><img id="logo5"src={chatcloud} style={{width:"20px", height:"20px"}}/></div><div><h3>No comments yet</h3></div></span>}
+<div className="container-for-list-of-comments">
         {isLoaded && ( comments.map((comment) =>
-          <div key={comment.id}>
+          <div key={comment.id} id="individual-comment-in-the-list-song-details-page">
             <div>User: {comment.author}</div>
               <div>{comment.content} </div>
-              {sessionUser && sessionUser.id===comment.user_id && (
+              {user && user.id===comment.user_id && (
                 <span>
                   <OpenModalButton buttonText={<img id="logo2"src={edit} style={{width:"20px", height:"20px"}}/>}
                   modalComponent={<EditCommentModal props={{comment,trackId}} />}
                   />
-                  <button id="delete-comment-button" 
-                  value={comment.id} 
+                  <button id="delete-comment-button"
+                  value={comment.id}
                   onClick={(e) => handleClickDeleteComment(e)}>
                   <img id="logo3"src={trashbin} style={{width:"20px", height:"20px"}}/>
                   </button>
                 </span>)}
 
         </div>
+
       ))
     }
+    </div>
   </div>
 
 
