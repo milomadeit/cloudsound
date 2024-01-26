@@ -1,7 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-// import './SongPlayer.css';
+import './SongPlayer.css';
 import { setCurrentSong } from '../../store/songs';
+import play from './icons/play.png'
+import pause from './icons/pause.png'
+import next from './icons/next.png'
+import prev from './icons/prev.png'
 
 const SongPlayer = () => {
     const currentSongsObject = useSelector((state) => state.songsReducer.allSongs);
@@ -60,11 +64,13 @@ const SongPlayer = () => {
         <div className='song-player'>
             <audio ref={audioRef} src={currentTrack.song_url} />
             <div className='song-player-controls'>
-                <button onClick={() => handlePrevTrack()} >&lt;&lt;</button>
-                <button onClick={togglePlayPause}>
-                    {isPlaying ? 'Pause' : 'Play'}
-                </button>
-                <button onClick={() => handleNextTrack()} >&gt;&gt;</button>
+                <img style={{
+        filter: "invert(100%)"}} className='next-prev-button' src={prev} onClick={() => handlePrevTrack()}/>
+                <img style={{
+        filter: "invert(100%)"
+      }} className='play-pause-button' onClick={togglePlayPause} src={isPlaying ? pause : play }/>
+                <img style={{
+        filter: "invert(100%)"}} className='next-prev-button' src={next} onClick={() => handleNextTrack()}/>
             </div>
         </div>
     );

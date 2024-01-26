@@ -1,0 +1,31 @@
+.song-player {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background-color: #333; 
+	color: white; 
+	text-align: center;
+	padding: 10px 0;
+	z-index: 1000;
+	
+  }
+
+  .play-pause-button {
+	height: 30px;
+	width: 30px;
+  }
+
+  .song-player-controls {
+
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+
+  }
+  .next-prev-button {
+	height: 30px;
+	width: 30px;
+	margin-left: 5px;
+	margin-right: 5px;	
+  }
