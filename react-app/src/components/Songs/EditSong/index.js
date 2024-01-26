@@ -21,13 +21,12 @@ const EditSong = () => {
 
   useEffect(() => {
     setIsMounted(true);
-    return () => setIsMounted(false); // Cleanup function to set isMounted to false
+    return () => setIsMounted(false); 
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form_errors = {};
-    if (!songFile) form_errors.songFile = "Please attach song";
     if (artist.length < 1) form_errors.artist = "Please include artist name";
     if (title.length < 1)
       form_errors.title = "Please include a title for your song";
@@ -51,12 +50,10 @@ const EditSong = () => {
       if (result.ok) {
         history.push("/");
       } else {
-        console.log("Song edit failed:", result.data);
-        // Handle the error data
+        return result.data
       }
     } catch (error) {
       console.error("An error occurred", error);
-      // Handle network or other unexpected errors
     }
     setLoading(false);
   };

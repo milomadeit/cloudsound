@@ -16,6 +16,7 @@ import EditSong from "./components/Songs/EditSong";
 import SongPlayer from "./components/SongPlayer";
 import CreateSongComment from "./components/CreateSongComment";
 import PlaylistDetails from "./components/Playlists/PlaylistDetails";
+import AddSongToPL from "./components/PlaylistSongs/AddPlaylistSong";
 
 function App() {
   const dispatch = useDispatch();
@@ -67,6 +68,10 @@ function App() {
               <CreatePlaylist />
             </Route>
           )}
+
+          <Route path="/playlists/add-song/:songId">
+            <AddSongToPL />
+          </Route>
 
           <Route path="/playlists/:playlist_id">
             <PlaylistDetails />

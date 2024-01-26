@@ -4,6 +4,7 @@ import { getAllSongs } from "../../../store/songs";
 import { FOLK, HIP_HOP, JAZZ, LATIN, POP } from "../../../constants/genre";
 import "./GetAllSongs.css";
 import GenreSongs from "../../GenreSongs";
+import * as playlistActions from '../../../store/playlists';
 
 const GetAllSongs = () => {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ const GetAllSongs = () => {
 
   useEffect(() => {
     dispatch(getAllSongs()).then(() => setLoading(false));
+    dispatch(playlistActions.get_playlists_thunk());
   }, [dispatch]);
 
   if (loading) return <h1>Loading...</h1>;

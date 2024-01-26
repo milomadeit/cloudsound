@@ -133,7 +133,10 @@ const SongBox = ({
               {!song_likes ? 0 : song_likes}
             </button>
 
-            <button className="song-box-action-btn">
+            <button
+              onClick={(e) => history.push(`/playlists/add-song/${id}`)}
+              className="song-box-action-btn"
+            >
               <i className="fas fa-plus" />
             </button>
           </>
@@ -160,5 +163,7 @@ const SongBox = ({
     </div>
   );
 };
+
+// fixing
 
 export default SongBox;
