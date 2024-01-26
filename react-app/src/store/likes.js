@@ -86,7 +86,6 @@ export const userLikes = (userId) => async (dispatch) => {
         const response = await fetch(`/api/likes/${userId}`);
         if (!response.ok) throw new Error('Failed to fetch user likes');
         const likedSongIds= await response.json();
-        console.log(likedSongIds)
         dispatch(setUserLikes(likedSongIds));
     } catch (error) {
         return error

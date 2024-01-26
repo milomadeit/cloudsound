@@ -18,9 +18,8 @@ const UploadSong = () => {
   const user = useSelector((state) => state.session.user);
 
   useEffect(() => {
-    console.log(user.id, "userrrrr");
     setIsMounted(true);
-    return () => setIsMounted(false); // Cleanup function to set isMounted to false
+    return () => setIsMounted(false); 
   }, [dispatch, user.id]);
 
   const handleSubmit = async (e) => {
@@ -50,12 +49,11 @@ const UploadSong = () => {
       if (result.ok) {
         history.push("/");
       } else {
-        console.log("Song upload failed:", result.data);
-        // Handle the error data
+        return result.data
+
       }
     } catch (error) {
       console.error("An error occurred", error);
-      // Handle network or other unexpected errors
     }
     setLoading(false);
   };

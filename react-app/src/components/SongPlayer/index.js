@@ -34,9 +34,9 @@ const SongPlayer = () => {
         };
     }, [isPlaying, currentTrack]);
 
-    if (!currentTrack?.song_url) {
-        return <div>...loading</div>;
-    }
+    // if (!currentTrack?.song_url) {
+    //     return <div>...click on a song to play</div>;
+    // }
 
     const togglePlayPause = () => {
         setIsPlaying(!isPlaying);

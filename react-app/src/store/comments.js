@@ -96,9 +96,6 @@ if(res.ok){
 return res
 }
 export const deleteCommentThunk = (trackId,commentId) => async (dispatch) => {
-  console.log(trackId)
-  console.log(commentId)
-
   const response=await fetch(`/api/tracks/${trackId}/comments/${commentId}`, {
     method: "DELETE",
 
@@ -127,7 +124,6 @@ const comments = (state = {}, action) => {
 
       return { ...state, [action.comment.id]: action.comment };
     case DELETE_COMMENT:
-      console.log(action.id)
       const newState = { ...state };
       delete newState[action.id];
       return newState;
