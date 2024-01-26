@@ -7,32 +7,13 @@ import DeleteSongModal from "../Songs/DeleteSongModal";
 import OpenModalButton from "../OpenModalButton";
 import { likeSong, likeCount, userLikes, unlikeSong } from "../../store/likes";
 
-const SongBox = ({
-  id,
-  artist,
-  title,
-  genre,
-  play_count,
-  likes,
-  song_url,
-  image_url,
-  user_id,
-}) => {
+const SongBox = ({id, artist, title, genre, play_count, likes, song_url, image_url, user_id }) => {
+  const song = { id, artist, title, genre, play_count, likes, song_url, image_url, user_id };
   const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
   const history = useHistory();
   const [isOwner, setIsOwner] = useState(false);
-  const song = {
-    id,
-    artist,
-    title,
-    genre,
-    play_count,
-    likes,
-    song_url,
-    image_url,
-    user_id,
-  };
+
   const isLiked = useSelector(
     (state) => state.likes.likedSongs[id]?.liked === true
   );

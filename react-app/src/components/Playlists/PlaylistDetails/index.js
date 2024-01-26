@@ -35,19 +35,19 @@ const PlaylistDetails = () => {
   return (
     <>
       <h1>Playlist Details:</h1>
-      <h2>--- {playlist.title} ---</h2>
+      <h2>--- {playlist?.title} ---</h2>
 
       {content &&
         content.map((thisSong) => (
           <div
             key={thisSong[0].id}
-          >{thisSong[0].title}
+          >{thisSong[0]?.title}
 
-            <div>By: {thisSong[0].artist}</div>
+            <div>By: {thisSong[0]?.artist}</div>
 
             <button
               onClick={(e) => removeSong(e)}
-              songid={thisSong[0].id}
+              songid={thisSong[0]?.id}
             >Remove</button>
             <hr></hr>
           </div>
