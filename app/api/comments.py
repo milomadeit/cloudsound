@@ -33,7 +33,6 @@ def get_comments_by_track_id(track_id):
 @comments_bp.route("/tracks/<int:id>/comments")
 def get_comment_form(id):
   form=CommentForm()
-  print(form)
   return {"form":form.comment}
 
 
