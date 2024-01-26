@@ -12,8 +12,8 @@
   }
 
   .play-pause-button {
-	height: 30px;
-	width: 30px;
+	height: 20px;
+	width: 20px;
   }
 
   .song-player-controls {
@@ -24,8 +24,8 @@
 
   }
   .next-prev-button {
-	height: 30px;
-	width: 30px;
+	height: 20px;
+	width: 20px;
 	margin-left: 5px;
 	margin-right: 5px;	
   }
