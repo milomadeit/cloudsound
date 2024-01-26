@@ -43,9 +43,11 @@ def get_pl_songs(playlistId):
 # Remove a song from playlist
 @pl_songs_bp.route('/playlists/<int:playlistId>/songs/<int:songId>', methods=['DELETE'])
 def remove_song_from_playlist(playlistId, songId):
-  remove_song = playlist_songs.delete().where(playlist_songs.c.song_id == songId)
-
+  remove_song = playlist_songs.delete().where(
+    playlist_songs.c.song_id == songId, playlist_songs.c.playlist_id == playlistId
+  )
 
   db.session.execute(remove_song)
+  db.session.commit()
 
   return jsonify({'j': 'hello'})

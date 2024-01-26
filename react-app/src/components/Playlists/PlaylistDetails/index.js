@@ -30,7 +30,6 @@ const PlaylistDetails = () => {
     const sId = e.target.getAttribute('songid')
 
     dispatch(plSongActions.remove_song(playlist_id, sId))
-    // console.log(id)
   }
 
   return (
