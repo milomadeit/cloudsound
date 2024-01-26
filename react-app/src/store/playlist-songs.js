@@ -31,12 +31,25 @@ export const get_playlist_songs = (id) => async (dispatch) => {
 }
 
 
+export const remove_song = (pId, sId) => async (dispatch) => {
+  const res = await fetch(`/api/playlists/${pId}/songs/${sId}`, {
+    method: 'DELETE',
+    body: { pId, sId }
+  })
+  const data = await res.json();
+  // dispatch(store_pl_songs(data))
+
+  return data
+}
+
+
 // REDUCER
-const playlistSongs = (state = {}, action) => {
-  let new_state = {};
+const playlistSongs = (state = [], action) => {
+  let new_state = [];
   switch (action.type) {
     case STORE_PL_SONGS:
-      action.songs.map((song) => new_state[song.pl_id] = song)
+      action.songs.map((song) => new_state.push(song))
+      return new_state;
 
     default:
       return state;
