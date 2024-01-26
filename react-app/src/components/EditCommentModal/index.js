@@ -38,7 +38,6 @@ const dispatch = useDispatch();
         if(typeof res ==="string"){
 
             errors.content=res
-            console.log(errors)
             setErrors(errors)
         }
 closeModal()

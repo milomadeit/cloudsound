@@ -58,6 +58,10 @@ def SongEdit(songId):
     current_song = Song.query.filter_by(id=songId).first()
     if not current_song:
         return jsonify({'error': 'song not found'}), 404
+    
+    if current_song.user_id != current_user.id:
+        return jsonify({}'error': 'you did not create this song'), 403  
+
 
     form = SongEditForm(CombinedMultiDict((request.files, request.form)))  # Initialize form with combined data
     form['csrf_token'].data = request.cookies['csrf_token']
@@ -84,7 +88,6 @@ def SongEdit(songId):
         return jsonify(response_data), 200
 
     if form.errors:
-        print(form.errors, 'yooooooooo')
         return jsonify(form.errors), 400
 
     return jsonify({'error': 'Invalid request'}), 400
@@ -115,7 +118,6 @@ def DeleteSong(songId):
         return jsonify({'message': 'song deleted successfully'}), 200
     except Exception as e:
         db.session.rollback()
-        print(f"error deleting song: {e}")
         return jsonify({'error': 'An error occurred during deletion'}), 500
 
 # get all songs by user id

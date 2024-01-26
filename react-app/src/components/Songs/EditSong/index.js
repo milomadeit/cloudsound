@@ -21,7 +21,7 @@ const EditSong = () => {
 
   useEffect(() => {
     setIsMounted(true);
-    return () => setIsMounted(false); // Cleanup function to set isMounted to false
+    return () => setIsMounted(false); 
   }, []);
 
   const handleSubmit = async (e) => {
@@ -50,12 +50,10 @@ const EditSong = () => {
       if (result.ok) {
         history.push("/");
       } else {
-        console.log("Song edit failed:", result.data);
-        // Handle the error data
+        return result.data
       }
     } catch (error) {
       console.error("An error occurred", error);
-      // Handle network or other unexpected errors
     }
     setLoading(false);
   };
