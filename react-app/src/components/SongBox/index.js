@@ -14,20 +14,20 @@ const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_
     const history = useHistory();
     const [isOwner, setIsOwner] = useState(false);
     const song = { id, artist, title, genre, play_count, likes, song_url, image_url, user_id };
-    const song_likes = useSelector((state) => state.likes.likedSongs[id]?.likes)
+    const isLiked = useSelector(state => state.likes.likedSongs[id]?.liked === true);
+
+
+    const song_likes = useSelector((state) => state.songsReducer.allSongs[id]?.likes)
+
     useEffect(() => {
         setIsOwner(user?.id === song.user_id);
-
-        dispatch(likeCount(id))
-
-
-
-    }, [dispatch, id, user, song.user_id, song_likes]);
-
+        dispatch(likeCount(id));
+        if (user?.id) {
+            dispatch(userLikes(user?.id));
+        }
+    }, [dispatch, id, user, song.user_id, isLiked]);
 
 
-
-    // extra functions
 
     const playSong = () => {
         dispatch(setCurrentSong(song));
@@ -36,8 +36,8 @@ const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_
     const navigateToSongDetail = (e, id) => {
         e.stopPropagation()
         history.push({
-            pathname: `/songs/${id}`,
-            state: { song: song }
+            pathname: `/songs/${id}`, 
+            state: {song: song}
         });
     };
 
@@ -49,12 +49,18 @@ const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_
         });
     };
 
-    const likeSongClick = async () => {
-        dispatch(likeSong(id, song_likes))
-    }
+    const likeSongClick = async (e) => {
+        e.stopPropagation()
 
+        if (isLiked) {
+            await dispatch(unlikeSong(id));
+            await dispatch(userLikes(user.id))
+        } else {
+            await dispatch(likeSong(id));
+            await dispatch(userLikes(user.id))
 
-
+        }
+    };
 
     return (
         <div className='song-box' onClick={playSong}>
@@ -66,13 +72,17 @@ const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_
                     <span className="genre-tag">{genre}</span>
                 </div>
             </div>
-
             <div className="song-stats"></div>
-
             <div className="song-box-actions">
-                <button className='song-box-like' type='button' onClick={() => likeSongClick()}>Like</button>
-                <button>Add to Playlist</button>
-                <span>{play_count < 1 || 'undefined' ? 0 : play_count} plays {song_likes < 1 ? 0 : song_likes} likes </span>
+                {user && (
+                    <>
+                        <button className='song-box-like' type='button' onClick={(e) => likeSongClick(e)}>
+                            {isLiked ? 'Unlike' : 'Like'}
+                        </button>
+                        <button>Add to Playlist</button>
+                    </>
+                )}
+                <span>{play_count < 1 || 'undefined' ? 0 : play_count} plays {!song_likes ? 0 : song_likes} likes </span>
                 {isOwner && (
                     <span>
                         <button onClick={(e) => navigateToEditSong(e, id)} className="edit-button" type='button'>Edit</button>
@@ -86,5 +96,8 @@ const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_
         </div>
     );
 };
+
+
+// fixing
 
 export default SongBox;

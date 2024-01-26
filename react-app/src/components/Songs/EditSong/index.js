@@ -27,7 +27,6 @@ const EditSong = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form_errors = {};
-    if (!songFile) form_errors.songFile = "Please attach song";
     if (artist.length < 1) form_errors.artist = "Please include artist name";
     if (title.length < 1)
       form_errors.title = "Please include a title for your song";
