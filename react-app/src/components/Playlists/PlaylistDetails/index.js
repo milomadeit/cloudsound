@@ -1,17 +1,17 @@
-// import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-// import * as playlistActions from '../../store/playlists';
+import * as plSongActions from '../../../store/playlist-songs';
 
 
 const PlaylistDetails = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const history = useHistory();
   const { playlist_id } = useParams()
 
-  // useEffect(() => {
-  //   dispatch(playlistActions.get_playlists_thunk())
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(plSongActions.get_playlist_songs(playlist_id))
+  }, [dispatch]);
 
   const playlist = useSelector((state) => state.playlists[playlist_id])
 

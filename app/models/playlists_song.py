@@ -3,10 +3,6 @@ from .song import Song
 from .playlist import Playlist
 
 
-
-from .playlist import Playlist
-from .song import Song
-
 # Should handle many to many relationship and create a join table
 
 playlist_songs = db.Table(

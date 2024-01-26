@@ -12,6 +12,8 @@ playlist_bp = Blueprint('playlist_bp', __name__)
 def get_user_playlists():
   userId = current_user.id
   playlists = Playlist.query.filter_by(user_id = userId)
+  # playlists = Playlist.query.filter_by(user_id = userId).join()
+
 
   user_playlists = [
     {
@@ -20,6 +22,9 @@ def get_user_playlists():
       'title': list.title
     }
     for list in playlists]
+
+  # for lst in user_playlists:
+  #   print(lst, '******')
 
   return jsonify(user_playlists)
 
