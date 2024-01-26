@@ -6,3 +6,10 @@
 .get-all-songs-genre-header {
   margin: 0 0 10px 0;
 }
+
+.genre-songs-grid {
+  display: grid;
+  grid: auto / repeat(auto-fill, 180px);
+  grid-gap: 5px;
+  max-width: 1000px;
+}
