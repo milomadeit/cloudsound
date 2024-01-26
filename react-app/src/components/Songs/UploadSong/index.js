@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { uploadSong } from "../../../store/songs";
 import { FOLK, HIP_HOP, JAZZ, LATIN, POP } from "../../../constants/genre";
+import "./UploadSong.css";
 
 const UploadSong = () => {
   const history = useHistory();
@@ -13,11 +14,11 @@ const UploadSong = () => {
   const [genre, setGenre] = useState("");
   const [loading, setLoading] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState({});
   const user = useSelector((state) => state.session.user);
 
   useEffect(() => {
-    console.log(user.id, 'userrrrr')
+    console.log(user.id, "userrrrr");
     setIsMounted(true);
     return () => setIsMounted(false); // Cleanup function to set isMounted to false
   }, [dispatch, user.id]);
@@ -25,12 +26,13 @@ const UploadSong = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form_errors = {};
-    if (artist.length < 1) form_errors.artist = 'Please include artist name'
-    if (title.length < 1) form_errors.title = "Please include a title for your song"
-    if (!genre) form_errors.genre = "Please select a genre"
+    if (artist.length < 1) form_errors.artist = "Please include artist name";
+    if (title.length < 1)
+      form_errors.title = "Please include a title for your song";
+    if (!genre) form_errors.genre = "Please select a genre";
 
     if (Object.keys(form_errors).length > 0) {
-      setErrors(form_errors)
+      setErrors(form_errors);
       return;
     }
 
@@ -39,7 +41,7 @@ const UploadSong = () => {
     formData.append("title", title);
     formData.append("artist", artist);
     formData.append("genre", genre);
-    formData.append('user_id', parseInt(user.id) )
+    formData.append("user_id", parseInt(user.id));
 
     if (isMounted) setLoading(true);
 
@@ -48,24 +50,28 @@ const UploadSong = () => {
       if (result.ok) {
         history.push("/");
       } else {
-        console.log('Song upload failed:', result.data);
+        console.log("Song upload failed:", result.data);
         // Handle the error data
       }
     } catch (error) {
-      console.error('An error occurred', error);
+      console.error("An error occurred", error);
       // Handle network or other unexpected errors
     }
     setLoading(false);
   };
 
   return (
-    <form onSubmit={handleSubmit} encType="multipart/form-data">
-      <div>
-      {errors.title && (
-            <p>{errors.title}</p>
-          )}
-        <label htmlFor="title">Title</label>
+    <form
+      className="upload-song-form"
+      onSubmit={handleSubmit}
+      encType="multipart/form-data"
+    >
+      <div className="upload-form-label-input-div">
+        <label className="upload-form-label" htmlFor="title">
+          Title
+        </label>
         <input
+          className="upload-form-input-text"
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -73,12 +79,14 @@ const UploadSong = () => {
           id="title"
         />
       </div>
-      <div>
-      {errors.artist && (
-            <p>{errors.artist}</p>
-          )}
-        <label htmlFor="artist">Artist</label>
+      {errors.title && <p className="p-error">{errors.title}</p>}
+
+      <div className="upload-form-label-input-div">
+        <label className="upload-form-label" htmlFor="artist">
+          Artist
+        </label>
         <input
+          className="upload-form-input-text"
           type="text"
           value={artist}
           onChange={(e) => setArtist(e.target.value)}
@@ -86,12 +94,14 @@ const UploadSong = () => {
           id="artist"
         />
       </div>
-      <div>
-      {errors.genre && (
-            <p>{errors.genre}</p>
-          )}
-        <label htmlFor="genre">Genre</label>
+      {errors.artist && <p className="p-error">{errors.artist}</p>}
+
+      <div className="upload-form-label-input-div">
+        <label className="upload-form-label" htmlFor="genre">
+          Genre
+        </label>
         <select
+          className="upload-form-input-select"
           name="genre"
           id="genre"
           onChange={(e) => setGenre(e.target.value)}
@@ -104,18 +114,20 @@ const UploadSong = () => {
           <option value={JAZZ}>Jazz</option>
         </select>
       </div>
-      <div>
-      {errors.songFile && (
-            <p>{errors.songFile}</p>
-          )}
+      {errors.genre && <p className="p-error">{errors.genre}</p>}
+
+      <div className="upload-form-label-input-div upload-form-label-input-file-div">
         <input
           type="file"
           accept="audio/*"
           onChange={(e) => setSongFile(e.target.files[0])}
         />
       </div>
+      {errors.songFile && <p className="p-error">{errors.songFile}</p>}
 
-      <button type="submit">Submit</button>
+      <button className="upload-form-btn" type="submit" disabled={loading}>
+        Upload Song
+      </button>
       {loading && <p>Loading...</p>}
     </form>
   );
