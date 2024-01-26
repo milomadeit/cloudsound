@@ -35,4 +35,4 @@ def create_playlist():
   db.session.add(new_playlist)
   db.session.commit()
 
-  return jsonify('Playlist created!')
+  return jsonify(new_playlist)
