@@ -1,14 +1,8 @@
 """empty message
 
-<<<<<<<< HEAD:migrations/versions/2910d49be055_.py
-Revision ID: 2910d49be055
+Revision ID: e549d6603c97
 Revises: 
-Create Date: 2024-01-23 16:14:41.294609
-========
-Revision ID: 7494685656d5
-Revises:
-Create Date: 2024-01-23 18:42:20.657726
->>>>>>>> get-song:migrations/versions/7494685656d5_.py
+Create Date: 2024-01-25 17:41:38.149712
 
 """
 from alembic import op
@@ -16,11 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-<<<<<<<< HEAD:migrations/versions/2910d49be055_.py
-revision = '2910d49be055'
-========
-revision = '7494685656d5'
->>>>>>>> get-song:migrations/versions/7494685656d5_.py
+revision = 'e549d6603c97'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -81,16 +71,6 @@ def upgrade():
     sa.ForeignKeyConstraint(['song_id'], ['songs.id'], ),
     sa.PrimaryKeyConstraint('song_id', 'playlist_id')
     )
-<<<<<<<< HEAD:migrations/versions/2910d49be055_.py
-========
-    if environment == "production":
-        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
-        op.execute(f"ALTER TABLE songs SET SCHEMA {SCHEMA};")
-        op.execute(f"ALTER TABLE playlists SET SCHEMA {SCHEMA};")
-        op.execute(f"ALTER TABLE comments SET SCHEMA {SCHEMA};")
-        op.execute(f"ALTER TABLE likes SET SCHEMA {SCHEMA};")
-        op.execute(f"ALTER TABLE playlist_songs SET SCHEMA {SCHEMA};")
->>>>>>>> get-song:migrations/versions/7494685656d5_.py
     # ### end Alembic commands ###
 
 
