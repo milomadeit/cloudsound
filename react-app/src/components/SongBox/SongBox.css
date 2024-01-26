@@ -42,21 +42,16 @@
 .song-box-info {
   max-width: 90px;
 }
+.song-box-info:hover {
+  text-decoration: underline;
+}
 .song-box-info h3 {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-
-.song-box-info h3 {
   margin: 0;
   font-size: 1em;
 }
-
-/* .song-box-info h3:hover {
-  text-decoration: underline;
-} */
-
 .song-box-info p {
   margin: 0;
   color: #666;
