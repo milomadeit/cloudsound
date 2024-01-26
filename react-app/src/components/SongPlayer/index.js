@@ -1,18 +1,22 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 // import './SongPlayer.css';
+import { setCurrentSong } from '../../store/songs';
 
 const SongPlayer = () => {
-    // const currentSongsObject = useSelector((state) => state.songsReducer.currentSong);
-    // const currentSongs = Object.values(currentSongsObject);
+    const currentSongsObject = useSelector((state) => state.songsReducer.allSongs);
+    const dispatch = useDispatch();
+    const currentSongs = Object.values(currentSongsObject);
     const [isPlaying, setIsPlaying] = useState(false);
-    // const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+    const [currentSong, setCurrentSong] = useState({})
+    const [currentTrackIndex, setCurrentTrackIndex] = useState(1);
     const audioRef = useRef(null);
 
     const currentTrack = useSelector((state) => state.songsReducer.currentSong);
 
     useEffect(() => {
         const current_ref = audioRef.current
+        // dispatch(setCurrentSong(currentTrack));  
         if (current_ref) {
             if (isPlaying) {
                 current_ref.play();
@@ -20,6 +24,7 @@ const SongPlayer = () => {
                 current_ref.pause();
             }
         }
+
 
         // Cleanup function
         return () => {
@@ -37,17 +42,17 @@ const SongPlayer = () => {
         setIsPlaying(!isPlaying);
     };
 
-    // const handlePrevTrack = () => {
-    //     setCurrentTrackIndex(prevIndex =>
-    //         prevIndex - 1 < 0 ? currentSongs.length - 1 : prevIndex - 1
-    //     );
-    // };
+    const handlePrevTrack = () => {
+        setCurrentTrackIndex(prevIndex =>
+            prevIndex - 1 < 0 ? currentSongs.length - 1 : prevIndex - 1
+        );
+    };
 
-    // const handleNextTrack = () => {
-    //     setCurrentTrackIndex(prevIndex =>
-    //         prevIndex < currentSongs.length - 1 ? prevIndex + 1 : 0
-    //     );
-    // };
+    const handleNextTrack = () => {
+        setCurrentTrackIndex(prevIndex =>
+            prevIndex < currentSongs.length - 1 ? prevIndex + 1 : 0
+        );
+    };
 
 	
 
@@ -55,11 +60,11 @@ const SongPlayer = () => {
         <div className='song-player'>
             <audio ref={audioRef} src={currentTrack.song_url} />
             <div className='song-player-controls'>
-                <button >&lt;&lt;</button>
+                <button onClick={() => handlePrevTrack()} >&lt;&lt;</button>
                 <button onClick={togglePlayPause}>
                     {isPlaying ? 'Pause' : 'Play'}
                 </button>
-                <button >&gt;&gt;</button>
+                <button onClick={() => handleNextTrack()} >&gt;&gt;</button>
             </div>
         </div>
     );
