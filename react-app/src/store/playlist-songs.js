@@ -1,10 +1,11 @@
-const GET_SONGS = 'GET_SONGS'
+const STORE_PL_SONGS = 'GET_PL_SONGS'
 
 
 // ACTIONS
-const store_song = () => {
+const store_pl_songs = (songs) => {
   return {
-    type: GET_SONGS,
+    type: STORE_PL_SONGS,
+    songs
   }
 }
 
@@ -21,20 +22,34 @@ export const add_song_to_pl = (formData, playlistId) => async (dispatch) => {
 }
 
 
-// export const get_playlists_thunk = () => async (dispatch) => {
-//   const res = await fetch(`/api/playlists/current`)
-//   const data = await res.json();
-//   dispatch(store_playlists(data))
+export const get_playlist_songs = (id) => async (dispatch) => {
+  const res = await fetch(`/api/playlists/${id}/songs`)
+  const data = await res.json();
+  dispatch(store_pl_songs(data))
 
-//   return data
-// }
+  return data
+}
+
+
+export const remove_song = (pId, sId) => async (dispatch) => {
+  const res = await fetch(`/api/playlists/${pId}/songs/${sId}`, {
+    method: 'DELETE',
+    body: { pId, sId }
+  })
+  const data = await res.json();
+  // dispatch(store_pl_songs(data))
+
+  return data
+}
 
 
 // REDUCER
-const playlistSongs = (state = {}, action) => {
-  let new_state = {};
+const playlistSongs = (state = [], action) => {
+  let new_state = [];
   switch (action.type) {
-
+    case STORE_PL_SONGS:
+      action.songs.map((song) => new_state.push(song))
+      return new_state;
 
     default:
       return state;
