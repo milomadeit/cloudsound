@@ -36,8 +36,8 @@ const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_
     const navigateToSongDetail = (e, id) => {
         e.stopPropagation()
         history.push({
-            pathname: `/songs/${id}`, 
-            state: {song: song}
+            pathname: `/songs/${id}`,
+            state: { song: song }
         });
     };
 
@@ -79,7 +79,7 @@ const SongBox = ({ id, artist, title, genre, play_count, likes, song_url, image_
                         <button className='song-box-like' type='button' onClick={(e) => likeSongClick(e)}>
                             {isLiked ? 'Unlike' : 'Like'}
                         </button>
-                        <button>Add to Playlist</button>
+                        <button onClick={(e) => history.push(`/playlists/add-song/${id}`)}>Add to Playlist</button>
                     </>
                 )}
                 <span>{play_count < 1 || 'undefined' ? 0 : play_count} plays {!song_likes ? 0 : song_likes} likes </span>
