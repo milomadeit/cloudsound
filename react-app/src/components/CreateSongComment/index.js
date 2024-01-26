@@ -52,20 +52,21 @@ setComment("")
              <form onSubmit={handleSubmit}>
 
                     <div className="errors">{errors.comment}</div>
-                   <div className="input-field-1">
-                    <label>
+                   <div className="comment-input-field">
+                    <div className="comment-input-field-field">
 
-                        <input
+                        <input id="input-comment"
                             type="text"
                             value={comment}
                             onChange={(e) => setComment(e.target.value)}
                             placeholder="Write a comment"
                             required
                         />
-                    </label>
 
-
+</div>
+<div className="comment-input-field-button">
                     <button id="submit-for-post-a-comment"type="submit" ><img id="send-logo"src={image} style={{width:"20px", height:"20px"}}/></button>
+                    </div>
         </div>
                 </form>
 </div>
