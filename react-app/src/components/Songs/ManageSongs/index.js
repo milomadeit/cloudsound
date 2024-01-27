@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { getCurrentUserSongs } from "../../../store/songs";
+import { getAllSongs, getCurrentUserSongs } from "../../../store/songs";
 import GenreSongs from "../../GenreSongs";
 
 const ManageSongs = () => {
@@ -19,6 +19,7 @@ const ManageSongs = () => {
       history.push("/");
       return;
     }
+    dispatch(getAllSongs())
     dispatch(getCurrentUserSongs()).then(() => setLoading(false));
   }, [dispatch, user, history]);
 
