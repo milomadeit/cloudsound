@@ -32,22 +32,23 @@ const GetSong = () => {
   const song = useSelector((state) => state.songsReducer.allSongs[parseInt(songId)]);
   const isLiked = useSelector(state => state.likes.likedSongs[songId]?.liked === true);
   const [isOwner, setIsOwner] = useState(false);
-  const song_check = location.state.song;
+  const song_check = location.state?.song || song
 
 
 
   useEffect(() => {
-    setIsOwner(user?.id === song_check.user_id);
+    setIsOwner(user?.id === song_check?.user_id);
     dispatch(getAllSongs());
     dispatch(likeCount(songId));
     if (user?.id) {
       dispatch(userLikes(user?.id));
     }
+    
 
     dispatch(commentActions.get_comments_thunk(songId))
       .then(() => setIsLoaded(true));
 
-  }, [dispatch, songId, song_check.user_id, user])
+  }, [dispatch, songId, song_check, user])
 
   if (!song?.title) {
     return <div>...loading</div>

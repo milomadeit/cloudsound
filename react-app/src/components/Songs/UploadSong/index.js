@@ -18,9 +18,14 @@ const UploadSong = () => {
   const user = useSelector((state) => state.session.user);
 
   useEffect(() => {
+    if(!user) {
+      history.push('/login')
+    }
     setIsMounted(true);
     return () => setIsMounted(false); 
-  }, [dispatch, user.id]);
+  }, [dispatch, user.id, user, history]);
+
+ 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
