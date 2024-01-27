@@ -1,9 +1,9 @@
 from flask import Blueprint, jsonify, request
 from ..models import db
 # from flask_login import current_user
-from app.models.playlists_song import playlist_songs
 from app.models.song import Song
 from sqlalchemy import select, delete
+from app.models.playlists_song import playlist_songs
 
 
 pl_songs_bp = Blueprint('pl_songs_bp', __name__)
