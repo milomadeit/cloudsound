@@ -56,7 +56,7 @@ class Song(db.Model):
 	image_url = db.Column(db.String())
 
 	user = db.relationship('User', back_populates='songs')
-	playlists = db.relationship('Playlist', secondary='playlistsongs', back_ps='songs')
+	playlists = db.relationship('Playlist', secondary='playlistsongs', back_populates='songs')
 	likes_relationship = db.relationship('Like', back_populates='song', cascade="all, delete-orphan")
 	comments=db.relationship("Comment", back_populates="song",  cascade="all, delete-orphan")
 
