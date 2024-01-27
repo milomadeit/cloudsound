@@ -2,11 +2,14 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import * as plSongActions from '../../../store/playlist-songs';
+import './index.css'
 
 
 const PlaylistDetails = () => {
   const dispatch = useDispatch();
-  const { playlist_id } = useParams()
+  const { playlist_id } = useParams();
+
+  const user = useSelector((state) => state.session)
 
   useEffect(() => {
     dispatch(plSongActions.get_playlist_songs(playlist_id))
@@ -34,22 +37,23 @@ const PlaylistDetails = () => {
 
   return (
     <>
-      <h1>Playlist Details:</h1>
-      <h2>--- {playlist?.title} ---</h2>
+      <h2 className="plH">--- {playlist?.title} ---</h2>
+      <hr className="plHr"></hr>
 
       {content &&
         content.map((thisSong) => (
           <div
             key={thisSong[0].id}
+            className="plSongDiv"
           >{thisSong[0]?.title}
 
-            <div>By: {thisSong[0]?.artist}</div>
+            <div className="songBy">By: {thisSong[0]?.artist}</div>
 
             <button
               onClick={(e) => removeSong(e)}
               songid={thisSong[0]?.id}
             >Remove</button>
-            <hr></hr>
+            <hr className="plHr2"></hr>
           </div>
         ))
       }
