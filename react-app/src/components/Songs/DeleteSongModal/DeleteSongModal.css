@@ -1,0 +1,29 @@
+.delete-song-modal-div {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.delete-song-modal-buttons-div {
+  display: flex;
+  gap: 5px;
+}
+
+.delete-song-modal-buttons-div button {
+  color: white;
+  height: 30px;
+  width: 100px;
+  border: 1px solid #666;
+  border-radius: 4px;
+  font-size: 14px;
+}
+.delete-song-modal-cancel-btn {
+  background-color: #433e3c;
+  border: 1px solid #666;
+  width: 65px;
+}
+.delete-song-modal-delete-btn {
+  background-color: #ff5500;
+  width: 120px;
+}
