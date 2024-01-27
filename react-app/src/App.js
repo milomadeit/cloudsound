@@ -45,11 +45,10 @@ function App() {
           )}
 
           {sessionUser && (
-            <Route path="/songs/edit/:songId">
+            <Route path="/songs/:songId/edit">
               <EditSong />
             </Route>
           )}
-
 
           <Route exact path="/songs/current">
             <ManageSongs />
@@ -59,7 +58,10 @@ function App() {
             <GetSong />
           </Route>
 
-          <Route exact path={["/songs/:trackId/comments/new", "/songs/:trackId"]}>
+          <Route
+            exact
+            path={["/songs/:trackId/comments/new", "/songs/:trackId"]}
+          >
             <CreateSongComment />
           </Route>
 
@@ -84,7 +86,6 @@ function App() {
           <Route path="/">
             <GetAllSongs />
           </Route>
-
         </Switch>
       )}
       <SongPlayer />
