@@ -12,4 +12,4 @@ class Playlist(db.Model):
 	user_id = db.Column(db.Integer, db.ForeignKey(User.id))
 
 	user = db.relationship('User', back_populates='playlists')
-	songs = db.relationship('Song', secondary="playlist_songs", back_populates="playlists")
+	songs = db.relationship('Song', secondary="playlistsongs", back_populates="playlists")
