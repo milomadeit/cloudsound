@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import * as plSongActions from '../../../store/playlist-songs'
 import { getAllSongs } from "../../../store/songs";
 
 
 const AddSongToPL = () => {
   const dispatch = useDispatch();
-  // const history = useHistory();
   const { songId } = useParams();
 
   const [playlistId, setPlaylistId] = useState(0)

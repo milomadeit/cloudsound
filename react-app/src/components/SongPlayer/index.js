@@ -78,7 +78,7 @@ const SongPlayer = () => {
     };
     
 
-	
+
 
     return (
         <div className='song-player'>
@@ -86,11 +86,13 @@ const SongPlayer = () => {
             <div className='song-player-controls'>
                 <img style={{
                     filter: "invert(100%)"}} className='next-prev-button' src={prev} />
+                }} 
                 <img style={{
-                     filter: "invert(100%)"
-      }} className='play-pause-button' onClick={togglePlayPause} src={isPlaying ? pause : play }/>
+                    filter: "invert(100%)"
+                }} className='play-pause-button' onClick={togglePlayPause} src={isPlaying ? pause : play} />
                 <img style={{
                     filter: "invert(100%)"}} className='next-prev-button' src={next}/>
+                }}
             </div>
         </div>
     );
