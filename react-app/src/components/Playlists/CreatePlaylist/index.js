@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import * as playlistActions from '../../../store/playlists';
+import './index.css'
 
 
 const CreatePlaylist = () => {
@@ -40,14 +41,18 @@ const CreatePlaylist = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Title:
+    <form onSubmit={handleSubmit} className="plForm">
+      <h2
+      >Create A Playlist!</h2>
+
+      <div className="labelInputDiv">
+        <label className="plLabel">Title:
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Playlist Title"
+            className="plInput"
           />
         </label>
       </div>
@@ -57,6 +62,7 @@ const CreatePlaylist = () => {
       <button
         type="submit"
         disabled={title.length ? false : true}
+        className="createPlBtn"
       >Create Playlist!</button>
     </form>
   )
