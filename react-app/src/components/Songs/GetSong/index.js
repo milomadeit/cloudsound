@@ -109,7 +109,7 @@ const GetSong = () => {
               onClick={(e) => likeSongClick(e)}
             />
             </span>
-            {user.id === song.user_id && <span><OpenModalButton buttonText={<img alt="" id="logo7" src={addplaylist} style={{ width: "20px", height: "20px" }} />}
+            {user.id && <span><OpenModalButton buttonText={<img alt="" id="logo7" src={addplaylist} style={{ width: "20px", height: "20px" }} />}
                     modalComponent={<AddSongToPlaylistModal props={{ trackId }} />}
                   /></span>}
             {user.id === song.user_id && <span><button onClick={(e) => navigateToEditSong(e, song.id)}>Update song</button></span>}
