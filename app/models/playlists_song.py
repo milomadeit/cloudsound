@@ -4,12 +4,13 @@ from .playlist import Playlist
 
 table_name = "playlist_songs"
 if environment == "production":
-    table_name = f"{SCHEMA}.playlist_songs"
+    __tablename__ = f"{SCHEMA}.playlist_songs"
+    __table_args__ = {'schema': SCHEMA}
 
 
 # Should handle many to many relationship and create a join table
 playlist_songs = db.Table(
-    table_name,
+    __tablename__,
     db.metadata,
     db.Column("song_id", db.ForeignKey(Song.id), primary_key=True),
     db.Column("playlist_id", db.ForeignKey(Playlist.id), primary_key=True))
