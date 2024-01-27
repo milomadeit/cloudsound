@@ -2,6 +2,10 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from .song import Song
 from .playlist import Playlist
 
+import os
+environment = os.getenv("FLASK_ENV")
+SCHEMA = os.environ.get('SCHEMA')
+
 
 table_name = "playlist_songs"
 if environment == "production":
