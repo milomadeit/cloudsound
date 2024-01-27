@@ -6,7 +6,7 @@ import "./Navigation.css";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
-
+import cloudSoundLogo from "./CloudSound-logos_transparent.png"
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
 
@@ -18,7 +18,7 @@ function Navigation({ isLoaded }) {
         exact
         to="/"
       >
-        CLOUDSOUND
+        <img alt="" id="logo10" src={cloudSoundLogo}   />
       </NavLink>
       {isLoaded && sessionUser && (
         <>

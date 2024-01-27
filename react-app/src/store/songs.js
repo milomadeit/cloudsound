@@ -51,6 +51,7 @@ export const uploadSong = (inputSong) => async (dispatch) => {
     return { ok: true, data: songData };
   } else {
     const errorData = response.json();
+    console.log(errorData)
     return { ok: false, data: errorData };
   }
 };
