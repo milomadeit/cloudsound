@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request, redirect
 from ..forms.song_validation_form import SongForm
+from ..forms.song_edit_form import SongEditForm
 from .s3buckets import get_unique_filename, upload_file_to_s3, remove_file_from_s3
 from ..models import db, Song
 from flask_login import current_user
@@ -25,13 +26,13 @@ def SongUpload():
                 upload = upload_file_to_s3(song_file)
 
                 if 'url' not in upload:
-                    return jsonify('upload failed')
+                    return jsonify({'error': 'upload failed'}), 500
 
                 url = upload['url']
 
                 # create new song in table
                 new_song = Song(
-                user_id=current_user.id,
+                user_id=request.form.get('user_id'),
                 title=request.form.get('title'),
                 artist=request.form.get('artist'),
                 genre=request.form.get('genre'),
@@ -40,10 +41,12 @@ def SongUpload():
                 db.session.add(new_song)
                 db.session.commit()
                 response_data = new_song.to_dict()
+                print(response_data)
                 return (jsonify(response_data), 200)
 
         if form.errors:
-            return jsonify(form.errors)
+            print(form.errors)
+            return jsonify(form.errors), 400
 
     return 'must be logged in to upload a song'
 
@@ -58,7 +61,11 @@ def SongEdit(songId):
     if not current_song:
         return jsonify({'error': 'song not found'}), 404
 
-    form = SongForm(CombinedMultiDict((request.files, request.form)))  # Initialize form with combined data
+    if current_song.user_id != current_user.id:
+        return jsonify({'error': 'you did not create this song'}), 403
+
+
+    form = SongEditForm(CombinedMultiDict((request.files, request.form)))  # Initialize form with combined data
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
@@ -74,9 +81,9 @@ def SongEdit(songId):
             remove_file_from_s3(old_song_url)
             current_song.song_url = upload['url']
 
-        current_song.title = form.title.data or current_song.title
-        current_song.artist = form.artist.data or current_song.artist
-        current_song.genre = form.genre.data or current_song.genre
+        current_song.title = request.form.get('title') or current_song.title
+        current_song.artist = request.form.get('artist') or current_song.artist
+        current_song.genre = request.form.get('genre') or current_song.genre
 
         db.session.commit()
         response_data = current_song.to_dict()  # Assuming you have a to_dict method
@@ -103,6 +110,7 @@ def DeleteSong(songId):
 
     # check if user is the owner of the song
     if song.user_id != current_user.id:
+
         return jsonify({'error': 'unauthorized'}), 403
 
     try:
@@ -122,7 +130,8 @@ def UserSongs():
         return jsonify({'error': 'must be logged in to view your songs'}), 401
 
     user_songs = Song.query.filter_by(user_id=current_user.id)
-    songs_list = [{'id':song.id, 'title': song.title, 'artist': song.artist, 'genre': song.genre, 'song_url': song.song_url, 'likes': song.likes} for song in user_songs]
+    songs_list = [{'id':song.id, 'title': song.title, 'artist': song.artist, 'genre': song.genre, 'song_url': song.song_url, 'likes': song.likes, 'play_count': song.play_count, 'user_id': song.user_id} for song in user_songs]
+
 
     return jsonify(songs_list)
 
@@ -131,6 +140,10 @@ def UserSongs():
 @song_routes.route('')
 def AllSongs():
     all_songs = Song.query.all()
-    songs_list = [{'id':song.id, 'title': song.title, 'artist': song.artist, 'genre': song.genre, 'song_url': song.song_url, 'likes': song.likes} for song in all_songs]
+    songs_list = [{'id':song.id, 'title': song.title, 'artist': song.artist, 'genre': song.genre, 'song_url': song.song_url, 'likes': song.likes, 'play_count': song.play_count, 'user_id':song.user_id} for song in all_songs]
 
     return jsonify(songs_list)
+
+# #get song by id
+# @song_routes.route("/<int:songId>")
+# def getSong():

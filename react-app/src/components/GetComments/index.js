@@ -6,6 +6,7 @@ import * as commentActions from '../../store/comments';
 
 function GetComments() {
   const dispatch = useDispatch();
+
   const { track_id } = useParams();
   const [isLoaded, setIsLoaded] = useState(false)
 
@@ -18,19 +19,19 @@ function GetComments() {
 
   return (
     <>
-      <h3>Comments:</h3>
-      {isLoaded && (
-        comments.map((comment) =>
-          <div key={comment.id}>
-            <span>User: {comment.author}</span>
-            <div>
-              Says: {comment.content}
-            </div>
-            <hr></hr>
+    <h3>Comments:</h3>
+    {isLoaded && (
+      comments.map((comment) =>
+        <div key={comment.id}>
+          <span>User: {comment.author}</span>
+          <div>
+            Says: {comment.content}
           </div>
-        )
-      )}
-    </>
+          <hr></hr>
+        </div>
+      )
+    )}
+  </>
   )
 }
 

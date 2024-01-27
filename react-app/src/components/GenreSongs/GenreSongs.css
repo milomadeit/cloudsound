@@ -1,0 +1,15 @@
+.genre-songs-div {
+  padding: 10px 0;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.get-all-songs-genre-header {
+  margin: 0 0 10px 0;
+}
+
+.genre-songs-grid {
+  display: grid;
+  grid: auto / repeat(auto-fill, 180px);
+  grid-gap: 5px;
+  max-width: 1000px;
+}

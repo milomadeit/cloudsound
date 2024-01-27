@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllSongs } from "../../../store/songs";
-import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 import { FOLK, HIP_HOP, JAZZ, LATIN, POP } from "../../../constants/genre";
+import "./GetAllSongs.css";
+import GenreSongs from "../../GenreSongs";
+import * as playlistActions from '../../../store/playlists';
 
 const GetAllSongs = () => {
   const dispatch = useDispatch();
@@ -12,6 +14,7 @@ const GetAllSongs = () => {
 
   useEffect(() => {
     dispatch(getAllSongs()).then(() => setLoading(false));
+    dispatch(playlistActions.get_playlists_thunk());
   }, [dispatch]);
 
   if (loading) return <h1>Loading...</h1>;
@@ -31,72 +34,13 @@ const GetAllSongs = () => {
   );
 
   return (
-    <div>
-      <div>
-        <h2>Pop</h2>
-        {popSongs.map((song) => (
-          <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
-            <div>{song.title}</div>
-            <div>{song.artist}</div>
-            <br />
-          </NavLink>
-        ))}
-      </div>
-
-      <div>
-        <h2>Latin</h2>
-        {latinSongs.map((song) => (
-          <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
-            <div>{song.title}</div>
-            <div>{song.artist}</div>
-            <br />
-          </NavLink>
-        ))}
-      </div>
-
-      <div>
-        <h2>Folk</h2>
-        {folkSongs.map((song) => (
-          <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
-            <div>{song.title}</div>
-            <div>{song.artist}</div>
-            <br />
-          </NavLink>
-        ))}
-      </div>
-
-      <div>
-        <h2>Hip-Hop</h2>
-        {hipHopSongs.map((song) => (
-          <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
-            <div>{song.title}</div>
-            <div>{song.artist}</div>
-            <br />
-          </NavLink>
-        ))}
-      </div>
-
-      <div>
-        <h2>Jazz</h2>
-        {jazzSongs.map((song) => (
-          <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
-            <div>{song.title}</div>
-            <div>{song.artist}</div>
-            <br />
-          </NavLink>
-        ))}
-      </div>
-
-      <div>
-        <h2>Others</h2>
-        {otherSongs.map((song) => (
-          <NavLink key={song.id} to={`/songs/${song.id}`} title={song.title}>
-            <div>{song.title}</div>
-            <div>{song.artist}</div>
-            <br />
-          </NavLink>
-        ))}
-      </div>
+    <div className="get-all-songs-main-div">
+      <GenreSongs genre="Pop" songs={popSongs} />
+      <GenreSongs genre="Latin" songs={latinSongs} />
+      <GenreSongs genre="Folk" songs={folkSongs} />
+      <GenreSongs genre="Hip-Hop" songs={hipHopSongs} />
+      <GenreSongs genre="Jazz" songs={jazzSongs} />
+      <GenreSongs genre="Others" songs={otherSongs} />
     </div>
   );
 };

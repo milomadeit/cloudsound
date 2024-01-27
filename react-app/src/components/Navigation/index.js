@@ -3,37 +3,75 @@ import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
-
+import OpenModalButton from "../OpenModalButton";
+import LoginFormModal from "../LoginFormModal";
+import SignupFormModal from "../SignupFormModal";
+import cloudSoundLogo from "./CloudSound-logos_transparent.png"
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
 
   return (
-    <ul>
-      <li>
-        <NavLink exact to="/">
-          Home
-        </NavLink>
-      </li>
-      {isLoaded && (
-        <li>
-          <ProfileButton user={sessionUser} />
-        </li>
-      )}
+    <nav className="navigation-nav">
+      <NavLink
+        activeClassName="navigation-active-link"
+        className="navigation-link navigation-home-button"
+        exact
+        to="/"
+      >
+        <img alt="" id="logo10" src={cloudSoundLogo}   />
+      </NavLink>
       {isLoaded && sessionUser && (
         <>
-          <li>
-            <NavLink exact to="/songs/new">
-              Upload
-            </NavLink>
-          </li>
-          <li>
-            <NavLink exact to="/songs/current">
-              Manage My Songs
-            </NavLink>
-          </li>
+          <NavLink
+            activeClassName="navigation-active-link"
+            className="navigation-link"
+            exact
+            to="/songs/new"
+          >
+            Upload
+          </NavLink>
+          <NavLink
+            activeClassName="navigation-active-link"
+            className="navigation-link"
+            exact
+            to="/songs/current"
+          >
+            Manage My Songs
+          </NavLink>
+          <NavLink
+            activeClassName="navigation-active-link"
+            className="navigation-link"
+            exact
+            to="/playlists/new"
+          >
+            Create Playlist
+          </NavLink>
+          <NavLink
+            activeClassName="navigation-active-link"
+            className="navigation-link"
+            exact
+            to="/playlists"
+          >
+            My Playlists
+          </NavLink>
+          <ProfileButton user={sessionUser} />
         </>
       )}
-    </ul>
+      {isLoaded && !sessionUser && (
+        <div className="nav-signIn-signUp-div">
+          <OpenModalButton
+            buttonText="Sign In"
+            modalComponent={<LoginFormModal />}
+            className="nav-sign-in-up-btn nav-sign-in-btn"
+          />
+          <OpenModalButton
+            buttonText="Create account"
+            modalComponent={<SignupFormModal />}
+            className="nav-sign-in-up-btn nav-sign-up-btn"
+          />
+        </div>
+      )}
+    </nav>
   );
 }
 

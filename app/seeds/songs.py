@@ -2,12 +2,9 @@ from app.models import db, Song, environment, SCHEMA
 from sqlalchemy.sql import text
 
 def seed_songs():
-    song1 = Song(
-        user_id=1, artist='PrincessK', title='Sweet', genre='edm', song_url='https://cloudsoundsongs.s3.amazonaws.com/sweet.mp3')
-    song2 = Song(
-        user_id=2, artist='BeatLorde', title='Chill vibesss', genre='synth', song_url='https://cloudsoundsongs.s3.amazonaws.com/old+school+2.mp3')
-    song3 = Song(
-        user_id=3, artist='Don Ron', title='For the homies', genre='underground', song_url='https://cloudsoundsongs.s3.amazonaws.com/Moore+Kismet+-+Rumor+(ft.+WYN).mp3')
+    song1 = Song(user_id=2, title='Sweet', artist='Oakland', genre='pop', song_url='https://cloudsoundsongs.s3.amazonaws.com/81dd5228f6bd472d80db94362dd65297.mp3', likes=103, play_count=220)
+    song2 = Song(user_id=2, title='Rumor', artist='Kismet', genre='pop', song_url='https://cloudsoundsongs.s3.amazonaws.com/1155c0eda7f1400bbd0814e5004748bf.mp3', likes=1367, play_count=2930)
+    song3 = Song(user_id=2, title='Old School', artist='Cameron', genre='jazz', song_url='https://cloudsoundsongs.s3.amazonaws.com/12080afb7f4b42fa8c4537d81975c356.mp3', likes=724, play_count=1032)
 
     db.session.add(song1)
     db.session.add(song2)

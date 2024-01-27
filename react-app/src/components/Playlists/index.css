@@ -1,0 +1,18 @@
+.plDiv {
+  padding-left: 20px;
+  margin-top: 10px;
+  width: fit-content;
+  font-weight: bolder;
+}
+
+.plDiv:hover {
+  cursor: pointer;
+}
+
+.plH2 {
+  padding-left: 20px;
+}
+
+.plHr {
+  margin: 10px 20px;
+}

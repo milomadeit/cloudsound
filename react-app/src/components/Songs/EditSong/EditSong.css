@@ -1,0 +1,42 @@
+.edit-song-form {
+  display: flex;
+  flex-direction: column;
+  margin: 25px auto;
+  width: 60%;
+  height: 250px;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 0 24px;
+  border: 1px solid #f2f2f2;
+  border-radius: 2px;
+  box-shadow: 0 2px 12px -5px rgba(0, 0, 0, 0.1);
+}
+
+.edit-form-label-input-div {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
+
+.edit-form-label {
+  display: flex;
+  width: 32%;
+}
+
+.edit-form-input-text,
+.edit-form-input-select {
+  margin-left: 10px;
+  height: 30px;
+  width: 100%;
+}
+
+.edit-form-btn {
+  color: white;
+  height: 36px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: #ff5500;
+  width: 80%;
+}

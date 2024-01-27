@@ -1,0 +1,65 @@
+#delete-comment-button{
+    border: none;
+    cursor: pointer;
+    appearance: none;
+    background-color: inherit;
+}
+
+
+.chatcloud-and-number-of-comments{
+    display:flex;
+    align-items: center;
+}
+.container-for-song-details{
+width: 100%;
+
+display: flex;
+flex-direction: column;
+margin: 25px auto;
+justify-content: stretch;
+
+
+align-items: flex-start;
+
+}
+.first-container-for-song-details{
+display:flex;
+flex-direction:row;
+justify-content: space-between;
+
+width:100%;
+align-items:center;
+padding-bottom: 30px;
+}
+
+.inner-song-details-page-likes-and-times-played{
+display:flex;
+flex-direction: row;
+justify-content:space-between;
+
+width: 100%;
+
+}
+.if-logged-in-features-on-song-details-page{
+    display:flex;
+
+
+    justify-content: space-around;
+}
+.song-info-on-song-details-page{
+    padding-bottom: 30px;
+}
+#individual-comment-in-the-list-song-details-page{
+    padding-bottom: 18px;
+}
+#button-for-add-to-playlist-song-details-page{
+border: none;
+cursor: pointer;
+appearance: none;
+background-color: inherit;
+}
+.starter{
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+}
