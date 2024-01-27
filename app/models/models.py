@@ -122,7 +122,7 @@ class Playlist(db.Model):
 	user_id = db.Column(db.Integer, db.ForeignKey(User.id))
 
 	user = db.relationship('User', back_populates='playlists')
-	songs = db.relationship('Song', secondary=playlistsongs, back_populates="playlists")
+	songs = db.relationship('Song', secondary='playlistsongs', back_populates="playlists")
       
 __tablename__ = "playlistsongs"
 if environment == "production":
