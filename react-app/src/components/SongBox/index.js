@@ -91,6 +91,10 @@ const SongBox = ({
     }
   };
 
+  const stopProp = (e) => {
+    e.stopPropagation();
+  }
+
   return (
     <div className="song-box" onClick={playSong}>
       <div className="song-box-header">
@@ -109,7 +113,6 @@ const SongBox = ({
           <span className="genre-tag">{genre}</span>
         </div>
       </div>
-
       <div className="song-box-play-div">
         <button className="song-box-play-btn">
           <i className="fas fa-play" style={{ color: "#ff5500" }} />
@@ -117,7 +120,7 @@ const SongBox = ({
       </div>
 
       <div className="song-box-actions">
-        {user && (
+        {user ? (
           <>
             <button
               className={`song-box-action-btn ${
@@ -144,6 +147,16 @@ const SongBox = ({
               />
             </button>
           </>
+        ) : (
+          <div className="song-box-no-user-like">
+          <button onClick={(e) => stopProp(e)}>
+          <i
+            className="fas fa-heart fa-2xs"
+            style={{ color: `${isLiked ? "red" : "black"}` }}
+          ></i>{" "}
+          {!song_likes ? 0 : song_likes}
+          </button>
+          </div>
         )}
 
         {isOwner && (
