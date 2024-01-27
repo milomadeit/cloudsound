@@ -70,6 +70,10 @@ const SongBox = ({id, artist, title, genre, play_count, likes, song_url, image_u
     }
   };
 
+  const stopProp = (e) => {
+    e.stopPropagation();
+  }
+
   return (
     <div className="song-box" onClick={playSong}>
       <div className="song-box-header">
@@ -88,19 +92,6 @@ const SongBox = ({id, artist, title, genre, play_count, likes, song_url, image_u
           <span className="genre-tag">{genre}</span>
         </div>
       </div>
-
-      {/* <div className="song-stats">
-        <div>
-          <i className="fas fa-heart fa-2xs" style={{ color: "#c1c2c2" }}></i>{" "}
-          {!song_likes ? 0 : song_likes}
-        </div>
-
-        <div>
-          <i className="fas fa-play fa-2xs" style={{ color: "#c1c2c2" }}></i>{" "}
-          {play_count < 1 || "undefined" ? 0 : play_count}
-        </div>
-      </div> */}
-
       <div className="song-box-play-div">
         <button className="song-box-play-btn">
           <i className="fas fa-play" style={{ color: "#ff5500" }} />
@@ -108,7 +99,7 @@ const SongBox = ({id, artist, title, genre, play_count, likes, song_url, image_u
       </div>
 
       <div className="song-box-actions">
-        {user && (
+        {user ? (
           <>
             <button
               className={`song-box-action-btn ${
@@ -131,6 +122,16 @@ const SongBox = ({id, artist, title, genre, play_count, likes, song_url, image_u
               <img alt="" id="logo2" src={addplaylist} style={{ width: "20px", height: "20px" }} />
             </button>
           </>
+        ) : (
+          <div className="song-box-no-user-like">
+          <button onClick={(e) => stopProp(e)}>
+          <i
+            className="fas fa-heart fa-2xs"
+            style={{ color: `${isLiked ? "red" : "black"}` }}
+          ></i>{" "}
+          {!song_likes ? 0 : song_likes}
+          </button>
+          </div>
         )}
 
         {isOwner && (

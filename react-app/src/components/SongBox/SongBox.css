@@ -74,7 +74,7 @@
 .song-stats {
   display: flex;
   width: inherit;
-  justify-content: space-around;
+  justify-content: center;
 }
 
 .song-stats span {
@@ -111,3 +111,7 @@
   border: 1px solid red;
 }
 
+.song-box-no-user-like {
+  display: grid;
+  grid:100%;
+}
