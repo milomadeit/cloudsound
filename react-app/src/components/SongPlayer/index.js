@@ -18,53 +18,45 @@ const SongPlayer = () => {
 
     const currentTrack = useSelector((state) => state.songsReducer.currentSong);
 
+    // useEffect to autoplay when currentTrack changes
+    useEffect(() => {
+        const currentRef = audioRef.current;
+        if (!currentRef || !currentTrack.song_url) return;
+
+        currentRef.src = currentTrack.song_url;
+        if (isPlaying) {
+            currentRef.play().catch((err) => console.error("Error playing the track:", err));
+        }
+    }, [currentTrack]);
+
+    // useEffect to handle play/pause toggles
     useEffect(() => {
         const currentRef = audioRef.current;
         if (!currentRef) return;
-    
-        // plays the current track
-        const playCurrentTrack = async () => {
-            try {
-                await currentRef.play();
-                setIsPlaying(true); 
-            } catch (error) {
-                // console.error("Playback was prevented:", error);
-                setIsPlaying(false); 
-            }
-        };
-    
-        // plays new song when currentTrack changes
-        // also attempts to auto-play when the component mounts and currentTrack is already set
-        if (currentTrack.song_url) {
-            playCurrentTrack();
-        }
-    
-        // function to pause the song when the component unmounts or before playing a new track
-        return () => {
-            currentRef.pause();
-        };
-    }, [currentTrack]); 
-    
 
-    // if (!currentTrack?.song_url) {
-    //     return <div>...click on a song to play</div>;
-    // }
+        isPlaying ? currentRef.play().catch((err) => console.error("Error playing the track:", err)) : currentRef.pause();
+    }, [isPlaying]); // Re-run when isPlaying changes
+
 
     const togglePlayPause = () => {
-        setIsPlaying(!isPlaying);
+        setIsPlaying((prevIsPlaying) => !prevIsPlaying);
     };
+    
 
     const handlePrevTrack = () => {
-        setCurrentTrackIndex(prevIndex =>
-            prevIndex - 1 < 0 ? currentSongs.length - 1 : prevIndex - 1
-        );
+        const newIndex = currentTrackIndex - 1 < 0 ? currentSongs.length - 1 : currentTrackIndex - 1;
+        setCurrentTrackIndex(newIndex);
+        const newTrack = currentSongs[newIndex];
+        dispatch(setCurrentSong(newTrack)); // Assuming `setCurrentSong` updates `currentTrack` in Redux.
     };
-
+    
     const handleNextTrack = () => {
-        setCurrentTrackIndex(prevIndex =>
-            prevIndex < currentSongs.length - 1 ? prevIndex + 1 : 0
-        );
+        const newIndex = currentTrackIndex < currentSongs.length - 1 ? currentTrackIndex + 1 : 0;
+        setCurrentTrackIndex(newIndex);
+        const newTrack = currentSongs[newIndex];
+        dispatch(setCurrentSong(newTrack));
     };
+    
 
 	
 
@@ -73,12 +65,12 @@ const SongPlayer = () => {
             <audio ref={audioRef} src={currentTrack.song_url} />
             <div className='song-player-controls'>
                 <img style={{
-                    filter: "invert(100%)"}} className='next-prev-button' src={prev} onClick={() => handlePrevTrack()}/>
+                    filter: "invert(100%)"}} className='next-prev-button' src={prev} />
                 <img style={{
                      filter: "invert(100%)"
       }} className='play-pause-button' onClick={togglePlayPause} src={isPlaying ? pause : play }/>
                 <img style={{
-                    filter: "invert(100%)"}} className='next-prev-button' src={next} onClick={() => handleNextTrack()}/>
+                    filter: "invert(100%)"}} className='next-prev-button' src={next}/>
             </div>
         </div>
     );
