@@ -43,7 +43,7 @@ width: 100%;
 .if-logged-in-features-on-song-details-page{
     display:flex;
 
-    width:30%;
+
     justify-content: space-around;
 }
 .song-info-on-song-details-page{
@@ -57,4 +57,9 @@ border: none;
 cursor: pointer;
 appearance: none;
 background-color: inherit;
+}
+.starter{
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
 }

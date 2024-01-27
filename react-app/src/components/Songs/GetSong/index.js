@@ -43,7 +43,7 @@ const GetSong = () => {
     if (user?.id) {
       dispatch(userLikes(user?.id));
     }
-    
+
 
     dispatch(commentActions.get_comments_thunk(songId))
       .then(() => setIsLoaded(true));
@@ -60,10 +60,7 @@ const GetSong = () => {
   }
 
 
-  const handleClickAddToPlaylist = (e) => {
-    e.preventDefault()
 
-  }
 
 
   const likeSongClick = async (e) => {
@@ -87,11 +84,22 @@ const GetSong = () => {
     });
   };
 
-  console.log(song)
+
   return (
     <div className="container-for-song-details">
+      <div className="starter">
+ <div className="song-info-on-song-details-page">
+        <h1>{song.title}</h1>
+        <h2>{song.artist}</h2>
+        <h3>{song.genre}</h3>
 
-      {user && (<div><CreateSongComment /></div>)}
+
+
+      </div>
+      <div className="song-details-page-likes-and-times-played">
+          <span className="inner-song-details-page-likes-and-times-played"><div><img id="logo6" src={play} alt="play" style={{ width: "20px", height: "20px" }} />{song.play_count}</div><div> <img id="logo1" src={heart} alt="heart" style={{ width: "20px", height: "20px" }} />{song.likes}</div></span>
+        </div>
+</div>
       <div className="first-container-for-song-details">
 
 
@@ -119,26 +127,17 @@ const GetSong = () => {
 
 
 
-        <div className="song-details-page-likes-and-times-played">
-          <span className="inner-song-details-page-likes-and-times-played"><div><img id="logo6" src={play} alt="play" style={{ width: "20px", height: "20px" }} />{song.play_count}</div><div> <img id="logo1" src={heart} alt="heart" style={{ width: "20px", height: "20px" }} />{song.likes}</div></span>
-        </div>
-
-      </div>
-
-
-
-
-
-      <div className="song-info-on-song-details-page">
-        <h1>{song.title}</h1>
-        <h2>{song.artist}</h2>
-        <h3>{song.genre}</h3>
-
 
 
       </div>
 
 
+
+
+
+
+
+      {user && (<div><CreateSongComment /></div>)}
       <div className="comments-container-for-song-details-page">
 
         {comments.length === 1 && <span className="chatcloud-and-number-of-comments"><div><img alt="" id="logo5" src={chatcloud} style={{ width: "20px", height: "20px" }} /></div><div><h3>{comments.length} comment</h3></div></span>}
