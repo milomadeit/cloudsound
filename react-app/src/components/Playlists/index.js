@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import * as playlistActions from '../../store/playlists';
+import './index.css'
 
 
 const Playlists = () => {
@@ -16,13 +17,18 @@ const Playlists = () => {
 
   return (
     <>
-      <h1>Playlists: </h1>
+      <h2
+        className="plH2"
+      >My Playlists</h2>
+      <hr className="plHr"></hr>
+
       {playlists.map((list) =>
         <div key={list.id}>
-          <span
+          <div
             onClick={(e) => history.push(`/playlists/${list.id}`)}
-          >Title: {list.title}</span>
-          <hr></hr>
+            className="plDiv"
+          >{list.title}</div>
+          <hr className="plHr"></hr>
         </div>
       )}
     </>
