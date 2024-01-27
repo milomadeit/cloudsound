@@ -28,8 +28,8 @@ def seed():
         undo_songs()
 
     seed_users()
-    seed_comments()
     seed_songs()
+    seed_comments()
     # Add other seed functions here
 
 
