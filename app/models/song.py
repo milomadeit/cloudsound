@@ -1,7 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from sqlalchemy.orm import declarative_base, relationship
 from .user import User
-from playlists_song import playlistsongs
+from .playlists_song import playlistsongs
 
 class Song(db.Model):
 	__tablename__ = 'songs'
