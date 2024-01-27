@@ -6,9 +6,30 @@ import "./SongBox.css";
 import DeleteSongModal from "../Songs/DeleteSongModal";
 import OpenModalButton from "../OpenModalButton";
 import { likeSong, likeCount, userLikes, unlikeSong } from "../../store/likes";
-import addplaylist from "../Songs/logo/add-to-playlist-3.png"
-const SongBox = ({id, artist, title, genre, play_count, likes, song_url, image_url, user_id }) => {
-  const song = { id, artist, title, genre, play_count, likes, song_url, image_url, user_id };
+import addplaylist from "../Songs/logo/add-to-playlist-3.png";
+
+const SongBox = ({
+  id,
+  artist,
+  title,
+  genre,
+  play_count,
+  likes,
+  song_url,
+  image_url,
+  user_id,
+}) => {
+  const song = {
+    id,
+    artist,
+    title,
+    genre,
+    play_count,
+    likes,
+    song_url,
+    image_url,
+    user_id,
+  };
   const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
   const history = useHistory();
@@ -119,7 +140,11 @@ const SongBox = ({id, artist, title, genre, play_count, likes, song_url, image_u
               onClick={(e) => navigateToAddToPlaylist(e, id)}
               className="song-box-action-btn"
             >
-              <img alt="" id="logo2" src={addplaylist} style={{ width: "20px", height: "20px" }} />
+              <img
+                alt="add-to-playlist"
+                className="song-box-add-to-playlist-img"
+                src={addplaylist}
+              />
             </button>
           </>
         ) : (
@@ -141,12 +166,14 @@ const SongBox = ({id, artist, title, genre, play_count, likes, song_url, image_u
               onClick={(e) => navigateToEditSong(e, id)}
               type="button"
             >
-              Edit
+              <i className="fas fa-edit"></i>
             </button>
 
             <OpenModalButton
               className="song-box-action-btn"
-              buttonText="Delete"
+              buttonText={
+                <i className="fas fa-trash-alt" style={{ color: "red" }}></i>
+              }
               modalComponent={<DeleteSongModal song={song} />}
             />
           </>

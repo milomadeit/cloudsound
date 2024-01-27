@@ -31,14 +31,6 @@
   margin-right: 10px;
 }
 
-.song-box img {
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
-  border-radius: 50%;
-  align-items: flex-start;
-}
-
 .song-box-info {
   max-width: 90px;
 }
@@ -95,7 +87,7 @@
 
 .song-box-actions {
   display: grid;
-  grid: auto / repeat(auto-fill, 70px);
+  grid: 25px / repeat(auto-fill, 70px);
   grid-gap: 5px;
 }
 
@@ -104,6 +96,7 @@
   color: black;
   border: 1px solid black;
   border-radius: 4px;
+  height: 25px;
 }
 
 .song-box-liked {
@@ -115,3 +108,9 @@
   display: grid;
   grid:100%;
 }
+
+.song-box-add-to-playlist-img {
+  height: 13px;
+  width: auto;
+}
+
