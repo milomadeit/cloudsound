@@ -19,32 +19,23 @@ const SongPlayer = () => {
     const currentTrack = useSelector((state) => state.songsReducer.currentSong);
 
     useEffect(() => {
-        const currentRef = audioRef.current;
-        if (!currentRef) return;
-    
-        // plays the current track
-        const playCurrentTrack = async () => {
-            try {
-                await currentRef.play();
-                setIsPlaying(true); 
-            } catch (error) {
-                // console.error("Playback was prevented:", error);
-                setIsPlaying(false); 
+        const current_ref = audioRef.current
+        // dispatch(setCurrentSong(currentTrack));
+        if (current_ref) {
+            if (isPlaying) {
+                current_ref.play();
+            } else {
+                current_ref.pause();
             }
-        };
-    
-        // plays new song when currentTrack changes
-        // also attempts to auto-play when the component mounts and currentTrack is already set
-        if (currentTrack.song_url) {
-            playCurrentTrack();
         }
-    
-        // function to pause the song when the component unmounts or before playing a new track
+
+
+        // Cleanup function
         return () => {
             currentRef.pause();
         };
-    }, [currentTrack]); 
-    
+    }, [currentTrack]);
+
 
     // if (!currentTrack?.song_url) {
     //     return <div>...click on a song to play</div>;
@@ -66,19 +57,21 @@ const SongPlayer = () => {
         );
     };
 
-	
+
 
     return (
         <div className='song-player'>
             <audio ref={audioRef} src={currentTrack.song_url} />
             <div className='song-player-controls'>
                 <img style={{
-                    filter: "invert(100%)"}} className='next-prev-button' src={prev} onClick={() => handlePrevTrack()}/>
+                    filter: "invert(100%)"
+                }} className='next-prev-button' src={prev} onClick={() => handlePrevTrack()} />
                 <img style={{
-                     filter: "invert(100%)"
-      }} className='play-pause-button' onClick={togglePlayPause} src={isPlaying ? pause : play }/>
+                    filter: "invert(100%)"
+                }} className='play-pause-button' onClick={togglePlayPause} src={isPlaying ? pause : play} />
                 <img style={{
-                    filter: "invert(100%)"}} className='next-prev-button' src={next} onClick={() => handleNextTrack()}/>
+                    filter: "invert(100%)"
+                }} className='next-prev-button' src={next} onClick={() => handleNextTrack()} />
             </div>
         </div>
     );
