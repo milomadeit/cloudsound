@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import * as plSongActions from '../../../store/playlist-songs';
@@ -6,12 +6,11 @@ import * as plSongActions from '../../../store/playlist-songs';
 
 const PlaylistDetails = () => {
   const dispatch = useDispatch();
-  // const history = useHistory();
   const { playlist_id } = useParams()
 
   useEffect(() => {
     dispatch(plSongActions.get_playlist_songs(playlist_id))
-  }, [dispatch]);
+  }, [dispatch, playlist_id]);
 
   const playlist = useSelector((state) => state.playlists[playlist_id]);
   const pl_songs = Object.values(useSelector((state) => state.playlistSongs));

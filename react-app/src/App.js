@@ -6,7 +6,6 @@ import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import UploadSong from "./components/Songs/UploadSong";
-import GetComments from "./components/GetComments";
 import CreatePlaylist from "./components/Playlists/CreatePlaylist";
 import Playlists from "./components/Playlists/index";
 import GetAllSongs from "./components/Songs/GetAllSongs";
@@ -59,7 +58,7 @@ function App() {
 
           </Route>
 
-          <Route path={["/songs/:trackId/comments/new","/songs/:trackId"]}>
+          <Route path={["/songs/:trackId/comments/new", "/songs/:trackId"]}>
             <CreateSongComment />
           </Route>
 

@@ -16,7 +16,7 @@ const SongPlayer = () => {
 
     useEffect(() => {
         const current_ref = audioRef.current
-        // dispatch(setCurrentSong(currentTrack));  
+        // dispatch(setCurrentSong(currentTrack));
         if (current_ref) {
             if (isPlaying) {
                 current_ref.play();
@@ -54,7 +54,7 @@ const SongPlayer = () => {
         );
     };
 
-	
+
 
     return (
         <div className='song-player'>
