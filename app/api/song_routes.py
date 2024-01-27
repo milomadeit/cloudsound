@@ -41,6 +41,7 @@ def SongUpload():
                 db.session.add(new_song)
                 db.session.commit()
                 response_data = new_song.to_dict()
+                print(response_data)
                 return (jsonify(response_data), 200)
 
         if form.errors:
