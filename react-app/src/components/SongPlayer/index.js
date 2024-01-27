@@ -27,12 +27,32 @@ const SongPlayer = () => {
         if (isPlaying) {
             currentRef.play().catch((err) => console.error("Error playing the track:", err));
         }
+
+        const playCurrentTrack = async () => {
+            try {
+                await currentRef.play();
+                setIsPlaying(true); 
+            } catch (error) {
+                // console.error("Playback was prevented:", error);
+                setIsPlaying(false); 
+            }
+        };
+    
+        // plays new song when currentTrack changes
+        // also attempts to auto-play when the component mounts and currentTrack is already set
+        if (currentTrack.song_url) {
+            playCurrentTrack();
+        }
+    
+
     }, [currentTrack]);
 
     // useEffect to handle play/pause toggles
     useEffect(() => {
         const currentRef = audioRef.current;
         if (!currentRef) return;
+
+
 
         isPlaying ? currentRef.play().catch((err) => console.error("Error playing the track:", err)) : currentRef.pause();
     }, [isPlaying]); // Re-run when isPlaying changes

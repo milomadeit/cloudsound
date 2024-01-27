@@ -50,6 +50,14 @@ const SongBox = ({id, artist, title, genre, play_count, likes, song_url, image_u
     });
   };
 
+  const navigateToAddToPlaylist = (e, id) => {
+    e.stopPropagation();
+    history.push({
+      pathname: `/playlists/add-song/${id}`,
+      state: { song: song },
+    });
+  };
+
   const likeSongClick = async (e) => {
     e.stopPropagation();
 
@@ -117,7 +125,7 @@ const SongBox = ({id, artist, title, genre, play_count, likes, song_url, image_u
             </button>
 
             <button
-              onClick={(e) => history.push(`/playlists/add-song/${id}`)}
+              onClick={(e) => navigateToAddToPlaylist(e, id)}
               className="song-box-action-btn"
             >
               <i className="fas fa-plus" />
