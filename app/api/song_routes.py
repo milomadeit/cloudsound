@@ -104,6 +104,7 @@ def DeleteSong(songId):
         return jsonify({'error': 'must be logged in to delete a song'}), 401
 
     song = Song.query.filter_by(id=songId).first()
+
     # check that song exists
     if not song:
         return jsonify({'error': 'could not find song'}), 404
@@ -114,11 +115,12 @@ def DeleteSong(songId):
         return jsonify({'error': 'unauthorized'}), 403
 
     try:
-        remove_file_from_s3(song.song_url)
+        # remove_file_from_s3(song.song_url)
         db.session.delete(song)
         db.session.commit()
         return jsonify({'message': 'song deleted successfully'}), 200
     except Exception as e:
+        print(e)
         db.session.rollback()
         return jsonify({'error': 'An error occurred during deletion'}), 500
 
