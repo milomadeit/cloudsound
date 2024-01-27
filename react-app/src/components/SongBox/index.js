@@ -6,7 +6,7 @@ import "./SongBox.css";
 import DeleteSongModal from "../Songs/DeleteSongModal";
 import OpenModalButton from "../OpenModalButton";
 import { likeSong, likeCount, userLikes, unlikeSong } from "../../store/likes";
-
+import addplaylist from "../Songs/logo/add-to-playlist-3.png"
 const SongBox = ({id, artist, title, genre, play_count, likes, song_url, image_url, user_id }) => {
   const song = { id, artist, title, genre, play_count, likes, song_url, image_url, user_id };
   const dispatch = useDispatch();
@@ -120,7 +120,7 @@ const SongBox = ({id, artist, title, genre, play_count, likes, song_url, image_u
               onClick={(e) => history.push(`/playlists/add-song/${id}`)}
               className="song-box-action-btn"
             >
-              <i className="fas fa-plus" />
+              <img alt="" id="logo2" src={addplaylist} style={{ width: "20px", height: "20px" }} />
             </button>
           </>
         )}

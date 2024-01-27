@@ -5,6 +5,7 @@ import { getAllSongs } from "../../../store/songs";
 import CreateSongComment from "../../CreateSongComment";
 import OpenModalButton from "../../OpenModalButton";
 import EditCommentModal from "../../EditCommentModal";
+import AddSongToPlaylistModal from "../../AddSongToPlaylistModal"
 import "./GetSong.css";
 import { likeSong, likeCount, userLikes, unlikeSong } from "../../../store/likes";
 
@@ -108,7 +109,9 @@ const GetSong = () => {
               onClick={(e) => likeSongClick(e)}
             />
             </span>
-            {user.id === song.user_id && <span><button id="button-for-add-to-playlist-song-details-page" onClick={(e) => handleClickAddToPlaylist(e)}><img alt="" id="logo2" src={addplaylist} style={{ width: "20px", height: "20px" }} /></button></span>}
+            {user.id === song.user_id && <span><OpenModalButton buttonText={<img alt="" id="logo7" src={addplaylist} style={{ width: "20px", height: "20px" }} />}
+                    modalComponent={<AddSongToPlaylistModal props={{ trackId }} />}
+                  /></span>}
             {user.id === song.user_id && <span><button onClick={(e) => navigateToEditSong(e, song.id)}>Update song</button></span>}
           </div>
         ) : (<div className="empty-div-in-case-no-user"></div>)}
