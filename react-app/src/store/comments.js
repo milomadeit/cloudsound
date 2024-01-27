@@ -64,10 +64,12 @@ if(res.ok){
   return data.comment[0]
     }
   dispatch(addComment(data))
- return data
+  return data
 }
 
-return res
+  const error = await res.json()
+  console.log(error)
+return error
 }
 
 export const editCommentThunk=(formData,trackId,commentId)=>async(dispatch)=>{
