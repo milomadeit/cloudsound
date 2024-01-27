@@ -85,14 +85,12 @@ const SongPlayer = () => {
             <audio ref={audioRef} src={currentTrack.song_url} />
             <div className='song-player-controls'>
                 <img style={{
-                    filter: "invert(100%)"}} className='next-prev-button' src={prev} />
-                }} 
+                    filter: "invert(100%)"}} className='next-prev-button' src={prev} /> 
                 <img style={{
                     filter: "invert(100%)"
                 }} className='play-pause-button' onClick={togglePlayPause} src={isPlaying ? pause : play} />
                 <img style={{
                     filter: "invert(100%)"}} className='next-prev-button' src={next}/>
-                }}
             </div>
         </div>
     );
