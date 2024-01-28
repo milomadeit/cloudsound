@@ -88,10 +88,13 @@ class Playlist(db.Model):
 
 playlistsongs = db.Table(
     'playlistsongs',
-    db.metadata,
+    db.Model.metadata,
     db.Column("song_id", db.ForeignKey(add_prefix_for_prod("songs.id")), primary_key=True),
     db.Column("playlist_id", db.ForeignKey(add_prefix_for_prod("playlists.id")), primary_key=True)
 )
+
+if environment == "production":
+    playlistsongs.schema = SCHEMA
 
 class Comment(db.Model):
     __tablename__ = 'comments'
