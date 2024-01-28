@@ -45,7 +45,7 @@ class Song(db.Model):
 		__table_args__ = {'schema': SCHEMA}
 
 	id = db.Column(db.Integer(), primary_key=True)
-	user_id = db.Column(db.Integer, db.ForeignKey(User.id))  # references users id column
+	user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod(User.id)))  # references users id column
 	title = db.Column(db.String(50), nullable=False)
 	artist = db.Column(db.String(50), nullable=False)
 	genre = db.Column(db.String())
@@ -80,7 +80,7 @@ class Playlist(db.Model):
 
 	id = db.Column(db.Integer, primary_key=True)
 	title = db.Column(db.String(60), nullable=False)
-	user_id = db.Column(db.Integer, db.ForeignKey(User.id))
+	user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod(User.id)))
 
 	user = db.relationship('User', back_populates='playlists')
 	songs = db.relationship('Song', secondary='playlistsongs', back_populates="playlists")
@@ -100,8 +100,8 @@ class Comment(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    song_id= db.Column(db.Integer, db.ForeignKey(Song.id))
-    user_id = db.Column(db.Integer, db.ForeignKey(User.id))
+    song_id= db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod(Song.id)))
+    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod(User.id)))
     content = db.Column(db.String(100), nullable=False)
 
 
@@ -116,8 +116,8 @@ class Like(db.Model):
 		__table_args__ = {'schema': SCHEMA}
 
 	id = db.Column(db.Integer, primary_key=True)
-	user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
-	song_id = db.Column(db.Integer, db.ForeignKey(Song.id), nullable=False)
+	user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod(User.id)), nullable=False)
+	song_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod(Song.id)), nullable=False)
 
 	user = db.relationship('User', back_populates='likes') # not actually fields on the table but sqlalchemy will create
 	song = db.relationship('Song', back_populates='likes_relationship') # a user or song object with info related to the like.
