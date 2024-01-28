@@ -50,6 +50,8 @@ const EditSong = () => {
       if (result.ok) {
         history.push("/");
       } else {
+        setErrors(result.data)
+        setLoading(false)
         return result.data
       }
     } catch (error) {
@@ -127,6 +129,7 @@ const EditSong = () => {
         Update Song
       </button>
       {loading && <p>Loading...</p>}
+      {errors && (<p>{errors}</p>)}
     </form>
   );
 };
