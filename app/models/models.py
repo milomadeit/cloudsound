@@ -2,13 +2,11 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
-
-
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
     if environment == "production":
-        __table_args__ = {'schema': SCHEMA}
+        __table_args__ = {'schema': SCHEMA, 'extend_existing': True}
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(40), nullable=False, unique=True)
@@ -56,7 +54,7 @@ class Song(db.Model):
 	image_url = db.Column(db.String())
 
 	user = db.relationship('User', back_populates='songs')
-	playlists = db.relationship('Playlist', secondary=playlistsongs, back_ps='songs')
+	playlists = db.relationship('Playlist', secondary='playlistsongs', back_populates='songs')
 	likes_relationship = db.relationship('Like', back_populates='song', cascade="all, delete-orphan")
 	comments=db.relationship("Comment", back_populates="song",  cascade="all, delete-orphan")
 
