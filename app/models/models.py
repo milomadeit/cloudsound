@@ -1,6 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from sqlalchemy import MetaData
 
 # __tablename__ = "playlistsongs"
 # if environment == "production":
@@ -90,9 +91,12 @@ class Playlist(db.Model):
 	songs = db.relationship('Song', secondary='playlistsongs', back_populates="playlists")
 
 
+metadata_obj = db.metadata
+if environment == "production":
+	metadata_obj = MetaData(schema=SCHEMA)
 playlistsongs = db.Table(
     'playlistsongs',
-    db.metadata,
+    metadata_obj,
     db.Column("song_id", db.ForeignKey(Song.id), primary_key=True),
     db.Column("playlist_id", db.ForeignKey(Playlist.id), primary_key=True)
 )
@@ -132,4 +136,3 @@ class Like(db.Model):
 			'user_id': self.user_id,
 			'song_id': self.song_id
 		}
-
