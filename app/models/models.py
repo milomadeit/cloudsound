@@ -94,8 +94,8 @@ playlistsongs = db.Table(
     'playlistsongs',
     db.metadata,
     db.Column("song_id", db.ForeignKey(Song.id), primary_key=True),
-    db.Column("playlist_id", db.ForeignKey(Playlist.id), primary_key=True))
-)
+    db.Column("playlist_id", db.ForeignKey(Playlist.id), primary_key=True)
+    )
 
 class Comment(db.Model):
     __tablename__ = 'comments'
