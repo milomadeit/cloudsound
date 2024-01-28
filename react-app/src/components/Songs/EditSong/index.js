@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useHistory, useLocation } from "react-router-dom";
 import { editSong } from "../../../store/songs";
 import { FOLK, HIP_HOP, JAZZ, LATIN, POP } from "../../../constants/genre";
 import "./EditSong.css";
@@ -9,7 +9,6 @@ const EditSong = () => {
   const history = useHistory();
   const location = useLocation();
   const dispatch = useDispatch();
-  const { songId } = useParams();
   const song = location.state.song;
   const [songFile, setSongFile] = useState(null);
   const [title, setTitle] = useState(song.title);

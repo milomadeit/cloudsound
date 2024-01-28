@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams, NavLink, useLocation, useHistory } from "react-router-dom";
+import { useParams, useLocation, useHistory } from "react-router-dom";
 import { getAllSongs } from "../../../store/songs";
 import CreateSongComment from "../../CreateSongComment";
 import OpenModalButton from "../../OpenModalButton";
@@ -31,13 +31,13 @@ const GetSong = () => {
   const user = useSelector((state) => state.session.user);
   const song = useSelector((state) => state.songsReducer.allSongs[parseInt(songId)]);
   const isLiked = useSelector(state => state.likes.likedSongs[songId]?.liked === true);
-  const [isOwner, setIsOwner] = useState(false);
+  // const [isOwner, setIsOwner] = useState(false);
   const song_check = location.state?.song || song
 
 
 
   useEffect(() => {
-    setIsOwner(user?.id === song_check?.user_id);
+    // setIsOwner(user?.id === song_check?.user_id);
     dispatch(getAllSongs());
     dispatch(likeCount(songId));
     if (user?.id) {
