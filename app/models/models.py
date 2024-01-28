@@ -6,12 +6,6 @@ from flask_login import UserMixin
 # if environment == "production":
 #     __table_args__ = {'schema': SCHEMA}
 
-playlistsongs = db.Table(
-    'playlistsongs',
-    db.metadata,
-    db.Column("song_id", db.ForeignKey("songs.id"), primary_key=True),
-    db.Column("playlist_id", db.ForeignKey("playlists.id"), primary_key=True)
-)
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -82,6 +76,26 @@ class Song(db.Model):
 			'likes': self.likes
 		}
 
+class Playlist(db.Model):
+	__tablename__ = 'playlists'
+
+	if environment == "production":
+		__table_args__ = {'schema': SCHEMA}
+
+	id = db.Column(db.Integer, primary_key=True)
+	title = db.Column(db.String(60), nullable=False)
+	user_id = db.Column(db.Integer, db.ForeignKey(User.id))
+
+	user = db.relationship('User', back_populates='playlists')
+	songs = db.relationship('Song', secondary=playlistsongs, back_populates="playlists")
+
+
+playlistsongs = db.Table(
+    'playlistsongs',
+    db.metadata,
+    db.Column("song_id", db.ForeignKey("songs.id"), primary_key=True),
+    db.Column("playlist_id", db.ForeignKey(playlists.id), primary_key=True)
+)
 
 class Comment(db.Model):
     __tablename__ = 'comments'
@@ -119,16 +133,3 @@ class Like(db.Model):
 			'song_id': self.song_id
 		}
 
-
-class Playlist(db.Model):
-	__tablename__ = 'playlists'
-
-	if environment == "production":
-		__table_args__ = {'schema': SCHEMA}
-
-	id = db.Column(db.Integer, primary_key=True)
-	title = db.Column(db.String(60), nullable=False)
-	user_id = db.Column(db.Integer, db.ForeignKey(User.id))
-
-	user = db.relationship('User', back_populates='playlists')
-	songs = db.relationship('Song', secondary=playlistsongs, back_populates="playlists")
