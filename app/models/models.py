@@ -90,12 +90,16 @@ class Playlist(db.Model):
 	songs = db.relationship('Song', secondary='playlistsongs', back_populates="playlists")
 
 
+playlistsongs_table_name = "playlistsongs"
+if environment == "production":
+    playlistsongs_table_name = f"{SCHEMA}.playlistsongs"
+
 playlistsongs = db.Table(
-    'playlistsongs',
+    playlistsongs_table_name,
     db.metadata,
-    db.Column("song_id", db.ForeignKey(Song.id), primary_key=True),
-    db.Column("playlist_id", db.ForeignKey(Playlist.id), primary_key=True)
-    )
+    db.Column("song_id", db.ForeignKey(f"{SCHEMA}.songs.id" if environment == "production" else "songs.id"), primary_key=True),
+    db.Column("playlist_id", db.ForeignKey(f"{SCHEMA}.playlists.id" if environment == "production" else "playlists.id"), primary_key=True)
+)
 
 class Comment(db.Model):
     __tablename__ = 'comments'
