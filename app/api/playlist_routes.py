@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from app.models.playlist import Playlist
+from app.models import Playlist
 from ..models import db
 from flask_login import current_user
 

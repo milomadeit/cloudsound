@@ -1,10 +1,10 @@
 from flask import Blueprint, jsonify,request,redirect
-from app.models.comment import Comment
+from app.models import Comment
 from app.models.db import db
 from app.forms.comment_validation_form import CommentForm
 from flask_login import current_user
 from sqlalchemy import desc
-from app.models.user import User
+from app.models import User
 from ..models import db
 
 comments_bp = Blueprint('comments_bp', __name__)
