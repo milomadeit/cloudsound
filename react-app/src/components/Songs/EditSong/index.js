@@ -129,7 +129,7 @@ const EditSong = () => {
         Update Song
       </button>
       {loading && <p>Loading...</p>}
-      {errors && (<p>{errors}</p>)}
+      {errors && (<p>{errors.error}</p>)}
     </form>
   );
 };
