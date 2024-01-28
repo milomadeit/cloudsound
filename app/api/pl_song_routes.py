@@ -1,8 +1,7 @@
 from flask import Blueprint, jsonify, request
 from ..models import db
 # from flask_login import current_user
-from app.models.playlists_song import playlist_songs
-from app.models.song import Song
+from app.models import Song, Playlist
 from sqlalchemy import select, delete
 
 
@@ -15,39 +14,39 @@ def add_pl_song(playlistId):
   songId = request.form.get('songId')
   playlistId = request.form.get('playlistId')
 
-  add_song = playlist_songs.insert().values(song_id=songId, playlist_id=playlistId)
+  song = Song.query.get(songId)
+  playlist = Playlist.query.get(playlistId)
 
-  db.session.execute(add_song)
-  db.session.commit()
+  if song and playlist:
+        playlist.songs.append(song)
+        db.session.commit()
+        return jsonify('Song added to Playlist!')
+  else:
+        return jsonify('Song or Playlist not found'), 404
 
-  return jsonify('Song added to Playlist!')
 
 
 # Get songs by playlist id
 @pl_songs_bp.route('/playlists/<int:playlistId>/songs')
 def get_pl_songs(playlistId):
-  get_songs = select([playlist_songs.columns.song_id, playlist_songs.columns.playlist_id]).where(playlist_songs.columns.playlist_id == playlistId)
+  playlist = Playlist.query.get(playlistId)
 
-  pl_songs = db.session.execute(get_songs)
-
-  songs_formatted = [
-    {
-    'song_id': song.song_id,
-    'pl_id': song.playlist_id
-    }
-    for song in pl_songs]
-
-  return jsonify(songs_formatted)
+  if playlist:
+        songs_formatted = [{'song_id': song.id, 'pl_id': playlistId} for song in playlist.songs]
+        return jsonify(songs_formatted)
+  else:
+        return jsonify('Playlist not found'), 404
 
 
 # Remove a song from playlist
 @pl_songs_bp.route('/playlists/<int:playlistId>/songs/<int:songId>', methods=['DELETE'])
 def remove_song_from_playlist(playlistId, songId):
-  remove_song = playlist_songs.delete().where(
-    playlist_songs.c.song_id == songId, playlist_songs.c.playlist_id == playlistId
-  )
+  playlist = Playlist.query.get(playlistId)
+  song = Song.query.get(songId)
 
-  db.session.execute(remove_song)
-  db.session.commit()
-
-  return jsonify({'j': 'hello'})
+  if song and playlist:
+        playlist.songs.remove(song)
+        db.session.commit()
+        return jsonify('Song removed from Playlist!')
+  else:
+        return jsonify('Song or Playlist not found'), 404
