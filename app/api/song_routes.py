@@ -86,7 +86,7 @@ def SongEdit(songId):
         current_song.genre = request.form.get('genre') or current_song.genre
 
         db.session.commit()
-        response_data = current_song.to_dict()  # Assuming you have a to_dict method
+        response_data = current_song.to_dict() 
         return jsonify(response_data), 200
 
     if form.errors:
