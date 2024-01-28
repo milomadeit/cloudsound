@@ -2,6 +2,17 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
+# __tablename__ = "playlistsongs"
+# if environment == "production":
+#     __table_args__ = {'schema': SCHEMA}
+
+playlistsongs = db.Table(
+    'playlistsongs',
+    db.metadata,
+    db.Column("song_id", db.ForeignKey("songs.id"), primary_key=True),
+    db.Column("playlist_id", db.ForeignKey("playlists.id"), primary_key=True)
+)
+
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
@@ -54,7 +65,7 @@ class Song(db.Model):
 	image_url = db.Column(db.String())
 
 	user = db.relationship('User', back_populates='songs')
-	playlists = db.relationship('Playlist', secondary='playlistsongs', back_populates='songs')
+	playlists = db.relationship('Playlist', secondary=playlistsongs, back_populates='songs')
 	likes_relationship = db.relationship('Like', back_populates='song', cascade="all, delete-orphan")
 	comments=db.relationship("Comment", back_populates="song",  cascade="all, delete-orphan")
 
@@ -120,16 +131,4 @@ class Playlist(db.Model):
 	user_id = db.Column(db.Integer, db.ForeignKey(User.id))
 
 	user = db.relationship('User', back_populates='playlists')
-	songs = db.relationship('Song', secondary='playlistsongs', back_populates="playlists")
-      
-__tablename__ = "playlistsongs"
-if environment == "production":
-    __tablename__ = f"{SCHEMA}.playlist_songs"
-    __table_args__ = {'schema': SCHEMA}
-
-
-playlistsongs = db.Table(
-    __tablename__,
-    db.metadata,
-    db.Column("song_id", db.ForeignKey(Song.id), primary_key=True),
-    db.Column("playlist_id", db.ForeignKey(Playlist.id), primary_key=True))
+	songs = db.relationship('Song', secondary=playlistsongs, back_populates="playlists")
