@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllSongs } from "../../../store/songs";
-import { FOLK, HIP_HOP, JAZZ, LATIN, POP } from "../../../constants/genre";
+import { FOLK, HIP_HOP, JAZZ, LATIN, POP, EDM, UNDERGROUND, OTHER } from "../../../constants/genre";
 import "./GetAllSongs.css";
 import GenreSongs from "../../GenreSongs";
 import * as playlistActions from '../../../store/playlists';
@@ -24,23 +24,30 @@ const GetAllSongs = () => {
   const folkSongs = songs.filter((s) => s.genre === FOLK);
   const hipHopSongs = songs.filter((s) => s.genre === HIP_HOP);
   const jazzSongs = songs.filter((s) => s.genre === JAZZ);
+  const edmSongs = songs.filter((s) => s.genre === EDM);
+  const undergroundSongs = songs.filter((s) => s.genre === UNDERGROUND);
+
   const otherSongs = songs.filter(
     (s) =>
       s.genre !== POP &&
       s.genre !== LATIN &&
       s.genre !== FOLK &&
       s.genre !== HIP_HOP &&
-      s.genre !== JAZZ
+      s.genre !== JAZZ &&
+      s.genre !== EDM &&
+      s.genre !== UNDERGROUND
   );
 
   return (
     <div className="get-all-songs-main-div">
       <GenreSongs genre="Pop" songs={popSongs} />
-      <GenreSongs genre="Latin" songs={latinSongs} />
-      <GenreSongs genre="Folk" songs={folkSongs} />
       <GenreSongs genre="Hip-Hop" songs={hipHopSongs} />
+      <GenreSongs genre="Folk" songs={folkSongs} />
+      <GenreSongs genre="EDM" songs={edmSongs} />
       <GenreSongs genre="Jazz" songs={jazzSongs} />
-      <GenreSongs genre="Others" songs={otherSongs} />
+      <GenreSongs genre="Latin" songs={latinSongs} />
+      <GenreSongs genre="Underground" songs={undergroundSongs} />
+      <GenreSongs genre="Other" songs={otherSongs} />
     </div>
   );
 };

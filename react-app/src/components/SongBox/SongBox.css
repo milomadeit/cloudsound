@@ -80,9 +80,10 @@
 }
 .song-box-play-btn {
   display: none;
-  height: 50px;
-  width: 50px;
+  height: 25px;
+  width: 25px;
   border-radius: 50%;
+  z-index: 1;
 }
 
 .song-box:hover .song-box-play-btn {
