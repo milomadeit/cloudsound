@@ -5,7 +5,6 @@ import { FOLK, HIP_HOP, JAZZ, LATIN, POP } from "../../../constants/genre";
 import "./GetAllSongs.css";
 import GenreSongs from "../../GenreSongs";
 import * as playlistActions from '../../../store/playlists';
-import { setCurrentSong } from "../../../store/songs";
 
 const GetAllSongs = () => {
   const dispatch = useDispatch();
