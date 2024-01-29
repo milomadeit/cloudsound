@@ -16,6 +16,7 @@ const EditSong = () => {
   const [genre, setGenre] = useState(song.genre);
   const [loading, setLoading] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [imageUrl, setImageUrl] = useState('')
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
@@ -30,6 +31,8 @@ const EditSong = () => {
     if (title.length < 1)
       form_errors.title = "Please include a title for your song";
     if (!genre) form_errors.genre = "Please select a genre";
+    if (imageUrl.length > 0 && !imageUrl.match(/\.(jpeg|jpg|gif|png)$/))
+      form_errors.imageUrl = "Image URL must end in .png, .jpg, or .jpeg";
 
     if (Object.keys(form_errors).length > 0) {
       setErrors(form_errors);
@@ -41,6 +44,7 @@ const EditSong = () => {
     formData.append("title", title);
     formData.append("artist", artist);
     formData.append("genre", genre);
+    formData.append('image_url', imageUrl);
 
     if (isMounted) setLoading(true);
 
@@ -114,6 +118,22 @@ const EditSong = () => {
         </select>
       </div>
       {errors.genre && <p className="p-error">{errors.genre}</p>}
+
+      <div className="upload-form-label-input-div">
+      <label className="upload-form-label" htmlFor="artist">
+          Image
+        </label>
+        <input
+          className="upload-form-input-text"
+          type="text"
+          value={imageUrl}
+          onChange={(e) => setImageUrl(e.target.value)}
+          placeholder="Image URL"
+          id="artist"
+        />
+      </div>
+         {errors.imageUrl && <p className="p-error">{errors.imageUrl}</p>}
+      
 
       <div className="edit-form-label-input-div edit-form-label-input-file-div">
         <input
