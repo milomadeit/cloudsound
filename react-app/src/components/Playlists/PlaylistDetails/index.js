@@ -9,7 +9,6 @@ const PlaylistDetails = () => {
   const dispatch = useDispatch();
   const { playlist_id } = useParams();
 
-  const user = useSelector((state) => state.session)
 
   useEffect(() => {
     dispatch(plSongActions.get_playlist_songs(playlist_id))
