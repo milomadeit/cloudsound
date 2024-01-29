@@ -107,18 +107,17 @@ const GetSong = () => {
                 filter: isLiked ? "invert(20%) sepia(94%) saturate(7461%) hue-rotate(358deg) brightness(103%) contrast(119%)" : "none",
               }}
             />{song.likes}
-            </div>
-        
-            </span>
+            </div>   
             {user ? (
           <div className="song-info-data" >
             
-            {user.id && <span><OpenModalButton buttonText={<img alt="" id="logo7" src={addplaylist} style={{ width: "20px", height: "20px" }} />}
+            {user.id && <span ><OpenModalButton buttonText={<img alt="" id="logo7" src={addplaylist} style={{ width: "20px", height: "20px" }} />}
                     modalComponent={<AddSongToPlaylistModal props={{ trackId }} />}
                   /></span>}
-            {user.id === song.user_id && <span><button onClick={(e) => navigateToEditSong(e, song.id)}>Update song</button></span>}
+            {user.id === song.user_id && <span className="song-info-edit"><button onClick={(e) => navigateToEditSong(e, song.id)}>Update song</button></span>}
           </div>
         ) : (<div className="empty-div-in-case-no-user"></div>)}
+            </span>
             </div>
         </div>
       <div className="first-container-for-song-details">
