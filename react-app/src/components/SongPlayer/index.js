@@ -17,18 +17,18 @@ const SongPlayer = () => {
     const [volume, setVolume] = useState(1);
     // const [trackProgress, setTrackProgress] = useState(0);
 
-    const currentTrack = useSelector((state) => state.songsReducer.currentSong);
+    const currentSong = useSelector((state) => state.songsReducer.currentSong);
     
 
 
-    // useEffect to autoplay when currentTrack changes
+    // useEffect to autoplay when currentSong changes
     useEffect(() => {
         const currentRef = audioRef.current;
-        if (!currentRef || !currentTrack.song_url) return;
+        if (!currentRef || !currentSong.song_url) return;
 
-        currentRef.src = currentTrack.song_url;
+        currentRef.src = currentSong.song_url;
         if (isPlaying) {
-            currentRef.play().catch((err) => console.error("Error playing the track:", err));
+            currentRef.play().catch((err) => console.error("Error playing the song:", err));
         }
 
         const playCurrentTrack = async () => {
@@ -41,14 +41,14 @@ const SongPlayer = () => {
             }
         };
     
-        // plays new song when currentTrack changes
-        // also attempts to auto-play when the component mounts and currentTrack is already set
-        if (currentTrack.song_url) {
+        // plays new song when currentSong changes
+        // also attempts to auto-play when the component mounts and currentSong is already set
+        if (currentSong.song_url) {
             playCurrentTrack();
         }
     
 
-    }, [currentTrack, isPlaying]);
+    }, [currentSong, isPlaying]);
 
     // useEffect to handle play/pause toggles
     useEffect(() => {
@@ -57,13 +57,17 @@ const SongPlayer = () => {
 
 
 
-        isPlaying ? currentRef.play().catch((err) => console.error("Error playing the track:", err)) : currentRef.pause();
+        isPlaying ? currentRef.play().catch((err) => console.error("Error playing the song:", err)) : currentRef.pause();
     }, [isPlaying]); // Re-run when isPlaying changes
+
 
 
 
     const togglePlayPause = () => {
         setIsPlaying((prevIsPlaying) => !prevIsPlaying);
+        if (!currentSong?.song_url) {
+            dispatch(setCurrentSong(currentSongs[currentTrackIndex]))
+        }
     };
     
 
@@ -92,7 +96,7 @@ const SongPlayer = () => {
 
     return (
         <div className='song-player'>
-            <audio ref={audioRef} src={currentTrack.song_url} />
+            <audio ref={audioRef} src={currentSong.song_url} />
             <div className='song-player-controls'>
                 <div className='song-player-main'>
                     <img alt='previous' className='next-prev-button' onClick={() => handlePrevTrack()} src={prev} /> 
