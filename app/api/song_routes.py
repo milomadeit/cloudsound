@@ -85,6 +85,7 @@ def SongEdit(songId):
         current_song.title = request.form.get('title') or current_song.title
         current_song.artist = request.form.get('artist') or current_song.artist
         current_song.genre = request.form.get('genre') or current_song.genre
+        current_song.image_url = request.form.get('image_url') or current_song.image_url
 
         db.session.commit()
         response_data = current_song.to_dict() 
