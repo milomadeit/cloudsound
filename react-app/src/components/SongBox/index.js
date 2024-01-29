@@ -77,6 +77,7 @@ const SongBox = ({
       pathname: `/playlists/add-song/${id}`,
       state: { song: song },
     });
+
   };
 
   const likeSongClick = async (e) => {
