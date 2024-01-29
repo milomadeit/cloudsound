@@ -40,3 +40,8 @@
   background-color: #ff5500;
   width: 80%;
 }
+
+.edit-form-btn:disabled {
+  background-color: grey;
+  cursor: not-allowed;
+}
