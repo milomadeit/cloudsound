@@ -65,6 +65,7 @@ const GetSong = () => {
 
   const likeSongClick = async (e) => {
     e.stopPropagation()
+    if (!user?.id) return
 
     if (isLiked) {
       await dispatch(unlikeSong(songId));
@@ -88,25 +89,15 @@ const GetSong = () => {
   return (
     <div className="container-for-song-details">
       <div className="starter">
- <div className="song-info-on-song-details-page">
-        <h1>{song.title}</h1>
-        <h2>{song.artist}</h2>
-        <h3>{song.genre}</h3>
-
-
-
-      </div>
-      <div className="song-details-page-likes-and-times-played">
-          <span className="inner-song-details-page-likes-and-times-played"><div><img id="logo6" src={play} alt="play" style={{ width: "20px", height: "20px" }} />{song.play_count}</div><div> <img id="logo1" src={heart} alt="heart" style={{ width: "20px", height: "20px" }} />{song.likes}</div></span>
+        <div className="song-info-on-song-details-page">
+          <h1 className="song-info title">{song.title}</h1>
+          <h2 className="song-info artist">{song.artist}</h2>
+          <h3 className="song-info genre">{song.genre}</h3>
         </div>
-</div>
-      <div className="first-container-for-song-details">
-
-
-        {user ? (
-          <div className="if-logged-in-features-on-song-details-page">
-
-            <span onClick={(e) => likeSongClick(e)}><img
+        <div className="song-details-page-likes-and-times-played">
+          <span className="inner-song-details-page-likes-and-times-played">
+            <div className="song-info-data" ><img id="logo6" src={play} alt="play" style={{ width: "20px", height: "20px" }} />{song.play_count}</div>
+            <div className="song-info-data"  onClick={(e) => likeSongClick(e)}><img
               id="logo1"
               src={heart}
               alt="heart"
@@ -115,28 +106,25 @@ const GetSong = () => {
                 height: "20px",
                 filter: isLiked ? "invert(20%) sepia(94%) saturate(7461%) hue-rotate(358deg) brightness(103%) contrast(119%)" : "none",
               }}
-              onClick={(e) => likeSongClick(e)}
-            />
+            />{song.likes}
+            </div>
+        
             </span>
+            {user ? (
+          <div className="song-info-data" >
+            
             {user.id && <span><OpenModalButton buttonText={<img alt="" id="logo7" src={addplaylist} style={{ width: "20px", height: "20px" }} />}
                     modalComponent={<AddSongToPlaylistModal props={{ trackId }} />}
                   /></span>}
             {user.id === song.user_id && <span><button onClick={(e) => navigateToEditSong(e, song.id)}>Update song</button></span>}
           </div>
         ) : (<div className="empty-div-in-case-no-user"></div>)}
-
-
-
+            </div>
+        </div>
+      <div className="first-container-for-song-details">
 
 
       </div>
-
-
-
-
-
-
-
       {user && (<div><CreateSongComment /></div>)}
       <div className="comments-container-for-song-details-page">
 
@@ -165,10 +153,8 @@ const GetSong = () => {
           ))
           }
         </div>
-      </div>
-
-
-    </div>
+  </div>
+</div>
   );
 };
 
