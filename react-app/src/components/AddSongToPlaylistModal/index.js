@@ -2,7 +2,6 @@
 import { useModal } from "../../context/Modal";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 import * as plSongActions from '../../store/playlist-songs'
 import { getAllSongs } from "../../store/songs";
 

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import * as plSongActions from '../../../store/playlist-songs'
 import { getAllSongs } from "../../../store/songs";
+import { get_playlists_thunk } from "../../../store/playlists"
 
 
 const AddSongToPL = () => {
@@ -21,6 +22,7 @@ const AddSongToPL = () => {
 
   useEffect(() => {
     dispatch(getAllSongs())
+    dispatch(get_playlists_thunk())
   }, [dispatch]);
 
   const addSongToPlaylist = (e) => {
