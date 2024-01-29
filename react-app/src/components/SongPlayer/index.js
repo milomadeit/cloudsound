@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from "react-router-dom";
 import './SongPlayer.css';
 import { setCurrentSong } from '../../store/songs';
 import play from './icons/play.png'
@@ -9,6 +10,7 @@ import prev from './icons/prev.png'
 
 const SongPlayer = () => {
     const currentSongsObject = useSelector((state) => state.songsReducer.allSongs);
+    const history = useHistory();
     const dispatch = useDispatch();
     const currentSongs = Object.values(currentSongsObject);
     const [isPlaying, setIsPlaying] = useState(false);
@@ -90,6 +92,14 @@ const SongPlayer = () => {
         audioRef.current.volume = newVolume;
 
     }
+
+    const navigateToSongDetail = (e, id) => {
+        e.stopPropagation();
+        history.push({
+          pathname: `/songs/${id}`,
+          state: { song: currentSong },
+        });
+      };
     
 
 
@@ -112,7 +122,11 @@ const SongPlayer = () => {
                     value={volume} 
                     onChange={handleVolumeChange}
                 />
-            </div>
+                </div>
+                <span className='song-player-info'>
+                    <p onClick={(e) => navigateToSongDetail(e, currentSong.id)} className='song-player-title'> {currentSong.title} </p>
+                    <p onClick={(e) => navigateToSongDetail(e, currentSong.id)} className='song-player-artist'>{currentSong.artist}</p>
+                </span>
             </div>
         </div>
     );
