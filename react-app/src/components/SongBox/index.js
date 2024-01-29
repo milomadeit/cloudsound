@@ -7,6 +7,7 @@ import DeleteSongModal from "../Songs/DeleteSongModal";
 import OpenModalButton from "../OpenModalButton";
 import { likeSong, likeCount, userLikes, unlikeSong } from "../../store/likes";
 import addplaylist from "../Songs/logo/add-to-playlist-3.png";
+import AddSongToPlaylistModal from "../AddSongToPlaylistModal";
 
 const SongBox = ({
   id,
@@ -71,15 +72,6 @@ const SongBox = ({
     });
   };
 
-  const navigateToAddToPlaylist = (e, id) => {
-    e.stopPropagation();
-    history.push({
-      pathname: `/playlists/add-song/${id}`,
-      state: { song: song },
-    });
-
-  };
-
   const likeSongClick = async (e) => {
     e.stopPropagation();
 
@@ -94,7 +86,7 @@ const SongBox = ({
 
   const stopProp = (e) => {
     e.stopPropagation();
-  }
+  };
 
   return (
     <div className="song-box" onClick={playSong}>
@@ -137,26 +129,29 @@ const SongBox = ({
               {!song_likes ? 0 : song_likes}
             </button>
 
-            <button
-              onClick={(e) => navigateToAddToPlaylist(e, id)}
+            <OpenModalButton
               className="song-box-action-btn"
-            >
-              <img
-                alt="add-to-playlist"
-                className="song-box-add-to-playlist-img"
-                src={addplaylist}
-              />
-            </button>
+              buttonText={
+                <img
+                  alt="add-to-playlist"
+                  className="song-box-add-to-playlist-img"
+                  src={addplaylist}
+                />
+              }
+              modalComponent={
+                <AddSongToPlaylistModal props={{ trackId: id }} />
+              }
+            />
           </>
         ) : (
           <div className="song-box-no-user-like">
-          <button onClick={(e) => stopProp(e)}>
-          <i
-            className="fas fa-heart fa-2xs"
-            style={{ color: `${isLiked ? "red" : "black"}` }}
-          ></i>{" "}
-          {!song_likes ? 0 : song_likes}
-          </button>
+            <button onClick={(e) => stopProp(e)}>
+              <i
+                className="fas fa-heart fa-2xs"
+                style={{ color: `${isLiked ? "red" : "black"}` }}
+              ></i>{" "}
+              {!song_likes ? 0 : song_likes}
+            </button>
           </div>
         )}
 
