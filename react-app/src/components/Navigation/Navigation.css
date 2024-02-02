@@ -8,7 +8,6 @@
 }
 
 .navigation-active-link {
-  background-color: #111111;
   text-decoration: none;
   color: white !important;
 }
@@ -20,6 +19,10 @@
   height: 100%;
   color: #cccccc;
   padding: 0 16px;
+}
+.navigation-link:hover {
+  background-color: #111111;
+
 }
 
 .navigation-home-button {

@@ -36,7 +36,8 @@ def SongUpload():
                 title=request.form.get('title'),
                 artist=request.form.get('artist'),
                 genre=request.form.get('genre'),
-                song_url=url
+                song_url=url,
+                image_url=request.form.get('image_url')
                 )
                 db.session.add(new_song)
                 db.session.commit()
@@ -84,9 +85,10 @@ def SongEdit(songId):
         current_song.title = request.form.get('title') or current_song.title
         current_song.artist = request.form.get('artist') or current_song.artist
         current_song.genre = request.form.get('genre') or current_song.genre
+        current_song.image_url = request.form.get('image_url') or current_song.image_url
 
         db.session.commit()
-        response_data = current_song.to_dict()  # Assuming you have a to_dict method
+        response_data = current_song.to_dict() 
         return jsonify(response_data), 200
 
     if form.errors:
@@ -132,7 +134,7 @@ def UserSongs():
         return jsonify({'error': 'must be logged in to view your songs'}), 401
 
     user_songs = Song.query.filter_by(user_id=current_user.id)
-    songs_list = [{'id':song.id, 'title': song.title, 'artist': song.artist, 'genre': song.genre, 'song_url': song.song_url, 'likes': song.likes, 'play_count': song.play_count, 'user_id': song.user_id} for song in user_songs]
+    songs_list = [{'id':song.id, 'title': song.title, 'artist': song.artist, 'genre': song.genre, 'song_url': song.song_url, 'likes': song.likes, 'play_count': song.play_count, 'user_id': song.user_id, 'image_url': song.image_url} for song in user_songs]
 
 
     return jsonify(songs_list)
@@ -142,7 +144,7 @@ def UserSongs():
 @song_routes.route('')
 def AllSongs():
     all_songs = Song.query.all()
-    songs_list = [{'id':song.id, 'title': song.title, 'artist': song.artist, 'genre': song.genre, 'song_url': song.song_url, 'likes': song.likes, 'play_count': song.play_count, 'user_id':song.user_id} for song in all_songs]
+    songs_list = [{'id':song.id, 'title': song.title, 'artist': song.artist, 'genre': song.genre, 'song_url': song.song_url, 'likes': song.likes, 'play_count': song.play_count, 'user_id':song.user_id, 'song_url':song.song_url, 'image_url':song.image_url} for song in all_songs]
 
     return jsonify(songs_list)
 

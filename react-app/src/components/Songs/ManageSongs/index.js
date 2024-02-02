@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { getAllSongs, getCurrentUserSongs } from "../../../store/songs";
+import { getCurrentUserSongs } from "../../../store/songs";
 import GenreSongs from "../../GenreSongs";
 
 const ManageSongs = () => {
-  const history = useHistory();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.session.user);
+  const currentUserSongsLoaded = useSelector(
+    (state) => state.songsReducer.currentUserSongsLoaded
+  );
   const currentUserSongs = useSelector(
     (state) => state.songsReducer.currentUserSongs
   );
@@ -15,13 +15,10 @@ const ManageSongs = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!user) {
-      history.push("/");
-      return;
+    if (!currentUserSongsLoaded) {
+      dispatch(getCurrentUserSongs()).then(() => setLoading(false));
     }
-    dispatch(getAllSongs())
-    dispatch(getCurrentUserSongs()).then(() => setLoading(false));
-  }, [dispatch, user, history]);
+  }, [currentUserSongsLoaded, dispatch]);
 
   if (loading) return <h1>Loading...</h1>;
 

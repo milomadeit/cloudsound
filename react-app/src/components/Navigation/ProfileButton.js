@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/session";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { setCurrentUserSongsLoaded } from "../../store/songs";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -30,7 +31,10 @@ function ProfileButton({ user }) {
 
   const handleLogout = async (e) => {
     e.preventDefault();
-    await dispatch(logout()).then(history.push("/"));
+    await dispatch(logout()).then(() => {
+      dispatch(setCurrentUserSongsLoaded());
+      history.push("/");
+    });
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");

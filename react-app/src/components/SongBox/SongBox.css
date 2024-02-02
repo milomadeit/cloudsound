@@ -79,10 +79,15 @@
   justify-content: space-around;
 }
 .song-box-play-btn {
+  display: none;
   height: 25px;
   width: 25px;
-  border: 1px solid #ff5500;
   border-radius: 50%;
+  z-index: 1;
+}
+
+.song-box:hover .song-box-play-btn {
+  display: inline;
 }
 
 .song-box-actions {

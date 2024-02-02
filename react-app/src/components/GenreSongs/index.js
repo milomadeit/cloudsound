@@ -2,6 +2,7 @@ import SongBox from "../SongBox";
 import "./GenreSongs.css";
 
 const GenreSongs = ({ genre, songs }) => {
+ 
   return (
     <div className="genre-songs-div">
       <h2 className="get-all-songs-genre-header">{genre}</h2>
