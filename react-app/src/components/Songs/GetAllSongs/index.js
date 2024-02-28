@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllSongs } from "../../../store/songs";
-import { FOLK, HIP_HOP, JAZZ, LATIN, POP, EDM, UNDERGROUND, OTHER } from "../../../constants/genre";
+import {
+  FOLK,
+  HIP_HOP,
+  JAZZ,
+  LATIN,
+  POP,
+  EDM,
+  UNDERGROUND,
+} from "../../../constants/genre";
 import "./GetAllSongs.css";
 import GenreSongs from "../../GenreSongs";
-import * as playlistActions from '../../../store/playlists';
+import * as playlistActions from "../../../store/playlists";
 
 const GetAllSongs = () => {
   const dispatch = useDispatch();
