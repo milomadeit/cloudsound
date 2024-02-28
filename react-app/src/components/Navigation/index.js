@@ -18,7 +18,7 @@ function Navigation({ isLoaded }) {
         exact
         to="/"
       >
-        <img alt="" id="logo10" src={cloudSoundLogo}   />
+        <img alt="" id="logo10" src={cloudSoundLogo} />
       </NavLink>
       {isLoaded && sessionUser && (
         <>
@@ -37,14 +37,6 @@ function Navigation({ isLoaded }) {
             to="/songs/current"
           >
             Manage My Songs
-          </NavLink>
-          <NavLink
-            activeClassName="navigation-active-link"
-            className="navigation-link"
-            exact
-            to="/playlists/new"
-          >
-            Create Playlist
           </NavLink>
           <NavLink
             activeClassName="navigation-active-link"
