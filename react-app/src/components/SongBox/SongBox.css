@@ -34,9 +34,11 @@
 .song-box-info {
   max-width: 90px;
 }
+
 .song-box-info:hover {
   text-decoration: underline;
 }
+
 .song-box-info h3 {
   overflow: hidden;
   white-space: nowrap;
@@ -44,6 +46,7 @@
   margin: 0;
   font-size: 1em;
 }
+
 .song-box-info p {
   margin: 0;
   color: #666;
@@ -52,6 +55,7 @@
 .genre-div {
   margin-left: 0;
 }
+
 .genre-tag {
   display: inline-block;
   background-color: #9c8a9b;
@@ -78,6 +82,7 @@
   width: inherit;
   justify-content: space-around;
 }
+
 .song-box-play-btn {
   display: none;
   height: 25px;
@@ -111,11 +116,10 @@
 
 .song-box-no-user-like {
   display: grid;
-  grid:100%;
+  grid: 100%;
 }
 
 .song-box-add-to-playlist-img {
   height: 13px;
   width: auto;
 }
-

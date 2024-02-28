@@ -116,9 +116,8 @@ const SongBox = ({
         {user ? (
           <>
             <button
-              className={`song-box-action-btn ${
-                isLiked ? "song-box-liked" : ""
-              }`}
+              className={`song-box-action-btn ${isLiked ? "song-box-liked" : ""
+                }`}
               type="button"
               onClick={(e) => likeSongClick(e)}
             >

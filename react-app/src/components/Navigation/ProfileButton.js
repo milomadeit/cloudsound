@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../store/session";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { setCurrentUserSongsLoaded } from "../../store/songs";
+import { clearLikesState } from '../../store/likes';
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -31,8 +32,10 @@ function ProfileButton({ user }) {
 
   const handleLogout = async (e) => {
     e.preventDefault();
+
     await dispatch(logout()).then(() => {
       dispatch(setCurrentUserSongsLoaded());
+      dispatch(clearLikesState());
       history.push("/");
     });
   };
