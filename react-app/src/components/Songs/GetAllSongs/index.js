@@ -48,14 +48,22 @@ const GetAllSongs = () => {
 
   return (
     <div className="get-all-songs-main-div">
-      <GenreSongs genre="Pop" songs={popSongs} />
-      <GenreSongs genre="Hip-Hop" songs={hipHopSongs} />
-      <GenreSongs genre="Folk" songs={folkSongs} />
-      <GenreSongs genre="EDM" songs={edmSongs} />
-      <GenreSongs genre="Jazz" songs={jazzSongs} />
-      <GenreSongs genre="Latin" songs={latinSongs} />
-      <GenreSongs genre="Underground" songs={undergroundSongs} />
-      <GenreSongs genre="Other" songs={otherSongs} />
+      {popSongs.length ? <GenreSongs genre="Pop" songs={popSongs} /> : null}
+      {hipHopSongs.length ? (
+        <GenreSongs genre="Hip-Hop" songs={hipHopSongs} />
+      ) : null}
+      {folkSongs.length ? <GenreSongs genre="Folk" songs={folkSongs} /> : null}
+      {edmSongs.length ? <GenreSongs genre="EDM" songs={edmSongs} /> : null}
+      {jazzSongs.length ? <GenreSongs genre="Jazz" songs={jazzSongs} /> : null}
+      {latinSongs.length ? (
+        <GenreSongs genre="Latin" songs={latinSongs} />
+      ) : null}
+      {undergroundSongs.length ? (
+        <GenreSongs genre="Underground" songs={undergroundSongs} />
+      ) : null}
+      {otherSongs.length ? (
+        <GenreSongs genre="Other" songs={otherSongs} />
+      ) : null}
     </div>
   );
 };
