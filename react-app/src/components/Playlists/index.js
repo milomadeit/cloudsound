@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import * as playlistActions from '../../store/playlists';
+import OpenModalButton from "../OpenModalButton";
+import CreatePlaylist from './CreatePlaylist';
 import './index.css'
 
 
@@ -17,9 +19,17 @@ const Playlists = () => {
 
   return (
     <>
-      <h2
-        className="plH2"
-      >My Playlists</h2>
+      <div className="plHeader">
+        <h2
+          className="plH2"
+        >My Playlists</h2>
+
+        <OpenModalButton
+          buttonText={'Create Playlist'}
+          modalComponent={<CreatePlaylist />}
+          className='createPlaylistBtn'
+        />
+      </div>
       <hr className="plHr"></hr>
 
       {playlists.map((list) =>
