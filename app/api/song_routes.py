@@ -137,7 +137,7 @@ def UserSongs():
     songs_list = [{'id':song.id, 'title': song.title, 'artist': song.artist, 'genre': song.genre, 'song_url': song.song_url, 'likes': song.likes, 'play_count': song.play_count, 'user_id': song.user_id, 'image_url': song.image_url} for song in user_songs]
 
 
-    return jsonify(songs_list)
+    return jsonify(songs_list),200
 
 
 # get all songs
@@ -146,7 +146,7 @@ def AllSongs():
     all_songs = Song.query.all()
     songs_list = [{'id':song.id, 'title': song.title, 'artist': song.artist, 'genre': song.genre, 'song_url': song.song_url, 'likes': song.likes, 'play_count': song.play_count, 'user_id':song.user_id, 'song_url':song.song_url, 'image_url':song.image_url} for song in all_songs]
 
-    return jsonify(songs_list)
+    return jsonify(songs_list), 200
 
 # #get song by id
 # @song_routes.route("/<int:songId>")
