@@ -8,6 +8,7 @@ import EditCommentModal from "../../EditCommentModal";
 import AddSongToPlaylistModal from "../../AddSongToPlaylistModal"
 import "./GetSong.css";
 import { likeSong, likeCount, userLikes, unlikeSong } from "../../../store/likes";
+import { setCurrentSong } from "../../../store/songs";
 
 
 import heart from "../logo/heart.png"
@@ -85,15 +86,23 @@ const GetSong = () => {
     });
   };
 
+  const playSong = () => {
+    dispatch(setCurrentSong(song));
+  };
+
 
   return (
     <div className="container-for-song-details">
-      <div className="starter">
+      
+      <div onClick={playSong} className="starter">
         <div className="song-info-on-song-details-page">
           <h1 className="song-info title">{song.title}</h1>
           <h2 className="song-info artist">{song.artist}</h2>
           <h3 className="song-info genre">{song.genre}</h3>
+          
         </div>
+        <img className='song-artwork' src={song.image_url}/>
+
         <div className="song-details-page-likes-and-times-played">
           <span className="inner-song-details-page-likes-and-times-played">
             <div className="song-info-data" ><img id="logo6" src={play} alt="play" style={{ width: "20px", height: "20px" }} />{song.play_count}</div>
@@ -127,16 +136,16 @@ const GetSong = () => {
       {user && (<div><CreateSongComment /></div>)}
       <div className="comments-container-for-song-details-page">
 
-        {comments.length === 1 && <span className="chatcloud-and-number-of-comments"><div><img alt="" id="logo5" src={chatcloud} style={{ width: "20px", height: "20px" }} /></div><div><h3>{comments.length} comment</h3></div></span>}
-        {comments.length > 1 && <span className="chatcloud-and-number-of-comments"><div><img alt="" id="logo5" src={chatcloud} style={{ width: "20px", height: "20px" }} /></div><div><h3>{comments.length} comments</h3></div></span>}
-        {comments.length === 0 && <span className="chatcloud-and-number-of-comments"><div><img alt="" id="logo5" src={chatcloud} style={{ width: "20px", height: "20px" }} /></div><div><h3>No comments yet</h3></div></span>}
+        {comments.length === 1 && <span className="chatcloud-and-number-of-comments"><div><img alt="" id="logo5" className="comment-logo" src={chatcloud} style={{ width: "20px", height: "20px" }} /></div><div><h3>{comments.length} comment</h3></div></span>}
+        {comments.length > 1 && <span className="chatcloud-and-number-of-comments"><div><img alt="" id="logo5" className="comment-logo" src={chatcloud} style={{ width: "20px", height: "20px" }} /></div><div><h3>{comments.length} comments</h3></div></span>}
+        {comments.length === 0 && <span className="chatcloud-and-number-of-comments"><div><img alt="" id="logo5" className="comment-logo" src={chatcloud} style={{ width: "20px", height: "20px" }} /></div><div><h3>No comments yet</h3></div></span>}
         <div className="container-for-list-of-comments">
           {isLoaded && (comments.map((comment) =>
-            <div key={comment.id} id="individual-comment-in-the-list-song-details-page">
+            <div key={comment.id} className="individual-comment-in-the-list-song-details-page">
               <div>User: {comment.author}</div>
               <div>{comment.content} </div>
               {user && user.id === comment.user_id && (
-                <span>
+                <span className="buttons-span">
                   <OpenModalButton buttonText={<img alt="" id="logo2" src={edit} style={{ width: "20px", height: "20px" }} />}
                     modalComponent={<EditCommentModal props={{ comment, trackId }} />}
                   />
@@ -151,6 +160,9 @@ const GetSong = () => {
 
           ))
           }
+          <div className="space">
+
+          </div>
         </div>
   </div>
 </div>

@@ -57,7 +57,7 @@ function CreateSongComment() {
                   type="text"
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
-                  placeholder="Write a comment"
+                  placeholder="Add a comment"
                   required
                 />
 

@@ -4,19 +4,30 @@
     appearance: none;
     background-color: inherit;
   }
-.post-a-comment{
 
-}
+
+
 .comment-input-field{
-display:flex;
-align-items:center;
-width:100%;
+  display:flex;
+  align-items:center;
+  width:100%;
+  justify-content: center;
 
 }
 #input-comment{
-width:500px;
+  width:500px;
+  border-radius: 8px;
 }
 #input-comment{
   background-color: whitesmoke;
+
+}
+
+.comment-input-field-button {
+  margin-top: 3px;
+}
+
+.comment-input-field-button:hover {
+  filter: invert(50%);
 
 }
