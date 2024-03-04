@@ -71,7 +71,7 @@ const EditCommentModal = (props) => {
                             </label>
 
 
-                            <button id="submit-for-post-a-comment" type="submit" ><img alt="" id="send-logo" src={image} style={{ width: "20px", height: "20px" }} /></button>
+                            <button className="submit-for-post-a-comment" type="submit" ><img alt="" className="send-logo" src={image} style={{ width: "20px", height: "20px" }} /></button>
                         </div>
                     </form>
                 </div>

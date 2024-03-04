@@ -10,6 +10,7 @@
     display:flex;
     align-items: center;
 }
+
 .container-for-song-details {
     width: 100%;
     display: flex;
@@ -18,6 +19,7 @@
     margin-left: 58px;
     justify-content: center;
     align-items: flex-start;
+    
 }
 
 .first-container-for-song-details {
@@ -26,7 +28,7 @@
     justify-content: space-between;
     width:100%;
     align-items:center;
-    padding-bottom: 30px;
+ 
   
 }
 
@@ -46,6 +48,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    
 }
 
 .song-info {
@@ -77,6 +80,16 @@
     border-radius: 5px;
     width: 535px;
     height: 200px;
+    background-color: rgb(237, 237, 237);
+    margin-bottom: 25px;
+    cursor: pointer;
+}
+
+.starter:hover {
+    box-shadow: 0px 1px 5px 1px rgba(0, 0, 0, 0.37);
+    cursor: pointer;
+    transform: translateY(-2px);
+
 }
 
 
@@ -91,10 +104,12 @@
 
 .song-info-data {
     margin-left: 5px;
+    margin-bottom: 20px;
 }
 
 .song-info.artist {
     color: #666;
+    margin-top: 12px;
     
 }
 .song-info.genre {
@@ -102,10 +117,45 @@
     padding: 0px 0px 1px 2px;
     border-radius: 3px;
     font-size: 10px;
-    width: 2em;
+    width: fit-content;
     margin-top: 20px;
 }
 
 .song-info-edit {
     margin-left: 5px;
+}
+
+
+.individual-comment-in-the-list-song-details-page {
+    border: 1px solid black;
+    min-width: 515px;
+    min-height: 80px;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.buttons-span {
+    margin-bottom: 0px;
+    margin-top: 15px;
+    position: absolute;
+    left: 515px;
+}
+
+.space {
+    height: 100px;
+}
+
+.comment-logo {
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+.song-artwork {
+    height: 150px;
+    width: 150px;
+    margin-left: 350px;
+    margin-top: -70px;
+    border-radius: 8px;
 }
