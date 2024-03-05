@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 import * as playlistActions from '../../../store/playlists';
+import { useModal } from "../../../context/Modal";
 import './index.css'
 
 
 const CreatePlaylist = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
   const [title, setTitle] = useState('');
   const [errors, setErrors] = useState('');
+  const { closeModal } = useModal();
 
   const userId = useSelector((state) => state.session.user.id)
   const playlists = Object.values(useSelector((state) => state.playlists))
@@ -24,7 +24,8 @@ const CreatePlaylist = () => {
 
       dispatch(playlistActions.create_playlist_thunk(formData));
       dispatch(playlistActions.get_playlists_thunk());
-      history.push('/playlists')
+
+      closeModal();
     }
   }
 
@@ -42,26 +43,21 @@ const CreatePlaylist = () => {
 
   return (
     <form onSubmit={handleSubmit} className="plForm">
-      <h2
-      >Create A Playlist!</h2>
+      <h2>Create A Playlist!</h2>
 
-      <div className="labelInputDiv">
-        <label className="plLabel">Title:
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Playlist Title"
-            className="plInput"
-          />
-        </label>
-      </div>
+      <input
+        type="text"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        placeholder="Title"
+        className="plTitle"
+        required
+      />
 
-      {errors && <p>{errors}</p>}
+      {errors && <p className="plTitle-Error">{errors}</p>}
 
       <button
         type="submit"
-        disabled={title.length ? false : true}
         className="createPlBtn"
       >Create Playlist!</button>
     </form>

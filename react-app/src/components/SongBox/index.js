@@ -148,7 +148,7 @@ const SongBox = ({
             <button onClick={(e) => stopProp(e)}>
               <i
                 className="fas fa-heart fa-2xs"
-                style={{ color: `${isLiked ? "red" : "black"}` }}
+                style={{ color: `${user && isLiked ? "red" : "black"}` }}
               ></i>{" "}
               {!song_likes ? 0 : song_likes}
             </button>
